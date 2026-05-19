@@ -1,0 +1,29 @@
+{
+  "files": [
+    "canvas_gen.mbt",
+    "canvas_stub_gen.c",
+    "cstring_stub_gen.c",
+    "data_gen.mbt",
+    "data_stub_gen.c",
+    "font_gen.mbt",
+    "font_stub_gen.c",
+    "general_gen.mbt",
+    "general_stub_gen.c",
+    "graphics_gen.mbt",
+    "graphics_stub_gen.c",
+    "image_gen.mbt",
+    "image_stub_gen.c",
+    "paint_gen.mbt",
+    "paint_stub_gen.c",
+    "path_gen.mbt",
+    "path_stub_gen.c",
+    "pointer_gen.mbt",
+    "pointer_stub_gen.c",
+    "surface_gen.mbt",
+    "surface_stub_gen.c",
+    "typeface_gen.mbt",
+    "typeface_stub_gen.c",
+    "types_gen.mbt",
+    "types_stub_gen.c"
+  ]
+}

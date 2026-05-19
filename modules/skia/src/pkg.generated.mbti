@@ -1,0 +1,120 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "klaseca/skia"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+
+// Errors
+pub(all) suberror SkiaError {
+  InvalidPixelBufferSize(width~ : Int, height~ : Int)
+  InvalidSurfaceSize(width~ : Int, height~ : Int)
+  TypefaceCreateFailed
+  FontCreateFailed
+  PathParseSvgFailed
+  SurfaceReadPixelsFailed
+  SurfaceCreateFailed(width~ : Int, height~ : Int)
+  WritePngFailed(status~ : Int)
+} derive(Eq, @debug.Debug)
+
+// Types and methods
+pub struct Canvas {
+  // private fields
+}
+pub fn Canvas::clear(Self, Color) -> Unit
+pub fn Canvas::clip_rect(Self, Rect, antialias? : Bool) -> Unit
+pub fn Canvas::draw_circle(Self, Float, Float, Float, Paint) -> Unit
+pub fn Canvas::draw_line(Self, Float, Float, Float, Float, Paint) -> Unit
+pub fn Canvas::draw_path(Self, Path, Paint) -> Unit
+pub fn Canvas::draw_round_rect(Self, Rect, Float, Float, Paint) -> Unit
+pub fn Canvas::draw_text(Self, Bytes, x~ : Float, y~ : Float, Font, Paint) -> Unit
+pub fn Canvas::restore(Self) -> Unit
+pub fn Canvas::save(Self) -> Int
+
+pub struct Color {
+  a : Byte
+  r : Byte
+  g : Byte
+  b : Byte
+}
+pub fn Color::Color(a~ : Byte, r~ : Byte, g~ : Byte, b~ : Byte) -> Self
+
+pub struct Font {
+  // private fields
+}
+pub fn Font::Font(Typeface, size~ : Float) -> Self raise SkiaError
+pub fn Font::dispose(Self) -> Unit
+pub fn Font::measure_text(Self, Bytes) -> Float
+pub fn Font::metrics(Self) -> FontMetrics
+pub fn Font::set_size(Self, Float) -> Unit
+
+pub(all) struct FontMetrics {
+  ascent : Float
+  descent : Float
+  leading : Float
+}
+
+pub struct Paint {
+  // private fields
+}
+pub fn Paint::Paint() -> Self
+pub fn Paint::dispose(Self) -> Unit
+pub fn Paint::set_antialias(Self, Bool) -> Unit
+pub fn Paint::set_color(Self, Color) -> Unit
+pub fn Paint::set_stroke_width(Self, Float) -> Unit
+pub fn Paint::set_style(Self, PaintStyle) -> Unit
+
+pub(all) enum PaintStyle {
+  Fill
+  Stroke
+}
+
+pub struct Path {
+  // private fields
+}
+pub fn Path::Path() -> Self
+pub fn Path::dispose(Self) -> Unit
+pub fn Path::parse_svg(Self, Bytes) -> Unit raise SkiaError
+pub fn Path::reset(Self) -> Unit
+pub fn Path::rewind(Self) -> Unit
+
+pub struct PixelBuffer {
+  data : Bytes
+  width : Int
+  height : Int
+  row_bytes : Int
+}
+pub fn PixelBuffer::PixelBuffer(width~ : Int, height~ : Int) -> Self raise SkiaError
+
+pub struct Rect {
+  left : Float
+  top : Float
+  right : Float
+  bottom : Float
+}
+pub fn Rect::Rect(left~ : Float, top~ : Float, right~ : Float, bottom~ : Float) -> Self
+
+pub struct Surface {
+  // private fields
+}
+pub fn Surface::Surface(width~ : Int, height~ : Int) -> Self raise SkiaError
+pub fn Surface::canvas(Self) -> Canvas
+pub fn Surface::dispose(Self) -> Unit
+pub fn Surface::height(Self) -> Int
+pub fn Surface::read_pixels(Self) -> PixelBuffer raise SkiaError
+pub fn Surface::read_pixels_into(Self, PixelBuffer) -> Unit raise SkiaError
+pub fn Surface::row_bytes(Self) -> Int
+pub fn Surface::width(Self) -> Int
+pub fn Surface::write_png(Self, Bytes) -> Unit raise SkiaError
+
+pub struct Typeface {
+  // private fields
+}
+pub fn Typeface::default() -> Self raise SkiaError
+pub fn Typeface::dispose(Self) -> Unit
+
+// Type aliases
+
+// Traits

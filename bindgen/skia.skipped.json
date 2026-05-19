@@ -1,0 +1,201 @@
+{
+  "generated": 307,
+  "skipped": 39,
+  "functions": [
+    {
+      "header": "sk_data.h",
+      "name": "sk_data_get_data",
+      "reason": "unsupported return type const void *"
+    },
+    {
+      "header": "sk_data.h",
+      "name": "sk_data_get_bytes",
+      "reason": "unsupported return type const uint8_t *"
+    },
+    {
+      "header": "sk_data.h",
+      "name": "sk_data_new_with_proc",
+      "reason": "parameter proc has unsupported type sk_data_release_proc"
+    },
+    {
+      "header": "sk_surface.h",
+      "name": "sk_surface_new_raster_direct",
+      "reason": "parameter releaseProc has unsupported type const sk_surface_raster_release_proc"
+    },
+    {
+      "header": "sk_surface.h",
+      "name": "sk_surface_new_metal_layer",
+      "reason": "parameter layer has unsupported type gr_mtl_handle_t"
+    },
+    {
+      "header": "sk_surface.h",
+      "name": "sk_surface_new_metal_view",
+      "reason": "parameter mtkView has unsupported type gr_mtl_handle_t"
+    },
+    {
+      "header": "sk_surface.h",
+      "name": "sk_surface_draw_with_sampling",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_clear_color4f",
+      "reason": "parameter color has unsupported type sk_color4f_t"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_color4f",
+      "reason": "parameter color has unsupported type sk_color4f_t"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_points",
+      "reason": "parameter arg3 has unsupported type const sk_point_t points []"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_save_layer_rec",
+      "reason": "parameter crec has unsupported type const sk_canvas_savelayerrec_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_image",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_image_rect",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_image_lattice",
+      "reason": "parameter lattice has unsupported type const sk_lattice_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_atlas",
+      "reason": "parameter colors has unsupported type const sk_color_t *"
+    },
+    {
+      "header": "sk_canvas.h",
+      "name": "sk_canvas_draw_patch",
+      "reason": "parameter colors has unsupported type const sk_color_t *"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_text_to_glyphs",
+      "reason": "parameter arg4 has unsupported type uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_unichars_to_glyphs",
+      "reason": "parameter arg1 has unsupported type const int32_t uni[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_get_widths_bounds",
+      "reason": "parameter arg1 has unsupported type const uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_get_pos",
+      "reason": "parameter arg1 has unsupported type const uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_get_xpos",
+      "reason": "parameter arg1 has unsupported type const uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_font_get_paths",
+      "reason": "parameter arg1 has unsupported type uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_font.h",
+      "name": "sk_text_utils_get_pos_path",
+      "reason": "parameter arg3 has unsupported type const sk_point_t pos[]"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_unichars_to_glyphs",
+      "reason": "parameter arg1 has unsupported type const int32_t unichars[]"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_get_table_tags",
+      "reason": "parameter arg1 has unsupported type sk_font_table_tag_t tags[]"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_get_kerning_pair_adjustments",
+      "reason": "parameter arg1 has unsupported type const uint16_t glyphs[]"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_get_variation_design_position",
+      "reason": "parameter coordinates has unsupported type sk_fontarguments_variation_position_coordinate_t *"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_get_variation_design_parameters",
+      "reason": "parameter parameters has unsupported type sk_fontarguments_variation_axis_t *"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_typeface_clone_with_arguments",
+      "reason": "parameter coordinates has unsupported type const sk_fontarguments_variation_position_coordinate_t *"
+    },
+    {
+      "header": "sk_typeface.h",
+      "name": "sk_fontmgr_match_family_style_character",
+      "reason": "parameter bcp47 has unsupported type const char * *"
+    },
+    {
+      "header": "sk_path.h",
+      "name": "sk_path_is_line",
+      "reason": "parameter arg1 has unsupported type sk_point_t line [2]"
+    },
+    {
+      "header": "sk_path.h",
+      "name": "sk_path_iter_next",
+      "reason": "parameter arg1 has unsupported type sk_point_t points [4]"
+    },
+    {
+      "header": "sk_path.h",
+      "name": "sk_path_rawiter_next",
+      "reason": "parameter arg1 has unsupported type sk_point_t points [4]"
+    },
+    {
+      "header": "sk_path.h",
+      "name": "sk_pathmeasure_get_pos_tan",
+      "reason": "parameter tangent has unsupported type sk_vector_t *"
+    },
+    {
+      "header": "sk_image.h",
+      "name": "sk_image_new_raster",
+      "reason": "parameter releaseProc has unsupported type sk_image_raster_release_proc"
+    },
+    {
+      "header": "sk_image.h",
+      "name": "sk_image_new_from_texture",
+      "reason": "parameter releaseProc has unsupported type const sk_image_texture_release_proc"
+    },
+    {
+      "header": "sk_image.h",
+      "name": "sk_image_make_shader",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    },
+    {
+      "header": "sk_image.h",
+      "name": "sk_image_make_raw_shader",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    },
+    {
+      "header": "sk_image.h",
+      "name": "sk_image_scale_pixels",
+      "reason": "parameter sampling has unsupported type const sk_sampling_options_t *"
+    }
+  ]
+}

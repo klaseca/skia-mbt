@@ -1,0 +1,38 @@
+formatter(
+  ignore: [
+    "canvas_gen.mbt",
+    "data_gen.mbt",
+    "font_gen.mbt",
+    "general_gen.mbt",
+    "graphics_gen.mbt",
+    "image_gen.mbt",
+    "paint_gen.mbt",
+    "path_gen.mbt",
+    "pointer_gen.mbt",
+    "surface_gen.mbt",
+    "typeface_gen.mbt",
+    "types_gen.mbt",
+  ],
+)
+
+options(
+  supported_targets: "native",
+  link: { "native": { "stub-cc-flags": "${build.SKIA_STUB_CC_FLAGS}" } },
+  "native-stub": [
+    "canvas_stub_gen.c",
+    "cstring_stub_gen.c",
+    "data_stub_gen.c",
+    "font_stub_gen.c",
+    "general_stub_gen.c",
+    "graphics_stub_gen.c",
+    "image_stub_gen.c",
+    "paint_stub_gen.c",
+    "path_stub_gen.c",
+    "pointer_stub_gen.c",
+    "surface_stub_gen.c",
+    "typeface_stub_gen.c",
+    "types_stub_gen.c",
+    "imageinfo_support.c",
+    "png_support.c",
+  ],
+)

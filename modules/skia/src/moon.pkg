@@ -1,0 +1,5 @@
+import {
+  "klaseca/skia-sys" @sys,
+}
+
+supported_targets = "native"

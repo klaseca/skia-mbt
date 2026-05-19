@@ -1,0 +1,9 @@
+import {
+  "klaseca/skia",
+}
+
+pkgtype(kind: "executable")
+
+options(
+  supported_targets: "native",
+)

@@ -1,0 +1,5 @@
+members = [
+  "examples",
+  "modules/skia-sys",
+  "modules/skia",
+]
