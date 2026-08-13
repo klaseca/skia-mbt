@@ -1,6 +1,6 @@
 name = "klaseca/skia-sys"
 
-version = "0.0.0"
+version = "0.1.0"
 
 readme = "README.mbt.md"
 
