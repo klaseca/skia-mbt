@@ -6,7 +6,7 @@ extern "C" fn imageinfo_bgra8888_premul_bytes(
 
 ///|
 pub fn imageinfo_bgra8888_premul(width : Int, height : Int) -> Imageinfo {
-  { bytes: imageinfo_bgra8888_premul_bytes(width, height) }
+  { bytes: imageinfo_bgra8888_premul_bytes(width, height), }
 }
 
 ///|

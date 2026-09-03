@@ -30,7 +30,7 @@ fn Color::to_sys(self : Self) -> UInt {
 
 ///|
 pub fn Color::Color(a~ : Byte, r~ : Byte, g~ : Byte, b~ : Byte) -> Color {
-  { a, r, g, b }
+  { a, r, g, b, }
 }
 
 ///|
@@ -53,7 +53,7 @@ pub fn Rect::Rect(
   right~ : Float,
   bottom~ : Float,
 ) -> Rect {
-  { left, top, right, bottom }
+  { left, top, right, bottom, }
 }
 
 ///|
@@ -122,7 +122,7 @@ fn Path::to_sys(self : Self) -> @sys.Path {
 
 ///|
 pub fn Path::Path() -> Path {
-  { raw: @sys.path_new() }
+  { raw: @sys.path_new(), }
 }
 
 ///|
@@ -152,7 +152,7 @@ fn Paint::to_sys(self : Self) -> @sys.Paint {
 
 ///|
 pub fn Paint::Paint() -> Paint {
-  { raw: @sys.paint_new() }
+  { raw: @sys.paint_new(), }
 }
 
 ///|

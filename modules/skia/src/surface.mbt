@@ -21,7 +21,7 @@ pub fn PixelBuffer::PixelBuffer(
   if height > 0x7fff_ffff / row_bytes {
     raise InvalidPixelBufferSize(width~, height~)
   }
-  { data: Bytes::new(row_bytes * height), width, height, row_bytes }
+  { data: Bytes::new(row_bytes * height), width, height, row_bytes, }
 }
 
 ///|
@@ -44,7 +44,7 @@ pub fn Surface::Surface(width~ : Int, height~ : Int) -> Surface raise SkiaError 
   if raw.is_null() {
     raise SurfaceCreateFailed(width~, height~)
   }
-  { raw, width, height }
+  { raw, width, height, }
 }
 
 ///|
