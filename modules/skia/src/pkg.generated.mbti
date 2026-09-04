@@ -2,6 +2,7 @@
 package "klaseca/skia"
 
 import {
+  "klaseca/skia-sys",
   "moonbitlang/core/debug",
 }
 
@@ -30,6 +31,7 @@ pub fn Canvas::draw_line(Self, Float, Float, Float, Float, Paint) -> Unit
 pub fn Canvas::draw_path(Self, Path, Paint) -> Unit
 pub fn Canvas::draw_round_rect(Self, Rect, Float, Float, Paint) -> Unit
 pub fn Canvas::draw_text(Self, Bytes, x~ : Float, y~ : Float, Font, Paint) -> Unit
+pub fn Canvas::from_sys(@skia-sys.Canvas) -> Self
 pub fn Canvas::restore(Self) -> Unit
 pub fn Canvas::save(Self) -> Int
 

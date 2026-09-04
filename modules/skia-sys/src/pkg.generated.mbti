@@ -84,6 +84,8 @@ pub fn canvas_new_from_bitmap(Bitmap) -> Canvas
 
 pub fn canvas_new_from_raster(Imageinfo, Bytes, UInt64, Surfaceprops) -> Canvas
 
+pub fn canvas_new_from_raster_pointer(Imageinfo, Pointer, UInt64, Surfaceprops) -> Canvas
+
 pub fn canvas_quick_reject(Canvas, Rect) -> Bool
 
 pub fn canvas_reset_matrix(Canvas) -> Unit
@@ -970,6 +972,7 @@ pub fn Point3::z(Self) -> Float
 #external
 pub type Pointer
 pub fn Pointer::is_null(Self) -> Bool
+pub fn Pointer::null() -> Self
 
 type Rect
 pub fn Rect::Rect(Float, Float, Float, Float) -> Self

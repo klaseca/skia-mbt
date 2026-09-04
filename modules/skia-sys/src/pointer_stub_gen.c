@@ -5,6 +5,11 @@
 #include <stdint.h>
 
 MOONBIT_FFI_EXPORT
+void *moonbit_skia_pointer_null(void) {
+  return NULL;
+}
+
+MOONBIT_FFI_EXPORT
 int32_t moonbit_skia_pointer_is_null(void *pointer) {
   return pointer == NULL;
 }

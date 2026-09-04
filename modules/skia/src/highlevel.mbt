@@ -62,7 +62,7 @@ pub struct Canvas {
 }
 
 ///|
-fn Canvas::from_sys(raw : @sys.Canvas) -> Canvas {
+pub fn Canvas::from_sys(raw : @sys.Canvas) -> Canvas {
   { raw, }
 }
 
