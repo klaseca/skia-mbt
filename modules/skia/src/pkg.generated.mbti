@@ -19,6 +19,9 @@ pub(all) suberror SkiaError {
   SurfaceCreateFailed(width~ : Int, height~ : Int)
   WritePngFailed(status~ : Int)
 } derive(Eq, @debug.Debug)
+pub fn SkiaError::equal(Self, Self) -> Bool
+pub fn SkiaError::not_equal(Self, Self) -> Bool
+pub fn SkiaError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 pub struct Canvas {

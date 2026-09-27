@@ -9,3 +9,9 @@ pub(all) suberror SkiaError {
   SurfaceCreateFailed(width~ : Int, height~ : Int)
   WritePngFailed(status~ : Int)
 } derive(Debug, Eq)
+
+///|
+pub extend SkiaError with Debug::{to_repr}
+
+///|
+pub extend SkiaError with Eq::{not_equal, equal}
