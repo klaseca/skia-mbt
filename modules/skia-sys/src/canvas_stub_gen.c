@@ -78,7 +78,7 @@ sk_path_t *moonbit_skia_path_ptr(void *self);
 void *moonbit_skia_surface_make_retained(sk_surface_t *ptr);
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_clear(void * ccanvas, sk_color_t color) {
+void moonbit_skia_canvas_clear(void * ccanvas, uint32_t color) {
   sk_canvas_clear(moonbit_skia_canvas_ptr(ccanvas), color);
 }
 
@@ -98,7 +98,7 @@ void moonbit_skia_canvas_restore_to_count(void * ccanvas, int32_t saveCount) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_color(void * ccanvas, sk_color_t color, sk_blendmode_t cmode) {
+void moonbit_skia_canvas_draw_color(void * ccanvas, uint32_t color, sk_blendmode_t cmode) {
   sk_canvas_draw_color(moonbit_skia_canvas_ptr(ccanvas), color, cmode);
 }
 

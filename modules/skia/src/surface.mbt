@@ -1,15 +1,15 @@
 ///|
 pub struct PixelBuffer {
   data : Bytes
-  width : Int
-  height : Int
-  row_bytes : Int
+  width : Int32
+  height : Int32
+  row_bytes : Int32
 }
 
 ///|
 pub fn PixelBuffer::PixelBuffer(
-  width~ : Int,
-  height~ : Int,
+  width~ : Int32,
+  height~ : Int32,
 ) -> PixelBuffer raise SkiaError {
   if width <= 0 || height <= 0 {
     raise InvalidPixelBufferSize(width~, height~)
@@ -27,12 +27,15 @@ pub fn PixelBuffer::PixelBuffer(
 ///|
 pub struct Surface {
   priv raw : @sys.Surface
-  priv width : Int
-  priv height : Int
+  priv width : Int32
+  priv height : Int32
 }
 
 ///|
-pub fn Surface::Surface(width~ : Int, height~ : Int) -> Surface raise SkiaError {
+pub fn Surface::Surface(
+  width~ : Int32,
+  height~ : Int32,
+) -> Surface raise SkiaError {
   if width <= 0 || height <= 0 || width > 0x7fff_ffff / 4 {
     raise InvalidSurfaceSize(width~, height~)
   }
@@ -58,17 +61,17 @@ pub fn Surface::canvas(self : Self) -> Canvas {
 }
 
 ///|
-pub fn Surface::width(self : Self) -> Int {
+pub fn Surface::width(self : Self) -> Int32 {
   self.width
 }
 
 ///|
-pub fn Surface::height(self : Self) -> Int {
+pub fn Surface::height(self : Self) -> Int32 {
   self.height
 }
 
 ///|
-pub fn Surface::row_bytes(self : Self) -> Int {
+pub fn Surface::row_bytes(self : Self) -> Int32 {
   self.width * 4
 }
 

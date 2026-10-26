@@ -34,7 +34,7 @@ pub extern "c" fn image_new_from_bitmap(cbitmap : Bitmap) -> Image = "moonbit_sk
 pub extern "c" fn image_new_from_encoded(cdata : Data) -> Image = "moonbit_skia_image_new_from_encoded"
 
 ///|
-pub extern "c" fn image_new_from_adopted_texture(context : GrRecordingContext, texture : GrBackendtexture, origin : Int, colorType : Int, alpha : Int, colorSpace : Colorspace) -> Image = "moonbit_skia_image_new_from_adopted_texture"
+pub extern "c" fn image_new_from_adopted_texture(context : GrRecordingContext, texture : GrBackendtexture, origin : Int32, colorType : Int32, alpha : Int32, colorSpace : Colorspace) -> Image = "moonbit_skia_image_new_from_adopted_texture"
 
 ///|
 #borrow(dimensions, cmatrix, paint)
@@ -46,19 +46,19 @@ pub fn image_new_from_picture(picture : Picture, dimensions : Isize, cmatrix : M
 }
 
 ///|
-pub extern "c" fn image_get_width(cimage : Image) -> Int = "moonbit_skia_image_get_width"
+pub extern "c" fn image_get_width(cimage : Image) -> Int32 = "moonbit_skia_image_get_width"
 
 ///|
-pub extern "c" fn image_get_height(cimage : Image) -> Int = "moonbit_skia_image_get_height"
+pub extern "c" fn image_get_height(cimage : Image) -> Int32 = "moonbit_skia_image_get_height"
 
 ///|
-pub extern "c" fn image_get_unique_id(cimage : Image) -> UInt = "moonbit_skia_image_get_unique_id"
+pub extern "c" fn image_get_unique_id(cimage : Image) -> UInt32 = "moonbit_skia_image_get_unique_id"
 
 ///|
-pub extern "c" fn image_get_alpha_type(image : Image) -> Int = "moonbit_skia_image_get_alpha_type"
+pub extern "c" fn image_get_alpha_type(image : Image) -> Int32 = "moonbit_skia_image_get_alpha_type"
 
 ///|
-pub extern "c" fn image_get_color_type(image : Image) -> Int = "moonbit_skia_image_get_color_type"
+pub extern "c" fn image_get_color_type(image : Image) -> Int32 = "moonbit_skia_image_get_color_type"
 
 ///|
 pub extern "c" fn image_get_colorspace(image : Image) -> Colorspace = "moonbit_skia_image_get_colorspace"
@@ -80,15 +80,15 @@ pub extern "c" fn image_is_valid(image : Image, context : GrRecordingContext) ->
 
 ///|
 #borrow(dstInfo, dstPixels)
-extern "c" fn image_read_pixels_ffi(image : Image, dstInfo : Bytes, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int, srcY : Int, cachingHint : Int) -> Bool = "moonbit_skia_image_read_pixels_ffi"
+extern "c" fn image_read_pixels_ffi(image : Image, dstInfo : Bytes, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int32, srcY : Int32, cachingHint : Int32) -> Bool = "moonbit_skia_image_read_pixels_ffi"
 
 ///|
-pub fn image_read_pixels(image : Image, dstInfo : Imageinfo, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int, srcY : Int, cachingHint : Int) -> Bool {
+pub fn image_read_pixels(image : Image, dstInfo : Imageinfo, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int32, srcY : Int32, cachingHint : Int32) -> Bool {
   image_read_pixels_ffi(image, dstInfo.to_bytes(), dstPixels, dstRowBytes, srcX, srcY, cachingHint)
 }
 
 ///|
-pub extern "c" fn image_read_pixels_into_pixmap(image : Image, dst : Pixmap, srcX : Int, srcY : Int, cachingHint : Int) -> Bool = "moonbit_skia_image_read_pixels_into_pixmap"
+pub extern "c" fn image_read_pixels_into_pixmap(image : Image, dst : Pixmap, srcX : Int32, srcY : Int32, cachingHint : Int32) -> Bool = "moonbit_skia_image_read_pixels_into_pixmap"
 
 ///|
 pub extern "c" fn image_ref_encoded(cimage : Image) -> Data = "moonbit_skia_image_ref_encoded"

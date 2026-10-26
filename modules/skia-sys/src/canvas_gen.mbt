@@ -6,7 +6,7 @@ pub extern "c" fn canvas_destroy(ccanvas : Canvas) = "moonbit_skia_canvas_destro
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_clear(ccanvas : Canvas, color : UInt) = "moonbit_skia_canvas_clear"
+pub extern "c" fn canvas_clear(ccanvas : Canvas, color : UInt32) = "moonbit_skia_canvas_clear"
 
 ///|
 #borrow(ccanvas)
@@ -14,15 +14,15 @@ pub extern "c" fn canvas_discard(ccanvas : Canvas) = "moonbit_skia_canvas_discar
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_get_save_count(ccanvas : Canvas) -> Int = "moonbit_skia_canvas_get_save_count"
+pub extern "c" fn canvas_get_save_count(ccanvas : Canvas) -> Int32 = "moonbit_skia_canvas_get_save_count"
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_restore_to_count(ccanvas : Canvas, saveCount : Int) = "moonbit_skia_canvas_restore_to_count"
+pub extern "c" fn canvas_restore_to_count(ccanvas : Canvas, saveCount : Int32) = "moonbit_skia_canvas_restore_to_count"
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_draw_color(ccanvas : Canvas, color : UInt, cmode : Int) = "moonbit_skia_canvas_draw_color"
+pub extern "c" fn canvas_draw_color(ccanvas : Canvas, color : UInt32, cmode : Int32) = "moonbit_skia_canvas_draw_color"
 
 ///|
 #borrow(ccanvas, cpaint)
@@ -34,7 +34,7 @@ pub extern "c" fn canvas_draw_line(ccanvas : Canvas, x0 : Float, y0 : Float, x1 
 
 ///|
 #borrow(ccanvas, text, cfont, cpaint)
-pub extern "c" fn canvas_draw_simple_text(ccanvas : Canvas, text : Bytes, byte_length : UInt64, encoding : Int, x : Float, y : Float, cfont : Font, cpaint : Paint) = "moonbit_skia_canvas_draw_simple_text"
+pub extern "c" fn canvas_draw_simple_text(ccanvas : Canvas, text : Bytes, byte_length : UInt64, encoding : Int32, x : Float, y : Float, cfont : Font, cpaint : Paint) = "moonbit_skia_canvas_draw_simple_text"
 
 ///|
 #borrow(ccanvas, cpaint)
@@ -73,20 +73,20 @@ pub fn canvas_draw_round_rect(ccanvas : Canvas, crect : Rect, rx : Float, ry : F
 
 ///|
 #borrow(ccanvas, crect)
-extern "c" fn canvas_clip_rect_with_operation_ffi(ccanvas : Canvas, crect : Bytes, op : Int, doAA : Bool) = "moonbit_skia_canvas_clip_rect_with_operation_ffi"
+extern "c" fn canvas_clip_rect_with_operation_ffi(ccanvas : Canvas, crect : Bytes, op : Int32, doAA : Bool) = "moonbit_skia_canvas_clip_rect_with_operation_ffi"
 
 ///|
-pub fn canvas_clip_rect_with_operation(ccanvas : Canvas, crect : Rect, op : Int, doAA : Bool) -> Unit {
+pub fn canvas_clip_rect_with_operation(ccanvas : Canvas, crect : Rect, op : Int32, doAA : Bool) -> Unit {
   canvas_clip_rect_with_operation_ffi(ccanvas, crect.to_bytes(), op, doAA)
 }
 
 ///|
 #borrow(ccanvas, cpath)
-pub extern "c" fn canvas_clip_path_with_operation(ccanvas : Canvas, cpath : Path, op : Int, doAA : Bool) = "moonbit_skia_canvas_clip_path_with_operation"
+pub extern "c" fn canvas_clip_path_with_operation(ccanvas : Canvas, cpath : Path, op : Int32, doAA : Bool) = "moonbit_skia_canvas_clip_path_with_operation"
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_clip_rrect_with_operation(ccanvas : Canvas, crect : Rrect, op : Int, doAA : Bool) = "moonbit_skia_canvas_clip_rrect_with_operation"
+pub extern "c" fn canvas_clip_rrect_with_operation(ccanvas : Canvas, crect : Rrect, op : Int32, doAA : Bool) = "moonbit_skia_canvas_clip_rrect_with_operation"
 
 ///|
 #borrow(ccanvas, cbounds)
@@ -108,14 +108,14 @@ pub fn canvas_get_device_clip_bounds(ccanvas : Canvas, cbounds : Irect) -> Bool 
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_save(ccanvas : Canvas) -> Int = "moonbit_skia_canvas_save"
+pub extern "c" fn canvas_save(ccanvas : Canvas) -> Int32 = "moonbit_skia_canvas_save"
 
 ///|
 #borrow(ccanvas, crect, cpaint)
-extern "c" fn canvas_save_layer_ffi(ccanvas : Canvas, crect : Bytes, cpaint : Paint) -> Int = "moonbit_skia_canvas_save_layer_ffi"
+extern "c" fn canvas_save_layer_ffi(ccanvas : Canvas, crect : Bytes, cpaint : Paint) -> Int32 = "moonbit_skia_canvas_save_layer_ffi"
 
 ///|
-pub fn canvas_save_layer(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Int {
+pub fn canvas_save_layer(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Int32 {
   canvas_save_layer_ffi(ccanvas, crect.to_bytes(), cpaint)
 }
 
@@ -163,7 +163,7 @@ pub fn canvas_quick_reject(ccanvas : Canvas, crect : Rect) -> Bool {
 
 ///|
 #borrow(ccanvas)
-pub extern "c" fn canvas_clip_region(ccanvas : Canvas, region : Region, op : Int) = "moonbit_skia_canvas_clip_region"
+pub extern "c" fn canvas_clip_region(ccanvas : Canvas, region : Region, op : Int32) = "moonbit_skia_canvas_clip_region"
 
 ///|
 #borrow(ccanvas, cpaint)
@@ -271,16 +271,16 @@ pub fn canvas_draw_link_destination_annotation(t : Canvas, rect : Rect, value : 
 
 ///|
 #borrow(ccanvas, center, dst, paint)
-extern "c" fn canvas_draw_image_nine_ffi(ccanvas : Canvas, image : Image, center : Bytes, dst : Bytes, mode : Int, paint : Paint) = "moonbit_skia_canvas_draw_image_nine_ffi"
+extern "c" fn canvas_draw_image_nine_ffi(ccanvas : Canvas, image : Image, center : Bytes, dst : Bytes, mode : Int32, paint : Paint) = "moonbit_skia_canvas_draw_image_nine_ffi"
 
 ///|
-pub fn canvas_draw_image_nine(ccanvas : Canvas, image : Image, center : Irect, dst : Rect, mode : Int, paint : Paint) -> Unit {
+pub fn canvas_draw_image_nine(ccanvas : Canvas, image : Image, center : Irect, dst : Rect, mode : Int32, paint : Paint) -> Unit {
   canvas_draw_image_nine_ffi(ccanvas, image, center.to_bytes(), dst.to_bytes(), mode, paint)
 }
 
 ///|
 #borrow(ccanvas, paint)
-pub extern "c" fn canvas_draw_vertices(ccanvas : Canvas, vertices : Vertices, mode : Int, paint : Paint) = "moonbit_skia_canvas_draw_vertices"
+pub extern "c" fn canvas_draw_vertices(ccanvas : Canvas, vertices : Vertices, mode : Int32, paint : Paint) = "moonbit_skia_canvas_draw_vertices"
 
 ///|
 #borrow(ccanvas, oval, paint)
@@ -304,13 +304,13 @@ pub extern "c" fn canvas_is_clip_empty(ccanvas : Canvas) -> Bool = "moonbit_skia
 pub extern "c" fn canvas_is_clip_rect(ccanvas : Canvas) -> Bool = "moonbit_skia_canvas_is_clip_rect"
 
 ///|
-pub extern "c" fn nodraw_canvas_new(width : Int, height : Int) -> NodrawCanvas = "moonbit_skia_nodraw_canvas_new"
+pub extern "c" fn nodraw_canvas_new(width : Int32, height : Int32) -> NodrawCanvas = "moonbit_skia_nodraw_canvas_new"
 
 ///|
 pub extern "c" fn nodraw_canvas_destroy(t : NodrawCanvas) = "moonbit_skia_nodraw_canvas_destroy"
 
 ///|
-pub extern "c" fn nway_canvas_new(width : Int, height : Int) -> NwayCanvas = "moonbit_skia_nway_canvas_new"
+pub extern "c" fn nway_canvas_new(width : Int32, height : Int32) -> NwayCanvas = "moonbit_skia_nway_canvas_new"
 
 ///|
 pub extern "c" fn nway_canvas_destroy(t : NwayCanvas) = "moonbit_skia_nway_canvas_destroy"

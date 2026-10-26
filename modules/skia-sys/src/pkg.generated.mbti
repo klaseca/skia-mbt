@@ -6,15 +6,15 @@ import {
 }
 
 // Values
-pub fn canvas_clear(Canvas, UInt) -> Unit
+pub fn canvas_clear(Canvas, UInt32) -> Unit
 
-pub fn canvas_clip_path_with_operation(Canvas, Path, Int, Bool) -> Unit
+pub fn canvas_clip_path_with_operation(Canvas, Path, Int32, Bool) -> Unit
 
-pub fn canvas_clip_rect_with_operation(Canvas, Rect, Int, Bool) -> Unit
+pub fn canvas_clip_rect_with_operation(Canvas, Rect, Int32, Bool) -> Unit
 
-pub fn canvas_clip_region(Canvas, Region, Int) -> Unit
+pub fn canvas_clip_region(Canvas, Region, Int32) -> Unit
 
-pub fn canvas_clip_rrect_with_operation(Canvas, Rrect, Int, Bool) -> Unit
+pub fn canvas_clip_rrect_with_operation(Canvas, Rrect, Int32, Bool) -> Unit
 
 pub fn canvas_concat(Canvas, Matrix44) -> Unit
 
@@ -28,13 +28,13 @@ pub fn canvas_draw_arc(Canvas, Rect, Float, Float, Bool, Paint) -> Unit
 
 pub fn canvas_draw_circle(Canvas, Float, Float, Float, Paint) -> Unit
 
-pub fn canvas_draw_color(Canvas, UInt, Int) -> Unit
+pub fn canvas_draw_color(Canvas, UInt32, Int32) -> Unit
 
 pub fn canvas_draw_drawable(Canvas, Drawable, Matrix) -> Unit
 
 pub fn canvas_draw_drrect(Canvas, Rrect, Rrect, Paint) -> Unit
 
-pub fn canvas_draw_image_nine(Canvas, Image, Irect, Rect, Int, Paint) -> Unit
+pub fn canvas_draw_image_nine(Canvas, Image, Irect, Rect, Int32, Paint) -> Unit
 
 pub fn canvas_draw_line(Canvas, Float, Float, Float, Float, Paint) -> Unit
 
@@ -60,13 +60,13 @@ pub fn canvas_draw_round_rect(Canvas, Rect, Float, Float, Paint) -> Unit
 
 pub fn canvas_draw_rrect(Canvas, Rrect, Paint) -> Unit
 
-pub fn canvas_draw_simple_text(Canvas, Bytes, UInt64, Int, Float, Float, Font, Paint) -> Unit
+pub fn canvas_draw_simple_text(Canvas, Bytes, UInt64, Int32, Float, Float, Font, Paint) -> Unit
 
 pub fn canvas_draw_text_blob(Canvas, Textblob, Float, Float, Paint) -> Unit
 
 pub fn canvas_draw_url_annotation(Canvas, Rect, Data) -> Unit
 
-pub fn canvas_draw_vertices(Canvas, Vertices, Int, Paint) -> Unit
+pub fn canvas_draw_vertices(Canvas, Vertices, Int32, Paint) -> Unit
 
 pub fn canvas_get_device_clip_bounds(Canvas, Irect) -> Bool
 
@@ -74,7 +74,7 @@ pub fn canvas_get_local_clip_bounds(Canvas, Rect) -> Bool
 
 pub fn canvas_get_matrix(Canvas, Matrix44) -> Unit
 
-pub fn canvas_get_save_count(Canvas) -> Int
+pub fn canvas_get_save_count(Canvas) -> Int32
 
 pub fn canvas_is_clip_empty(Canvas) -> Bool
 
@@ -92,15 +92,15 @@ pub fn canvas_reset_matrix(Canvas) -> Unit
 
 pub fn canvas_restore(Canvas) -> Unit
 
-pub fn canvas_restore_to_count(Canvas, Int) -> Unit
+pub fn canvas_restore_to_count(Canvas, Int32) -> Unit
 
 pub fn canvas_rotate_degrees(Canvas, Float) -> Unit
 
 pub fn canvas_rotate_radians(Canvas, Float) -> Unit
 
-pub fn canvas_save(Canvas) -> Int
+pub fn canvas_save(Canvas) -> Int32
 
-pub fn canvas_save_layer(Canvas, Rect, Paint) -> Int
+pub fn canvas_save_layer(Canvas, Rect, Paint) -> Int32
 
 pub fn canvas_scale(Canvas, Float, Float) -> Unit
 
@@ -110,7 +110,7 @@ pub fn canvas_skew(Canvas, Float, Float) -> Unit
 
 pub fn canvas_translate(Canvas, Float, Float) -> Unit
 
-pub fn colortype_get_default_8888() -> Int
+pub fn colortype_get_default_8888() -> Int32
 
 pub fn data_get_size(Data) -> UInt64
 
@@ -130,13 +130,13 @@ pub fn data_ref(Data) -> Unit
 
 pub fn data_unref(Data) -> Unit
 
-pub fn font_break_text(Font, Bytes, UInt64, Int, Float, @ref.Ref[Float], Paint) -> UInt64
+pub fn font_break_text(Font, Bytes, UInt64, Int32, Float, @ref.Ref[Float], Paint) -> UInt64
 
 pub fn font_delete(Font) -> Unit
 
-pub fn font_get_edging(Font) -> Int
+pub fn font_get_edging(Font) -> Int32
 
-pub fn font_get_hinting(Font) -> Int
+pub fn font_get_hinting(Font) -> Int32
 
 pub fn font_get_metrics(Font, Fontmetrics) -> Float
 
@@ -162,15 +162,15 @@ pub fn font_is_linear_metrics(Font) -> Bool
 
 pub fn font_is_subpixel(Font) -> Bool
 
-pub fn font_measure_text(Font, Bytes, UInt64, Int) -> Float
+pub fn font_measure_text(Font, Bytes, UInt64, Int32) -> Float
 
-pub fn font_measure_text_no_return(Font, Bytes, UInt64, Int, Rect, Paint, @ref.Ref[Float]) -> Unit
+pub fn font_measure_text_no_return(Font, Bytes, UInt64, Int32, Rect, Paint, @ref.Ref[Float]) -> Unit
 
 pub fn font_new_with_values(Typeface, Float, Float, Float) -> Font
 
 pub fn font_set_baseline_snap(Font, Bool) -> Unit
 
-pub fn font_set_edging(Font, Int) -> Unit
+pub fn font_set_edging(Font, Int32) -> Unit
 
 pub fn font_set_embedded_bitmaps(Font, Bool) -> Unit
 
@@ -178,7 +178,7 @@ pub fn font_set_embolden(Font, Bool) -> Unit
 
 pub fn font_set_force_auto_hinting(Font, Bool) -> Unit
 
-pub fn font_set_hinting(Font, Int) -> Unit
+pub fn font_set_hinting(Font, Int32) -> Unit
 
 pub fn font_set_linear_metrics(Font, Bool) -> Unit
 
@@ -192,21 +192,21 @@ pub fn font_set_subpixel(Font, Bool) -> Unit
 
 pub fn font_set_typeface(Font, Typeface) -> Unit
 
-pub fn font_unichar_to_glyph(Font, Int) -> UInt16
+pub fn font_unichar_to_glyph(Font, Int32) -> UInt16
 
-pub fn fontmgr_count_families(Fontmgr) -> Int
+pub fn fontmgr_count_families(Fontmgr) -> Int32
 
 pub fn fontmgr_create_default() -> Fontmgr
 
-pub fn fontmgr_create_from_data(Fontmgr, Data, Int) -> Typeface
+pub fn fontmgr_create_from_data(Fontmgr, Data, Int32) -> Typeface
 
-pub fn fontmgr_create_from_file(Fontmgr, Bytes, Int) -> Typeface
+pub fn fontmgr_create_from_file(Fontmgr, Bytes, Int32) -> Typeface
 
-pub fn fontmgr_create_from_stream(Fontmgr, StreamAsset, Int) -> Typeface
+pub fn fontmgr_create_from_stream(Fontmgr, StreamAsset, Int32) -> Typeface
 
-pub fn fontmgr_create_styleset(Fontmgr, Int) -> Fontstyleset
+pub fn fontmgr_create_styleset(Fontmgr, Int32) -> Fontstyleset
 
-pub fn fontmgr_get_family_name(Fontmgr, Int, StringLib) -> Unit
+pub fn fontmgr_get_family_name(Fontmgr, Int32, StringLib) -> Unit
 
 pub fn fontmgr_legacy_create_typeface(Fontmgr, Fontstyle) -> Typeface
 
@@ -218,21 +218,21 @@ pub fn fontmgr_unref(Fontmgr) -> Unit
 
 pub fn fontstyle_delete(Fontstyle) -> Unit
 
-pub fn fontstyle_get_slant(Fontstyle) -> Int
+pub fn fontstyle_get_slant(Fontstyle) -> Int32
 
-pub fn fontstyle_get_weight(Fontstyle) -> Int
+pub fn fontstyle_get_weight(Fontstyle) -> Int32
 
-pub fn fontstyle_get_width(Fontstyle) -> Int
+pub fn fontstyle_get_width(Fontstyle) -> Int32
 
-pub fn fontstyle_new(Int, Int, Int) -> Fontstyle
+pub fn fontstyle_new(Int32, Int32, Int32) -> Fontstyle
 
 pub fn fontstyleset_create_empty() -> Fontstyleset
 
-pub fn fontstyleset_create_typeface(Fontstyleset, Int) -> Typeface
+pub fn fontstyleset_create_typeface(Fontstyleset, Int32) -> Typeface
 
-pub fn fontstyleset_get_count(Fontstyleset) -> Int
+pub fn fontstyleset_get_count(Fontstyleset) -> Int32
 
-pub fn fontstyleset_get_style(Fontstyleset, Int, Fontstyle, StringLib) -> Unit
+pub fn fontstyleset_get_style(Fontstyleset, Int32, Fontstyle, StringLib) -> Unit
 
 pub fn fontstyleset_match_style(Fontstyleset, Fontstyle) -> Typeface
 
@@ -244,9 +244,9 @@ pub fn get_surface(Canvas) -> Surface
 
 pub fn graphics_dump_memory_statistics(Tracememorydump) -> Unit
 
-pub fn graphics_get_font_cache_count_limit() -> Int
+pub fn graphics_get_font_cache_count_limit() -> Int32
 
-pub fn graphics_get_font_cache_count_used() -> Int
+pub fn graphics_get_font_cache_count_used() -> Int32
 
 pub fn graphics_get_font_cache_limit() -> UInt64
 
@@ -266,7 +266,7 @@ pub fn graphics_purge_font_cache() -> Unit
 
 pub fn graphics_purge_resource_cache() -> Unit
 
-pub fn graphics_set_font_cache_count_limit(Int) -> Int
+pub fn graphics_set_font_cache_count_limit(Int32) -> Int32
 
 pub fn graphics_set_font_cache_limit(UInt64) -> UInt64
 
@@ -274,17 +274,17 @@ pub fn graphics_set_resource_cache_single_allocation_byte_limit(UInt64) -> UInt6
 
 pub fn graphics_set_resource_cache_total_byte_limit(UInt64) -> UInt64
 
-pub fn image_get_alpha_type(Image) -> Int
+pub fn image_get_alpha_type(Image) -> Int32
 
-pub fn image_get_color_type(Image) -> Int
+pub fn image_get_color_type(Image) -> Int32
 
 pub fn image_get_colorspace(Image) -> Colorspace
 
-pub fn image_get_height(Image) -> Int
+pub fn image_get_height(Image) -> Int32
 
-pub fn image_get_unique_id(Image) -> UInt
+pub fn image_get_unique_id(Image) -> UInt32
 
-pub fn image_get_width(Image) -> Int
+pub fn image_get_width(Image) -> Int32
 
 pub fn image_is_alpha_only(Image) -> Bool
 
@@ -308,7 +308,7 @@ pub fn image_make_with_filter(Image, GrRecordingContext, Imagefilter, Irect, Ire
 
 pub fn image_make_with_filter_raster(Image, Imagefilter, Irect, Irect, Irect, Ipoint) -> Image
 
-pub fn image_new_from_adopted_texture(GrRecordingContext, GrBackendtexture, Int, Int, Int, Colorspace) -> Image
+pub fn image_new_from_adopted_texture(GrRecordingContext, GrBackendtexture, Int32, Int32, Int32, Colorspace) -> Image
 
 pub fn image_new_from_bitmap(Bitmap) -> Image
 
@@ -324,9 +324,9 @@ pub fn image_new_raster_data(Imageinfo, Data, UInt64) -> Image
 
 pub fn image_peek_pixels(Image, Pixmap) -> Bool
 
-pub fn image_read_pixels(Image, Imageinfo, Bytes, UInt64, Int, Int, Int) -> Bool
+pub fn image_read_pixels(Image, Imageinfo, Bytes, UInt64, Int32, Int32, Int32) -> Bool
 
-pub fn image_read_pixels_into_pixmap(Image, Pixmap, Int, Int, Int) -> Bool
+pub fn image_read_pixels_into_pixmap(Image, Pixmap, Int32, Int32, Int32) -> Bool
 
 pub fn image_ref(Image) -> Unit
 
@@ -334,13 +334,13 @@ pub fn image_ref_encoded(Image) -> Data
 
 pub fn image_unref(Image) -> Unit
 
-pub fn imageinfo_bgra8888_premul(Int, Int) -> Imageinfo
+pub fn imageinfo_bgra8888_premul(Int32, Int32) -> Imageinfo
 
 pub fn nodraw_canvas_destroy(NodrawCanvas) -> Unit
 
-pub fn nodraw_canvas_new(Int, Int) -> NodrawCanvas
+pub fn nodraw_canvas_new(Int32, Int32) -> NodrawCanvas
 
-pub fn nvrefcnt_get_ref_count(Nvrefcnt) -> Int
+pub fn nvrefcnt_get_ref_count(Nvrefcnt) -> Int32
 
 pub fn nvrefcnt_safe_ref(Nvrefcnt) -> Unit
 
@@ -352,13 +352,13 @@ pub fn nway_canvas_add_canvas(NwayCanvas, Canvas) -> Unit
 
 pub fn nway_canvas_destroy(NwayCanvas) -> Unit
 
-pub fn nway_canvas_new(Int, Int) -> NwayCanvas
+pub fn nway_canvas_new(Int32, Int32) -> NwayCanvas
 
 pub fn nway_canvas_remove_all(NwayCanvas) -> Unit
 
 pub fn nway_canvas_remove_canvas(NwayCanvas, Canvas) -> Unit
 
-pub fn opbuilder_add(Opbuilder, Path, Int) -> Unit
+pub fn opbuilder_add(Opbuilder, Path, Int32) -> Unit
 
 pub fn opbuilder_destroy(Opbuilder) -> Unit
 
@@ -376,9 +376,9 @@ pub fn paint_delete(Paint) -> Unit
 
 pub fn paint_get_blender(Paint) -> Blender
 
-pub fn paint_get_blendmode(Paint) -> Int
+pub fn paint_get_blendmode(Paint) -> Int32
 
-pub fn paint_get_color(Paint) -> UInt
+pub fn paint_get_color(Paint) -> UInt32
 
 pub fn paint_get_color4f(Paint, Color4f) -> Unit
 
@@ -394,15 +394,15 @@ pub fn paint_get_path_effect(Paint) -> PathEffect
 
 pub fn paint_get_shader(Paint) -> Shader
 
-pub fn paint_get_stroke_cap(Paint) -> Int
+pub fn paint_get_stroke_cap(Paint) -> Int32
 
-pub fn paint_get_stroke_join(Paint) -> Int
+pub fn paint_get_stroke_join(Paint) -> Int32
 
 pub fn paint_get_stroke_miter(Paint) -> Float
 
 pub fn paint_get_stroke_width(Paint) -> Float
 
-pub fn paint_get_style(Paint) -> Int
+pub fn paint_get_style(Paint) -> Int32
 
 pub fn paint_is_antialias(Paint) -> Bool
 
@@ -416,9 +416,9 @@ pub fn paint_set_antialias(Paint, Bool) -> Unit
 
 pub fn paint_set_blender(Paint, Blender) -> Unit
 
-pub fn paint_set_blendmode(Paint, Int) -> Unit
+pub fn paint_set_blendmode(Paint, Int32) -> Unit
 
-pub fn paint_set_color(Paint, UInt) -> Unit
+pub fn paint_set_color(Paint, UInt32) -> Unit
 
 pub fn paint_set_color4f(Paint, Color4f, Colorspace) -> Unit
 
@@ -434,15 +434,15 @@ pub fn paint_set_path_effect(Paint, PathEffect) -> Unit
 
 pub fn paint_set_shader(Paint, Shader) -> Unit
 
-pub fn paint_set_stroke_cap(Paint, Int) -> Unit
+pub fn paint_set_stroke_cap(Paint, Int32) -> Unit
 
-pub fn paint_set_stroke_join(Paint, Int) -> Unit
+pub fn paint_set_stroke_join(Paint, Int32) -> Unit
 
 pub fn paint_set_stroke_miter(Paint, Float) -> Unit
 
 pub fn paint_set_stroke_width(Paint, Float) -> Unit
 
-pub fn paint_set_style(Paint, Int) -> Unit
+pub fn paint_set_style(Paint, Int32) -> Unit
 
 pub fn path_clone(Path) -> Path
 
@@ -450,13 +450,13 @@ pub fn path_compute_tight_bounds(Path, Rect) -> Unit
 
 pub fn path_contains(Path, Float, Float) -> Bool
 
-pub fn path_convert_conic_to_quads(Point, Point, Point, Float, Point, Int) -> Int
+pub fn path_convert_conic_to_quads(Point, Point, Point, Float, Point, Int32) -> Int32
 
-pub fn path_count_points(Path) -> Int
+pub fn path_count_points(Path) -> Int32
 
-pub fn path_count_verbs(Path) -> Int
+pub fn path_count_verbs(Path) -> Int32
 
-pub fn path_create_iter(Path, Int) -> PathIterator
+pub fn path_create_iter(Path, Int32) -> PathIterator
 
 pub fn path_create_rawiter(Path) -> PathRawiterator
 
@@ -464,21 +464,21 @@ pub fn path_delete(Path) -> Unit
 
 pub fn path_get_bounds(Path, Rect) -> Unit
 
-pub fn path_get_filltype(Path) -> Int
+pub fn path_get_filltype(Path) -> Int32
 
 pub fn path_get_last_point(Path, Point) -> Bool
 
-pub fn path_get_point(Path, Int, Point) -> Unit
+pub fn path_get_point(Path, Int32, Point) -> Unit
 
-pub fn path_get_points(Path, Point, Int) -> Int
+pub fn path_get_points(Path, Point, Int32) -> Int32
 
-pub fn path_get_segment_masks(Path) -> UInt
+pub fn path_get_segment_masks(Path) -> UInt32
 
 pub fn path_is_convex(Path) -> Bool
 
 pub fn path_is_oval(Path, Rect) -> Bool
 
-pub fn path_is_rect(Path, Rect, @ref.Ref[Bool], @ref.Ref[Int]) -> Bool
+pub fn path_is_rect(Path, Rect, @ref.Ref[Bool], @ref.Ref[Int32]) -> Bool
 
 pub fn path_is_rrect(Path, Rrect) -> Bool
 
@@ -486,9 +486,9 @@ pub fn path_iter_conic_weight(PathIterator) -> Float
 
 pub fn path_iter_destroy(PathIterator) -> Unit
 
-pub fn path_iter_is_close_line(PathIterator) -> Int
+pub fn path_iter_is_close_line(PathIterator) -> Int32
 
-pub fn path_iter_is_closed_contour(PathIterator) -> Int
+pub fn path_iter_is_closed_contour(PathIterator) -> Int32
 
 pub fn path_new() -> Path
 
@@ -498,13 +498,13 @@ pub fn path_rawiter_conic_weight(PathRawiterator) -> Float
 
 pub fn path_rawiter_destroy(PathRawiterator) -> Unit
 
-pub fn path_rawiter_peek(PathRawiterator) -> Int
+pub fn path_rawiter_peek(PathRawiterator) -> Int32
 
 pub fn path_reset(Path) -> Unit
 
 pub fn path_rewind(Path) -> Unit
 
-pub fn path_set_filltype(Path, Int) -> Unit
+pub fn path_set_filltype(Path, Int32) -> Unit
 
 pub fn path_to_svg_string(Path, StringLib) -> Unit
 
@@ -516,7 +516,7 @@ pub fn pathmeasure_destroy(Pathmeasure) -> Unit
 
 pub fn pathmeasure_get_length(Pathmeasure) -> Float
 
-pub fn pathmeasure_get_matrix(Pathmeasure, Float, Matrix, Int) -> Bool
+pub fn pathmeasure_get_matrix(Pathmeasure, Float, Matrix, Int32) -> Bool
 
 pub fn pathmeasure_get_segment(Pathmeasure, Float, Float, Pathbuilder, Bool) -> Bool
 
@@ -532,13 +532,13 @@ pub fn pathmeasure_set_path(Pathmeasure, Path, Bool) -> Unit
 
 pub fn pathop_as_winding(Path, Path) -> Bool
 
-pub fn pathop_op(Path, Path, Int, Path) -> Bool
+pub fn pathop_op(Path, Path, Int32, Path) -> Bool
 
 pub fn pathop_simplify(Path, Path) -> Bool
 
 pub fn pathop_tight_bounds(Path, Rect) -> Bool
 
-pub fn refcnt_get_ref_count(Refcnt) -> Int
+pub fn refcnt_get_ref_count(Refcnt) -> Int32
 
 pub fn refcnt_safe_ref(Refcnt) -> Unit
 
@@ -546,7 +546,7 @@ pub fn refcnt_safe_unref(Refcnt) -> Unit
 
 pub fn refcnt_unique(Refcnt) -> Bool
 
-pub fn skia_write_surface_png(Surface, Bytes) -> Int
+pub fn skia_write_surface_png(Surface, Bytes) -> Int32
 
 pub fn surface_draw(Surface, Canvas, Float, Float, Paint) -> Unit
 
@@ -556,73 +556,73 @@ pub fn surface_get_props(Surface) -> Surfaceprops
 
 pub fn surface_get_recording_context(Surface) -> GrRecordingContext
 
-pub fn surface_new_backend_render_target(GrRecordingContext, GrBackendrendertarget, Int, Int, Colorspace, Surfaceprops) -> Surface
+pub fn surface_new_backend_render_target(GrRecordingContext, GrBackendrendertarget, Int32, Int32, Colorspace, Surfaceprops) -> Surface
 
-pub fn surface_new_backend_texture(GrRecordingContext, GrBackendtexture, Int, Int, Int, Colorspace, Surfaceprops) -> Surface
+pub fn surface_new_backend_texture(GrRecordingContext, GrBackendtexture, Int32, Int32, Int32, Colorspace, Surfaceprops) -> Surface
 
 pub fn surface_new_image_snapshot(Surface) -> Image
 
 pub fn surface_new_image_snapshot_with_crop(Surface, Irect) -> Image
 
-pub fn surface_new_null(Int, Int) -> Surface
+pub fn surface_new_null(Int32, Int32) -> Surface
 
 pub fn surface_new_raster(Imageinfo, UInt64, Surfaceprops) -> Surface
 
-pub fn surface_new_render_target(GrRecordingContext, Bool, Imageinfo, Int, Int, Surfaceprops, Bool) -> Surface
+pub fn surface_new_render_target(GrRecordingContext, Bool, Imageinfo, Int32, Int32, Surfaceprops, Bool) -> Surface
 
 pub fn surface_peek_pixels(Surface, Pixmap) -> Bool
 
-pub fn surface_read_pixels(Surface, Imageinfo, Bytes, UInt64, Int, Int) -> Bool
+pub fn surface_read_pixels(Surface, Imageinfo, Bytes, UInt64, Int32, Int32) -> Bool
 
 pub fn surface_unref(Surface) -> Unit
 
 pub fn surfaceprops_delete(Surfaceprops) -> Unit
 
-pub fn surfaceprops_get_flags(Surfaceprops) -> UInt
+pub fn surfaceprops_get_flags(Surfaceprops) -> UInt32
 
-pub fn surfaceprops_get_pixel_geometry(Surfaceprops) -> Int
+pub fn surfaceprops_get_pixel_geometry(Surfaceprops) -> Int32
 
-pub fn surfaceprops_new(UInt, Int) -> Surfaceprops
+pub fn surfaceprops_new(UInt32, Int32) -> Surfaceprops
 
-pub fn text_utils_get_path(Bytes, UInt64, Int, Float, Float, Font, Path) -> Unit
+pub fn text_utils_get_path(Bytes, UInt64, Int32, Float, Float, Font, Path) -> Unit
 
-pub fn typeface_copy_table_data(Typeface, UInt) -> Data
+pub fn typeface_copy_table_data(Typeface, UInt32) -> Data
 
-pub fn typeface_count_glyphs(Typeface) -> Int
+pub fn typeface_count_glyphs(Typeface) -> Int32
 
-pub fn typeface_count_tables(Typeface) -> Int
+pub fn typeface_count_tables(Typeface) -> Int32
 
 pub fn typeface_create_empty() -> Typeface
 
 pub fn typeface_get_family_name(Typeface) -> StringLib
 
-pub fn typeface_get_font_slant(Typeface) -> Int
+pub fn typeface_get_font_slant(Typeface) -> Int32
 
-pub fn typeface_get_font_weight(Typeface) -> Int
+pub fn typeface_get_font_weight(Typeface) -> Int32
 
-pub fn typeface_get_font_width(Typeface) -> Int
+pub fn typeface_get_font_width(Typeface) -> Int32
 
 pub fn typeface_get_fontstyle(Typeface) -> Fontstyle
 
 pub fn typeface_get_post_script_name(Typeface) -> StringLib
 
-pub fn typeface_get_table_data(Typeface, UInt, UInt64, UInt64, Bytes) -> UInt64
+pub fn typeface_get_table_data(Typeface, UInt32, UInt64, UInt64, Bytes) -> UInt64
 
-pub fn typeface_get_table_size(Typeface, UInt) -> UInt64
+pub fn typeface_get_table_size(Typeface, UInt32) -> UInt64
 
-pub fn typeface_get_units_per_em(Typeface) -> Int
+pub fn typeface_get_units_per_em(Typeface) -> Int32
 
 pub fn typeface_is_fixed_pitch(Typeface) -> Bool
 
-pub fn typeface_open_stream(Typeface, @ref.Ref[Int]) -> StreamAsset
+pub fn typeface_open_stream(Typeface, @ref.Ref[Int32]) -> StreamAsset
 
-pub fn typeface_unichar_to_glyph(Typeface, Int) -> UInt16
+pub fn typeface_unichar_to_glyph(Typeface, Int32) -> UInt16
 
 pub fn typeface_unref(Typeface) -> Unit
 
-pub fn version_get_increment() -> Int
+pub fn version_get_increment() -> Int32
 
-pub fn version_get_milestone() -> Int
+pub fn version_get_milestone() -> Int32
 
 pub fn version_get_string() -> Bytes
 
@@ -724,13 +724,13 @@ pub type Font
 pub fn Font::is_null(Self) -> Bool
 
 type Fontmetrics
-pub fn Fontmetrics::Fontmetrics(UInt, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -> Self
+pub fn Fontmetrics::Fontmetrics(UInt32, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -> Self
 pub fn Fontmetrics::fAscent(Self) -> Float
 pub fn Fontmetrics::fAvgCharWidth(Self) -> Float
 pub fn Fontmetrics::fBottom(Self) -> Float
 pub fn Fontmetrics::fCapHeight(Self) -> Float
 pub fn Fontmetrics::fDescent(Self) -> Float
-pub fn Fontmetrics::fFlags(Self) -> UInt
+pub fn Fontmetrics::fFlags(Self) -> UInt32
 pub fn Fontmetrics::fLeading(Self) -> Float
 pub fn Fontmetrics::fMaxCharWidth(Self) -> Float
 pub fn Fontmetrics::fStrikeoutPosition(Self) -> Float
@@ -814,33 +814,33 @@ pub fn Imagefilter::is_null(Self) -> Bool
 pub fn Imagefilter::to_pointer(Self) -> Pointer
 
 type Imageinfo
-pub fn Imageinfo::Imageinfo(Colorspace, Int, Int, Int, Int) -> Self
-pub fn Imageinfo::alphaType(Self) -> Int
-pub fn Imageinfo::colorType(Self) -> Int
+pub fn Imageinfo::Imageinfo(Colorspace, Int32, Int32, Int32, Int32) -> Self
+pub fn Imageinfo::alphaType(Self) -> Int32
+pub fn Imageinfo::colorType(Self) -> Int32
 pub fn Imageinfo::colorspace(Self) -> Colorspace
-pub fn Imageinfo::height(Self) -> Int
+pub fn Imageinfo::height(Self) -> Int32
 pub fn Imageinfo::to_bytes(Self) -> Bytes
-pub fn Imageinfo::width(Self) -> Int
+pub fn Imageinfo::width(Self) -> Int32
 
 type Ipoint
-pub fn Ipoint::Ipoint(Int, Int) -> Self
+pub fn Ipoint::Ipoint(Int32, Int32) -> Self
 pub fn Ipoint::to_bytes(Self) -> Bytes
-pub fn Ipoint::x(Self) -> Int
-pub fn Ipoint::y(Self) -> Int
+pub fn Ipoint::x(Self) -> Int32
+pub fn Ipoint::y(Self) -> Int32
 
 type Irect
-pub fn Irect::Irect(Int, Int, Int, Int) -> Self
-pub fn Irect::bottom(Self) -> Int
-pub fn Irect::left(Self) -> Int
-pub fn Irect::right(Self) -> Int
+pub fn Irect::Irect(Int32, Int32, Int32, Int32) -> Self
+pub fn Irect::bottom(Self) -> Int32
+pub fn Irect::left(Self) -> Int32
+pub fn Irect::right(Self) -> Int32
 pub fn Irect::to_bytes(Self) -> Bytes
-pub fn Irect::top(Self) -> Int
+pub fn Irect::top(Self) -> Int32
 
 type Isize
-pub fn Isize::Isize(Int, Int) -> Self
-pub fn Isize::h(Self) -> Int
+pub fn Isize::Isize(Int32, Int32) -> Self
+pub fn Isize::h(Self) -> Int32
 pub fn Isize::to_bytes(Self) -> Bytes
-pub fn Isize::w(Self) -> Int
+pub fn Isize::w(Self) -> Int32
 
 #external
 pub type Maskfilter

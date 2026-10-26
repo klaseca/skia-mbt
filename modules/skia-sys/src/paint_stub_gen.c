@@ -87,7 +87,7 @@ void moonbit_skia_paint_set_antialias(void * arg0, int32_t arg1) {
 }
 
 MOONBIT_FFI_EXPORT
-sk_color_t moonbit_skia_paint_get_color(void * arg0) {
+uint32_t moonbit_skia_paint_get_color(void * arg0) {
   return sk_paint_get_color(moonbit_skia_paint_ptr(arg0));
 }
 
@@ -97,7 +97,7 @@ void moonbit_skia_paint_get_color4f_ffi(void * paint, moonbit_bytes_t color) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_paint_set_color(void * arg0, sk_color_t arg1) {
+void moonbit_skia_paint_set_color(void * arg0, uint32_t arg1) {
   sk_paint_set_color(moonbit_skia_paint_ptr(arg0), arg1);
 }
 

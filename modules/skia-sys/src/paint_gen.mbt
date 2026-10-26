@@ -25,7 +25,7 @@ pub extern "c" fn paint_set_antialias(arg0 : Paint, arg1 : Bool) = "moonbit_skia
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_get_color(arg0 : Paint) -> UInt = "moonbit_skia_paint_get_color"
+pub extern "c" fn paint_get_color(arg0 : Paint) -> UInt32 = "moonbit_skia_paint_get_color"
 
 ///|
 #borrow(paint, color)
@@ -38,7 +38,7 @@ pub fn paint_get_color4f(paint : Paint, color : Color4f) -> Unit {
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_set_color(arg0 : Paint, arg1 : UInt) = "moonbit_skia_paint_set_color"
+pub extern "c" fn paint_set_color(arg0 : Paint, arg1 : UInt32) = "moonbit_skia_paint_set_color"
 
 ///|
 #borrow(paint, color)
@@ -51,11 +51,11 @@ pub fn paint_set_color4f(paint : Paint, color : Color4f, colorspace : Colorspace
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_get_style(arg0 : Paint) -> Int = "moonbit_skia_paint_get_style"
+pub extern "c" fn paint_get_style(arg0 : Paint) -> Int32 = "moonbit_skia_paint_get_style"
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_set_style(arg0 : Paint, arg1 : Int) = "moonbit_skia_paint_set_style"
+pub extern "c" fn paint_set_style(arg0 : Paint, arg1 : Int32) = "moonbit_skia_paint_set_style"
 
 ///|
 #borrow(arg0)
@@ -75,19 +75,19 @@ pub extern "c" fn paint_set_stroke_miter(arg0 : Paint, miter : Float) = "moonbit
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_get_stroke_cap(arg0 : Paint) -> Int = "moonbit_skia_paint_get_stroke_cap"
+pub extern "c" fn paint_get_stroke_cap(arg0 : Paint) -> Int32 = "moonbit_skia_paint_get_stroke_cap"
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_set_stroke_cap(arg0 : Paint, arg1 : Int) = "moonbit_skia_paint_set_stroke_cap"
+pub extern "c" fn paint_set_stroke_cap(arg0 : Paint, arg1 : Int32) = "moonbit_skia_paint_set_stroke_cap"
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_get_stroke_join(arg0 : Paint) -> Int = "moonbit_skia_paint_get_stroke_join"
+pub extern "c" fn paint_get_stroke_join(arg0 : Paint) -> Int32 = "moonbit_skia_paint_get_stroke_join"
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_set_stroke_join(arg0 : Paint, arg1 : Int) = "moonbit_skia_paint_set_stroke_join"
+pub extern "c" fn paint_set_stroke_join(arg0 : Paint, arg1 : Int32) = "moonbit_skia_paint_set_stroke_join"
 
 ///|
 #borrow(arg0)
@@ -99,7 +99,7 @@ pub extern "c" fn paint_set_maskfilter(arg0 : Paint, arg1 : Maskfilter) = "moonb
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_set_blendmode(arg0 : Paint, arg1 : Int) = "moonbit_skia_paint_set_blendmode"
+pub extern "c" fn paint_set_blendmode(arg0 : Paint, arg1 : Int32) = "moonbit_skia_paint_set_blendmode"
 
 ///|
 #borrow(paint)
@@ -139,7 +139,7 @@ pub extern "c" fn paint_get_imagefilter(arg0 : Paint) -> Imagefilter = "moonbit_
 
 ///|
 #borrow(arg0)
-pub extern "c" fn paint_get_blendmode(arg0 : Paint) -> Int = "moonbit_skia_paint_get_blendmode"
+pub extern "c" fn paint_get_blendmode(arg0 : Paint) -> Int32 = "moonbit_skia_paint_get_blendmode"
 
 ///|
 #borrow(cpaint)

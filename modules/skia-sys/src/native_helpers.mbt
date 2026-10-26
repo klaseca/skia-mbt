@@ -1,11 +1,11 @@
 ///|
 extern "C" fn imageinfo_bgra8888_premul_bytes(
-  width : Int,
-  height : Int,
+  width : Int32,
+  height : Int32,
 ) -> Bytes = "moonbit_skia_imageinfo_bgra8888_premul"
 
 ///|
-pub fn imageinfo_bgra8888_premul(width : Int, height : Int) -> Imageinfo {
+pub fn imageinfo_bgra8888_premul(width : Int32, height : Int32) -> Imageinfo {
   { bytes: imageinfo_bgra8888_premul_bytes(width, height), }
 }
 
@@ -33,4 +33,4 @@ pub fn canvas_new_from_raster_pointer(
 pub extern "C" fn skia_write_surface_png(
   surface : Surface,
   path : Bytes,
-) -> Int = "moonbit_skia_write_surface_png"
+) -> Int32 = "moonbit_skia_write_surface_png"

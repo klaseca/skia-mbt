@@ -31,11 +31,11 @@ pub fn path_compute_tight_bounds(arg0 : Path, arg1 : Rect) -> Unit {
 
 ///|
 #borrow(arg0)
-pub extern "c" fn path_get_filltype(arg0 : Path) -> Int = "moonbit_skia_path_get_filltype"
+pub extern "c" fn path_get_filltype(arg0 : Path) -> Int32 = "moonbit_skia_path_get_filltype"
 
 ///|
 #borrow(arg0)
-pub extern "c" fn path_set_filltype(arg0 : Path, arg1 : Int) = "moonbit_skia_path_set_filltype"
+pub extern "c" fn path_set_filltype(arg0 : Path, arg1 : Int32) = "moonbit_skia_path_set_filltype"
 
 ///|
 #borrow(cpath, cmatrix)
@@ -65,27 +65,27 @@ pub extern "c" fn path_rewind(cpath : Path) = "moonbit_skia_path_rewind"
 
 ///|
 #borrow(cpath)
-pub extern "c" fn path_count_points(cpath : Path) -> Int = "moonbit_skia_path_count_points"
+pub extern "c" fn path_count_points(cpath : Path) -> Int32 = "moonbit_skia_path_count_points"
 
 ///|
 #borrow(cpath)
-pub extern "c" fn path_count_verbs(cpath : Path) -> Int = "moonbit_skia_path_count_verbs"
+pub extern "c" fn path_count_verbs(cpath : Path) -> Int32 = "moonbit_skia_path_count_verbs"
 
 ///|
 #borrow(cpath, point)
-extern "c" fn path_get_point_ffi(cpath : Path, index : Int, point : Bytes) = "moonbit_skia_path_get_point_ffi"
+extern "c" fn path_get_point_ffi(cpath : Path, index : Int32, point : Bytes) = "moonbit_skia_path_get_point_ffi"
 
 ///|
-pub fn path_get_point(cpath : Path, index : Int, point : Point) -> Unit {
+pub fn path_get_point(cpath : Path, index : Int32, point : Point) -> Unit {
   path_get_point_ffi(cpath, index, point.to_bytes())
 }
 
 ///|
 #borrow(cpath, points)
-extern "c" fn path_get_points_ffi(cpath : Path, points : Bytes, max : Int) -> Int = "moonbit_skia_path_get_points_ffi"
+extern "c" fn path_get_points_ffi(cpath : Path, points : Bytes, max : Int32) -> Int32 = "moonbit_skia_path_get_points_ffi"
 
 ///|
-pub fn path_get_points(cpath : Path, points : Point, max : Int) -> Int {
+pub fn path_get_points(cpath : Path, points : Point, max : Int32) -> Int32 {
   path_get_points_ffi(cpath, points.to_bytes(), max)
 }
 
@@ -112,16 +112,16 @@ pub fn path_get_last_point(cpath : Path, point : Point) -> Bool {
 
 ///|
 #borrow(p0, p1, p2, pts)
-extern "c" fn path_convert_conic_to_quads_ffi(p0 : Bytes, p1 : Bytes, p2 : Bytes, w : Float, pts : Bytes, pow2 : Int) -> Int = "moonbit_skia_path_convert_conic_to_quads_ffi"
+extern "c" fn path_convert_conic_to_quads_ffi(p0 : Bytes, p1 : Bytes, p2 : Bytes, w : Float, pts : Bytes, pow2 : Int32) -> Int32 = "moonbit_skia_path_convert_conic_to_quads_ffi"
 
 ///|
-pub fn path_convert_conic_to_quads(p0 : Point, p1 : Point, p2 : Point, w : Float, pts : Point, pow2 : Int) -> Int {
+pub fn path_convert_conic_to_quads(p0 : Point, p1 : Point, p2 : Point, w : Float, pts : Point, pow2 : Int32) -> Int32 {
   path_convert_conic_to_quads_ffi(p0.to_bytes(), p1.to_bytes(), p2.to_bytes(), w, pts.to_bytes(), pow2)
 }
 
 ///|
 #borrow(cpath)
-pub extern "c" fn path_get_segment_masks(cpath : Path) -> UInt = "moonbit_skia_path_get_segment_masks"
+pub extern "c" fn path_get_segment_masks(cpath : Path) -> UInt32 = "moonbit_skia_path_get_segment_masks"
 
 ///|
 #borrow(cpath, bounds)
@@ -138,10 +138,10 @@ pub extern "c" fn path_is_rrect(cpath : Path, bounds : Rrect) -> Bool = "moonbit
 
 ///|
 #borrow(cpath, rect, isClosed, direction)
-extern "c" fn path_is_rect_ffi(cpath : Path, rect : Bytes, isClosed : Ref[Bool], direction : Ref[Int]) -> Bool = "moonbit_skia_path_is_rect_ffi"
+extern "c" fn path_is_rect_ffi(cpath : Path, rect : Bytes, isClosed : Ref[Bool], direction : Ref[Int32]) -> Bool = "moonbit_skia_path_is_rect_ffi"
 
 ///|
-pub fn path_is_rect(cpath : Path, rect : Rect, isClosed : Ref[Bool], direction : Ref[Int]) -> Bool {
+pub fn path_is_rect(cpath : Path, rect : Rect, isClosed : Ref[Bool], direction : Ref[Int32]) -> Bool {
   path_is_rect_ffi(cpath, rect.to_bytes(), isClosed, direction)
 }
 
@@ -151,16 +151,16 @@ pub extern "c" fn path_is_convex(cpath : Path) -> Bool = "moonbit_skia_path_is_c
 
 ///|
 #borrow(cpath)
-pub extern "c" fn path_create_iter(cpath : Path, forceClose : Int) -> PathIterator = "moonbit_skia_path_create_iter"
+pub extern "c" fn path_create_iter(cpath : Path, forceClose : Int32) -> PathIterator = "moonbit_skia_path_create_iter"
 
 ///|
 pub extern "c" fn path_iter_conic_weight(iterator : PathIterator) -> Float = "moonbit_skia_path_iter_conic_weight"
 
 ///|
-pub extern "c" fn path_iter_is_close_line(iterator : PathIterator) -> Int = "moonbit_skia_path_iter_is_close_line"
+pub extern "c" fn path_iter_is_close_line(iterator : PathIterator) -> Int32 = "moonbit_skia_path_iter_is_close_line"
 
 ///|
-pub extern "c" fn path_iter_is_closed_contour(iterator : PathIterator) -> Int = "moonbit_skia_path_iter_is_closed_contour"
+pub extern "c" fn path_iter_is_closed_contour(iterator : PathIterator) -> Int32 = "moonbit_skia_path_iter_is_closed_contour"
 
 ///|
 pub extern "c" fn path_iter_destroy(iterator : PathIterator) = "moonbit_skia_path_iter_destroy"
@@ -170,7 +170,7 @@ pub extern "c" fn path_iter_destroy(iterator : PathIterator) = "moonbit_skia_pat
 pub extern "c" fn path_create_rawiter(cpath : Path) -> PathRawiterator = "moonbit_skia_path_create_rawiter"
 
 ///|
-pub extern "c" fn path_rawiter_peek(iterator : PathRawiterator) -> Int = "moonbit_skia_path_rawiter_peek"
+pub extern "c" fn path_rawiter_peek(iterator : PathRawiterator) -> Int32 = "moonbit_skia_path_rawiter_peek"
 
 ///|
 pub extern "c" fn path_rawiter_conic_weight(iterator : PathRawiterator) -> Float = "moonbit_skia_path_rawiter_conic_weight"
@@ -180,7 +180,7 @@ pub extern "c" fn path_rawiter_destroy(iterator : PathRawiterator) = "moonbit_sk
 
 ///|
 #borrow(one, two, result)
-pub extern "c" fn pathop_op(one : Path, two : Path, op : Int, result : Path) -> Bool = "moonbit_skia_pathop_op"
+pub extern "c" fn pathop_op(one : Path, two : Path, op : Int32, result : Path) -> Bool = "moonbit_skia_pathop_op"
 
 ///|
 #borrow(path, result)
@@ -207,7 +207,7 @@ pub extern "c" fn opbuilder_destroy(builder : Opbuilder) = "moonbit_skia_opbuild
 
 ///|
 #borrow(path)
-pub extern "c" fn opbuilder_add(builder : Opbuilder, path : Path, op : Int) = "moonbit_skia_opbuilder_add"
+pub extern "c" fn opbuilder_add(builder : Opbuilder, path : Path, op : Int32) = "moonbit_skia_opbuilder_add"
 
 ///|
 #borrow(result)
@@ -232,10 +232,10 @@ pub extern "c" fn pathmeasure_get_length(pathMeasure : Pathmeasure) -> Float = "
 
 ///|
 #borrow(matrix)
-extern "c" fn pathmeasure_get_matrix_ffi(pathMeasure : Pathmeasure, distance : Float, matrix : Bytes, flags : Int) -> Bool = "moonbit_skia_pathmeasure_get_matrix_ffi"
+extern "c" fn pathmeasure_get_matrix_ffi(pathMeasure : Pathmeasure, distance : Float, matrix : Bytes, flags : Int32) -> Bool = "moonbit_skia_pathmeasure_get_matrix_ffi"
 
 ///|
-pub fn pathmeasure_get_matrix(pathMeasure : Pathmeasure, distance : Float, matrix : Matrix, flags : Int) -> Bool {
+pub fn pathmeasure_get_matrix(pathMeasure : Pathmeasure, distance : Float, matrix : Matrix, flags : Int32) -> Bool {
   pathmeasure_get_matrix_ffi(pathMeasure, distance, matrix.to_bytes(), flags)
 }
 

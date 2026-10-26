@@ -58,19 +58,19 @@ pub extern "c" fn font_set_baseline_snap(font : Font, value : Bool) = "moonbit_s
 
 ///|
 #borrow(font)
-pub extern "c" fn font_get_edging(font : Font) -> Int = "moonbit_skia_font_get_edging"
+pub extern "c" fn font_get_edging(font : Font) -> Int32 = "moonbit_skia_font_get_edging"
 
 ///|
 #borrow(font)
-pub extern "c" fn font_set_edging(font : Font, value : Int) = "moonbit_skia_font_set_edging"
+pub extern "c" fn font_set_edging(font : Font, value : Int32) = "moonbit_skia_font_set_edging"
 
 ///|
 #borrow(font)
-pub extern "c" fn font_get_hinting(font : Font) -> Int = "moonbit_skia_font_get_hinting"
+pub extern "c" fn font_get_hinting(font : Font) -> Int32 = "moonbit_skia_font_get_hinting"
 
 ///|
 #borrow(font)
-pub extern "c" fn font_set_hinting(font : Font, value : Int) = "moonbit_skia_font_set_hinting"
+pub extern "c" fn font_set_hinting(font : Font, value : Int32) = "moonbit_skia_font_set_hinting"
 
 ///|
 #borrow(font)
@@ -106,28 +106,28 @@ pub extern "c" fn font_set_skew_x(font : Font, value : Float) = "moonbit_skia_fo
 
 ///|
 #borrow(font)
-pub extern "c" fn font_unichar_to_glyph(font : Font, uni : Int) -> UInt16 = "moonbit_skia_font_unichar_to_glyph"
+pub extern "c" fn font_unichar_to_glyph(font : Font, uni : Int32) -> UInt32 = "moonbit_skia_font_unichar_to_glyph"
 
 ///|
 #borrow(font, text)
-pub extern "c" fn font_measure_text(font : Font, text : Bytes, byteLength : UInt64, encoding : Int) -> Float = "moonbit_skia_font_measure_text"
+pub extern "c" fn font_measure_text(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32) -> Float = "moonbit_skia_font_measure_text"
 
 ///|
 #borrow(font, text, bounds, paint, measuredWidth)
-extern "c" fn font_measure_text_no_return_ffi(font : Font, text : Bytes, byteLength : UInt64, encoding : Int, bounds : Bytes, paint : Paint, measuredWidth : Ref[Float]) = "moonbit_skia_font_measure_text_no_return_ffi"
+extern "c" fn font_measure_text_no_return_ffi(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, bounds : Bytes, paint : Paint, measuredWidth : Ref[Float]) = "moonbit_skia_font_measure_text_no_return_ffi"
 
 ///|
-pub fn font_measure_text_no_return(font : Font, text : Bytes, byteLength : UInt64, encoding : Int, bounds : Rect, paint : Paint, measuredWidth : Ref[Float]) -> Unit {
+pub fn font_measure_text_no_return(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, bounds : Rect, paint : Paint, measuredWidth : Ref[Float]) -> Unit {
   font_measure_text_no_return_ffi(font, text, byteLength, encoding, bounds.to_bytes(), paint, measuredWidth)
 }
 
 ///|
 #borrow(font, text, measuredWidth, paint)
-pub extern "c" fn font_break_text(font : Font, text : Bytes, byteLength : UInt64, encoding : Int, maxWidth : Float, measuredWidth : Ref[Float], paint : Paint) -> UInt64 = "moonbit_skia_font_break_text"
+pub extern "c" fn font_break_text(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, maxWidth : Float, measuredWidth : Ref[Float], paint : Paint) -> UInt64 = "moonbit_skia_font_break_text"
 
 ///|
 #borrow(font, path)
-pub extern "c" fn font_get_path(font : Font, glyph : UInt16, path : Path) -> Bool = "moonbit_skia_font_get_path"
+pub extern "c" fn font_get_path(font : Font, glyph : UInt32, path : Path) -> Bool = "moonbit_skia_font_get_path"
 
 ///|
 #borrow(font, metrics)
@@ -140,4 +140,4 @@ pub fn font_get_metrics(font : Font, metrics : Fontmetrics) -> Float {
 
 ///|
 #borrow(text, font, path)
-pub extern "c" fn text_utils_get_path(text : Bytes, length : UInt64, encoding : Int, x : Float, y : Float, font : Font, path : Path) = "moonbit_skia_text_utils_get_path"
+pub extern "c" fn text_utils_get_path(text : Bytes, length : UInt64, encoding : Int32, x : Float, y : Float, font : Font, path : Path) = "moonbit_skia_text_utils_get_path"

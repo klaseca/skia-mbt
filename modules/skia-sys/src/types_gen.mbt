@@ -1200,10 +1200,10 @@ struct Irect {
 }
 
 ///|
-extern "c" fn irect_make(left : Int, top : Int, right : Int, bottom : Int) -> Bytes = "moonbit_skia_irect_make"
+extern "c" fn irect_make(left : Int32, top : Int32, right : Int32, bottom : Int32) -> Bytes = "moonbit_skia_irect_make"
 
 ///|
-pub fn Irect::Irect(left : Int, top : Int, right : Int, bottom : Int) -> Irect {
+pub fn Irect::Irect(left : Int32, top : Int32, right : Int32, bottom : Int32) -> Irect {
   { bytes: irect_make(left, top, right, bottom) }
 }
 
@@ -1214,37 +1214,37 @@ pub fn Irect::to_bytes(self : Self) -> Bytes {
 
 ///|
 #borrow(bytes)
-extern "c" fn irect_left(bytes : Bytes) -> Int = "moonbit_skia_irect_left"
+extern "c" fn irect_left(bytes : Bytes) -> Int32 = "moonbit_skia_irect_left"
 
 ///|
-pub fn Irect::left(self : Self) -> Int {
+pub fn Irect::left(self : Self) -> Int32 {
   irect_left(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn irect_top(bytes : Bytes) -> Int = "moonbit_skia_irect_top"
+extern "c" fn irect_top(bytes : Bytes) -> Int32 = "moonbit_skia_irect_top"
 
 ///|
-pub fn Irect::top(self : Self) -> Int {
+pub fn Irect::top(self : Self) -> Int32 {
   irect_top(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn irect_right(bytes : Bytes) -> Int = "moonbit_skia_irect_right"
+extern "c" fn irect_right(bytes : Bytes) -> Int32 = "moonbit_skia_irect_right"
 
 ///|
-pub fn Irect::right(self : Self) -> Int {
+pub fn Irect::right(self : Self) -> Int32 {
   irect_right(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn irect_bottom(bytes : Bytes) -> Int = "moonbit_skia_irect_bottom"
+extern "c" fn irect_bottom(bytes : Bytes) -> Int32 = "moonbit_skia_irect_bottom"
 
 ///|
-pub fn Irect::bottom(self : Self) -> Int {
+pub fn Irect::bottom(self : Self) -> Int32 {
   irect_bottom(self.to_bytes())
 }
 
@@ -1614,10 +1614,10 @@ struct Ipoint {
 }
 
 ///|
-extern "c" fn ipoint_make(x : Int, y : Int) -> Bytes = "moonbit_skia_ipoint_make"
+extern "c" fn ipoint_make(x : Int32, y : Int32) -> Bytes = "moonbit_skia_ipoint_make"
 
 ///|
-pub fn Ipoint::Ipoint(x : Int, y : Int) -> Ipoint {
+pub fn Ipoint::Ipoint(x : Int32, y : Int32) -> Ipoint {
   { bytes: ipoint_make(x, y) }
 }
 
@@ -1628,19 +1628,19 @@ pub fn Ipoint::to_bytes(self : Self) -> Bytes {
 
 ///|
 #borrow(bytes)
-extern "c" fn ipoint_x(bytes : Bytes) -> Int = "moonbit_skia_ipoint_x"
+extern "c" fn ipoint_x(bytes : Bytes) -> Int32 = "moonbit_skia_ipoint_x"
 
 ///|
-pub fn Ipoint::x(self : Self) -> Int {
+pub fn Ipoint::x(self : Self) -> Int32 {
   ipoint_x(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn ipoint_y(bytes : Bytes) -> Int = "moonbit_skia_ipoint_y"
+extern "c" fn ipoint_y(bytes : Bytes) -> Int32 = "moonbit_skia_ipoint_y"
 
 ///|
-pub fn Ipoint::y(self : Self) -> Int {
+pub fn Ipoint::y(self : Self) -> Int32 {
   ipoint_y(self.to_bytes())
 }
 
@@ -1686,10 +1686,10 @@ struct Isize {
 }
 
 ///|
-extern "c" fn isize_make(w : Int, h : Int) -> Bytes = "moonbit_skia_isize_make"
+extern "c" fn isize_make(w : Int32, h : Int32) -> Bytes = "moonbit_skia_isize_make"
 
 ///|
-pub fn Isize::Isize(w : Int, h : Int) -> Isize {
+pub fn Isize::Isize(w : Int32, h : Int32) -> Isize {
   { bytes: isize_make(w, h) }
 }
 
@@ -1700,19 +1700,19 @@ pub fn Isize::to_bytes(self : Self) -> Bytes {
 
 ///|
 #borrow(bytes)
-extern "c" fn isize_w(bytes : Bytes) -> Int = "moonbit_skia_isize_w"
+extern "c" fn isize_w(bytes : Bytes) -> Int32 = "moonbit_skia_isize_w"
 
 ///|
-pub fn Isize::w(self : Self) -> Int {
+pub fn Isize::w(self : Self) -> Int32 {
   isize_w(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn isize_h(bytes : Bytes) -> Int = "moonbit_skia_isize_h"
+extern "c" fn isize_h(bytes : Bytes) -> Int32 = "moonbit_skia_isize_h"
 
 ///|
-pub fn Isize::h(self : Self) -> Int {
+pub fn Isize::h(self : Self) -> Int32 {
   isize_h(self.to_bytes())
 }
 
@@ -1722,10 +1722,10 @@ struct Fontmetrics {
 }
 
 ///|
-extern "c" fn fontmetrics_make(fFlags : UInt, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Bytes = "moonbit_skia_fontmetrics_make"
+extern "c" fn fontmetrics_make(fFlags : UInt32, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Bytes = "moonbit_skia_fontmetrics_make"
 
 ///|
-pub fn Fontmetrics::Fontmetrics(fFlags : UInt, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Fontmetrics {
+pub fn Fontmetrics::Fontmetrics(fFlags : UInt32, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Fontmetrics {
   { bytes: fontmetrics_make(fFlags, fTop, fAscent, fDescent, fBottom, fLeading, fAvgCharWidth, fMaxCharWidth, fXMin, fXMax, fXHeight, fCapHeight, fUnderlineThickness, fUnderlinePosition, fStrikeoutThickness, fStrikeoutPosition) }
 }
 
@@ -1736,10 +1736,10 @@ pub fn Fontmetrics::to_bytes(self : Self) -> Bytes {
 
 ///|
 #borrow(bytes)
-extern "c" fn fontmetrics_fFlags(bytes : Bytes) -> UInt = "moonbit_skia_fontmetrics_fflags"
+extern "c" fn fontmetrics_fFlags(bytes : Bytes) -> UInt32 = "moonbit_skia_fontmetrics_fflags"
 
 ///|
-pub fn Fontmetrics::fFlags(self : Self) -> UInt {
+pub fn Fontmetrics::fFlags(self : Self) -> UInt32 {
   fontmetrics_fFlags(self.to_bytes())
 }
 
@@ -1884,10 +1884,10 @@ struct Imageinfo {
 }
 
 ///|
-extern "c" fn imageinfo_make(colorspace : Colorspace, width : Int, height : Int, colorType : Int, alphaType : Int) -> Bytes = "moonbit_skia_imageinfo_make"
+extern "c" fn imageinfo_make(colorspace : Colorspace, width : Int32, height : Int32, colorType : Int32, alphaType : Int32) -> Bytes = "moonbit_skia_imageinfo_make"
 
 ///|
-pub fn Imageinfo::Imageinfo(colorspace : Colorspace, width : Int, height : Int, colorType : Int, alphaType : Int) -> Imageinfo {
+pub fn Imageinfo::Imageinfo(colorspace : Colorspace, width : Int32, height : Int32, colorType : Int32, alphaType : Int32) -> Imageinfo {
   { bytes: imageinfo_make(colorspace, width, height, colorType, alphaType) }
 }
 
@@ -1907,37 +1907,37 @@ pub fn Imageinfo::colorspace(self : Self) -> Colorspace {
 
 ///|
 #borrow(bytes)
-extern "c" fn imageinfo_width(bytes : Bytes) -> Int = "moonbit_skia_imageinfo_width"
+extern "c" fn imageinfo_width(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_width"
 
 ///|
-pub fn Imageinfo::width(self : Self) -> Int {
+pub fn Imageinfo::width(self : Self) -> Int32 {
   imageinfo_width(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn imageinfo_height(bytes : Bytes) -> Int = "moonbit_skia_imageinfo_height"
+extern "c" fn imageinfo_height(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_height"
 
 ///|
-pub fn Imageinfo::height(self : Self) -> Int {
+pub fn Imageinfo::height(self : Self) -> Int32 {
   imageinfo_height(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn imageinfo_colorType(bytes : Bytes) -> Int = "moonbit_skia_imageinfo_colortype"
+extern "c" fn imageinfo_colorType(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_colortype"
 
 ///|
-pub fn Imageinfo::colorType(self : Self) -> Int {
+pub fn Imageinfo::colorType(self : Self) -> Int32 {
   imageinfo_colorType(self.to_bytes())
 }
 
 ///|
 #borrow(bytes)
-extern "c" fn imageinfo_alphaType(bytes : Bytes) -> Int = "moonbit_skia_imageinfo_alphatype"
+extern "c" fn imageinfo_alphaType(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_alphatype"
 
 ///|
-pub fn Imageinfo::alphaType(self : Self) -> Int {
+pub fn Imageinfo::alphaType(self : Self) -> Int32 {
   imageinfo_alphaType(self.to_bytes())
 }
 

@@ -1,13 +1,13 @@
 ///|
 pub(all) suberror SkiaError {
-  InvalidPixelBufferSize(width~ : Int, height~ : Int)
-  InvalidSurfaceSize(width~ : Int, height~ : Int)
+  InvalidPixelBufferSize(width~ : Int32, height~ : Int32)
+  InvalidSurfaceSize(width~ : Int32, height~ : Int32)
   TypefaceCreateFailed
   FontCreateFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
-  SurfaceCreateFailed(width~ : Int, height~ : Int)
-  WritePngFailed(status~ : Int)
+  SurfaceCreateFailed(width~ : Int32, height~ : Int32)
+  WritePngFailed(status~ : Int32)
 } derive(Debug, Eq)
 
 ///|

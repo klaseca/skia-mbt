@@ -9,6 +9,6 @@
     "bindgen": "node --import moonbit-bindgen/register ./bindgen/bindgen_skia_sys.ts"
   },
   "devDependencies": {
-    "moonbit-bindgen": "github:klaseca/moonbit-bindgen#bb75ff034de42e508c17743fcfdf25c34bd9967a"
+    "moonbit-bindgen": "github:klaseca/moonbit-bindgen#316801736577c9da2d3b0a02cd23e95cb52e0ff8"
   }
 }

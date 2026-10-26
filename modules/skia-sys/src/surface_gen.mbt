@@ -1,7 +1,7 @@
 // Generated file. Do not edit by hand.
 
 ///|
-pub extern "c" fn surface_new_null(width : Int, height : Int) -> Surface = "moonbit_skia_surface_new_null"
+pub extern "c" fn surface_new_null(width : Int32, height : Int32) -> Surface = "moonbit_skia_surface_new_null"
 
 ///|
 #borrow(arg0)
@@ -13,17 +13,17 @@ pub fn surface_new_raster(arg0 : Imageinfo, rowBytes : UInt64, arg2 : Surfacepro
 }
 
 ///|
-pub extern "c" fn surface_new_backend_texture(context : GrRecordingContext, texture : GrBackendtexture, origin : Int, samples : Int, colorType : Int, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_texture"
+pub extern "c" fn surface_new_backend_texture(context : GrRecordingContext, texture : GrBackendtexture, origin : Int32, samples : Int32, colorType : Int32, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_texture"
 
 ///|
-pub extern "c" fn surface_new_backend_render_target(context : GrRecordingContext, target : GrBackendrendertarget, origin : Int, colorType : Int, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_render_target"
+pub extern "c" fn surface_new_backend_render_target(context : GrRecordingContext, target : GrBackendrendertarget, origin : Int32, colorType : Int32, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_render_target"
 
 ///|
 #borrow(cinfo)
-extern "c" fn surface_new_render_target_ffi(context : GrRecordingContext, budgeted : Bool, cinfo : Bytes, sampleCount : Int, origin : Int, props : Surfaceprops, shouldCreateWithMips : Bool) -> Surface = "moonbit_skia_surface_new_render_target_ffi"
+extern "c" fn surface_new_render_target_ffi(context : GrRecordingContext, budgeted : Bool, cinfo : Bytes, sampleCount : Int32, origin : Int32, props : Surfaceprops, shouldCreateWithMips : Bool) -> Surface = "moonbit_skia_surface_new_render_target_ffi"
 
 ///|
-pub fn surface_new_render_target(context : GrRecordingContext, budgeted : Bool, cinfo : Imageinfo, sampleCount : Int, origin : Int, props : Surfaceprops, shouldCreateWithMips : Bool) -> Surface {
+pub fn surface_new_render_target(context : GrRecordingContext, budgeted : Bool, cinfo : Imageinfo, sampleCount : Int32, origin : Int32, props : Surfaceprops, shouldCreateWithMips : Bool) -> Surface {
   surface_new_render_target_ffi(context, budgeted, cinfo.to_bytes(), sampleCount, origin, props, shouldCreateWithMips)
 }
 
@@ -58,10 +58,10 @@ pub extern "c" fn surface_peek_pixels(surface : Surface, pixmap : Pixmap) -> Boo
 
 ///|
 #borrow(surface, dstInfo, dstPixels)
-extern "c" fn surface_read_pixels_ffi(surface : Surface, dstInfo : Bytes, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int, srcY : Int) -> Bool = "moonbit_skia_surface_read_pixels_ffi"
+extern "c" fn surface_read_pixels_ffi(surface : Surface, dstInfo : Bytes, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int32, srcY : Int32) -> Bool = "moonbit_skia_surface_read_pixels_ffi"
 
 ///|
-pub fn surface_read_pixels(surface : Surface, dstInfo : Imageinfo, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int, srcY : Int) -> Bool {
+pub fn surface_read_pixels(surface : Surface, dstInfo : Imageinfo, dstPixels : Bytes, dstRowBytes : UInt64, srcX : Int32, srcY : Int32) -> Bool {
   surface_read_pixels_ffi(surface, dstInfo.to_bytes(), dstPixels, dstRowBytes, srcX, srcY)
 }
 
@@ -74,13 +74,13 @@ pub extern "c" fn surface_get_props(surface : Surface) -> Surfaceprops = "moonbi
 pub extern "c" fn surface_get_recording_context(surface : Surface) -> GrRecordingContext = "moonbit_skia_surface_get_recording_context"
 
 ///|
-pub extern "c" fn surfaceprops_new(flags : UInt, geometry : Int) -> Surfaceprops = "moonbit_skia_surfaceprops_new"
+pub extern "c" fn surfaceprops_new(flags : UInt32, geometry : Int32) -> Surfaceprops = "moonbit_skia_surfaceprops_new"
 
 ///|
 pub extern "c" fn surfaceprops_delete(props : Surfaceprops) = "moonbit_skia_surfaceprops_delete"
 
 ///|
-pub extern "c" fn surfaceprops_get_flags(props : Surfaceprops) -> UInt = "moonbit_skia_surfaceprops_get_flags"
+pub extern "c" fn surfaceprops_get_flags(props : Surfaceprops) -> UInt32 = "moonbit_skia_surfaceprops_get_flags"
 
 ///|
-pub extern "c" fn surfaceprops_get_pixel_geometry(props : Surfaceprops) -> Int = "moonbit_skia_surfaceprops_get_pixel_geometry"
+pub extern "c" fn surfaceprops_get_pixel_geometry(props : Surfaceprops) -> Int32 = "moonbit_skia_surfaceprops_get_pixel_geometry"

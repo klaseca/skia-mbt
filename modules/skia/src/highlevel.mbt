@@ -5,7 +5,7 @@ pub(all) enum PaintStyle {
 }
 
 ///|
-fn PaintStyle::to_sys(self : Self) -> Int {
+fn PaintStyle::to_sys(self : Self) -> Int32 {
   match self {
     Fill => 0
     Stroke => 1
@@ -21,7 +21,7 @@ pub struct Color {
 }
 
 ///|
-fn Color::to_sys(self : Self) -> UInt {
+fn Color::to_sys(self : Self) -> UInt32 {
   (self.a.to_uint() << 24) |
   (self.r.to_uint() << 16) |
   (self.g.to_uint() << 8) |

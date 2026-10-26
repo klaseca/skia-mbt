@@ -90,7 +90,7 @@ void * moonbit_skia_typeface_create_empty(void) {
 }
 
 MOONBIT_FFI_EXPORT
-uint16_t moonbit_skia_typeface_unichar_to_glyph(void * typeface, int32_t unichar) {
+uint32_t moonbit_skia_typeface_unichar_to_glyph(void * typeface, int32_t unichar) {
   return sk_typeface_unichar_to_glyph(moonbit_skia_typeface_ptr(typeface), unichar);
 }
 
@@ -105,17 +105,17 @@ int32_t moonbit_skia_typeface_count_tables(void * typeface) {
 }
 
 MOONBIT_FFI_EXPORT
-uint64_t moonbit_skia_typeface_get_table_size(void * typeface, sk_font_table_tag_t tag) {
+uint64_t moonbit_skia_typeface_get_table_size(void * typeface, uint32_t tag) {
   return sk_typeface_get_table_size(moonbit_skia_typeface_ptr(typeface), tag);
 }
 
 MOONBIT_FFI_EXPORT
-uint64_t moonbit_skia_typeface_get_table_data(void * typeface, sk_font_table_tag_t tag, uint64_t offset, uint64_t length, moonbit_bytes_t data) {
+uint64_t moonbit_skia_typeface_get_table_data(void * typeface, uint32_t tag, uint64_t offset, uint64_t length, moonbit_bytes_t data) {
   return sk_typeface_get_table_data(moonbit_skia_typeface_ptr(typeface), tag, offset, length, ((void *)data));
 }
 
 MOONBIT_FFI_EXPORT
-sk_data_t * moonbit_skia_typeface_copy_table_data(void * typeface, sk_font_table_tag_t tag) {
+sk_data_t * moonbit_skia_typeface_copy_table_data(void * typeface, uint32_t tag) {
   return sk_typeface_copy_table_data(moonbit_skia_typeface_ptr(typeface), tag);
 }
 

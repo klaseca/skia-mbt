@@ -22,13 +22,13 @@ pub extern "c" fn graphics_get_font_cache_limit() -> UInt64 = "moonbit_skia_grap
 pub extern "c" fn graphics_set_font_cache_limit(bytes : UInt64) -> UInt64 = "moonbit_skia_graphics_set_font_cache_limit"
 
 ///|
-pub extern "c" fn graphics_get_font_cache_count_used() -> Int = "moonbit_skia_graphics_get_font_cache_count_used"
+pub extern "c" fn graphics_get_font_cache_count_used() -> Int32 = "moonbit_skia_graphics_get_font_cache_count_used"
 
 ///|
-pub extern "c" fn graphics_get_font_cache_count_limit() -> Int = "moonbit_skia_graphics_get_font_cache_count_limit"
+pub extern "c" fn graphics_get_font_cache_count_limit() -> Int32 = "moonbit_skia_graphics_get_font_cache_count_limit"
 
 ///|
-pub extern "c" fn graphics_set_font_cache_count_limit(count : Int) -> Int = "moonbit_skia_graphics_set_font_cache_count_limit"
+pub extern "c" fn graphics_set_font_cache_count_limit(count : Int32) -> Int32 = "moonbit_skia_graphics_set_font_cache_count_limit"
 
 ///|
 pub extern "c" fn graphics_get_resource_cache_total_bytes_used() -> UInt64 = "moonbit_skia_graphics_get_resource_cache_total_bytes_used"

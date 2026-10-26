@@ -192,7 +192,7 @@ void moonbit_skia_font_set_skew_x(void * font, float value) {
 }
 
 MOONBIT_FFI_EXPORT
-uint16_t moonbit_skia_font_unichar_to_glyph(void * font, int32_t uni) {
+uint32_t moonbit_skia_font_unichar_to_glyph(void * font, int32_t uni) {
   return sk_font_unichar_to_glyph(moonbit_skia_font_ptr(font), uni);
 }
 
@@ -217,7 +217,7 @@ uint64_t moonbit_skia_font_break_text(void * font, moonbit_bytes_t text, uint64_
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_font_get_path(void * font, uint16_t glyph, void * path) {
+int32_t moonbit_skia_font_get_path(void * font, uint32_t glyph, void * path) {
   return sk_font_get_path(moonbit_skia_font_ptr(font), glyph, moonbit_skia_path_ptr(path));
 }
 

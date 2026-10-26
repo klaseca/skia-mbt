@@ -10,14 +10,14 @@ import {
 
 // Errors
 pub(all) suberror SkiaError {
-  InvalidPixelBufferSize(width~ : Int, height~ : Int)
-  InvalidSurfaceSize(width~ : Int, height~ : Int)
+  InvalidPixelBufferSize(width~ : Int32, height~ : Int32)
+  InvalidSurfaceSize(width~ : Int32, height~ : Int32)
   TypefaceCreateFailed
   FontCreateFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
-  SurfaceCreateFailed(width~ : Int, height~ : Int)
-  WritePngFailed(status~ : Int)
+  SurfaceCreateFailed(width~ : Int32, height~ : Int32)
+  WritePngFailed(status~ : Int32)
 } derive(Eq, @debug.Debug)
 pub fn SkiaError::equal(Self, Self) -> Bool
 pub fn SkiaError::not_equal(Self, Self) -> Bool
@@ -36,7 +36,7 @@ pub fn Canvas::draw_round_rect(Self, Rect, Float, Float, Paint) -> Unit
 pub fn Canvas::draw_text(Self, Bytes, x~ : Float, y~ : Float, Font, Paint) -> Unit
 pub fn Canvas::from_sys(@skia-sys.Canvas) -> Self
 pub fn Canvas::restore(Self) -> Unit
-pub fn Canvas::save(Self) -> Int
+pub fn Canvas::save(Self) -> Int32
 
 pub struct Color {
   a : Byte
@@ -87,11 +87,11 @@ pub fn Path::rewind(Self) -> Unit
 
 pub struct PixelBuffer {
   data : Bytes
-  width : Int
-  height : Int
-  row_bytes : Int
+  width : Int32
+  height : Int32
+  row_bytes : Int32
 }
-pub fn PixelBuffer::PixelBuffer(width~ : Int, height~ : Int) -> Self raise SkiaError
+pub fn PixelBuffer::PixelBuffer(width~ : Int32, height~ : Int32) -> Self raise SkiaError
 
 pub struct Rect {
   left : Float
@@ -104,14 +104,14 @@ pub fn Rect::Rect(left~ : Float, top~ : Float, right~ : Float, bottom~ : Float) 
 pub struct Surface {
   // private fields
 }
-pub fn Surface::Surface(width~ : Int, height~ : Int) -> Self raise SkiaError
+pub fn Surface::Surface(width~ : Int32, height~ : Int32) -> Self raise SkiaError
 pub fn Surface::canvas(Self) -> Canvas
 pub fn Surface::dispose(Self) -> Unit
-pub fn Surface::height(Self) -> Int
+pub fn Surface::height(Self) -> Int32
 pub fn Surface::read_pixels(Self) -> PixelBuffer raise SkiaError
 pub fn Surface::read_pixels_into(Self, PixelBuffer) -> Unit raise SkiaError
-pub fn Surface::row_bytes(Self) -> Int
-pub fn Surface::width(Self) -> Int
+pub fn Surface::row_bytes(Self) -> Int32
+pub fn Surface::width(Self) -> Int32
 pub fn Surface::write_png(Self, Bytes) -> Unit raise SkiaError
 
 pub struct Typeface {

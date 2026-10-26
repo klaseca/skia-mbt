@@ -10,15 +10,15 @@ pub extern "c" fn typeface_get_fontstyle(typeface : Typeface) -> Fontstyle = "mo
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_get_font_weight(typeface : Typeface) -> Int = "moonbit_skia_typeface_get_font_weight"
+pub extern "c" fn typeface_get_font_weight(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_get_font_weight"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_get_font_width(typeface : Typeface) -> Int = "moonbit_skia_typeface_get_font_width"
+pub extern "c" fn typeface_get_font_width(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_get_font_width"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_get_font_slant(typeface : Typeface) -> Int = "moonbit_skia_typeface_get_font_slant"
+pub extern "c" fn typeface_get_font_slant(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_get_font_slant"
 
 ///|
 #borrow(typeface)
@@ -29,31 +29,31 @@ pub extern "c" fn typeface_create_empty() -> Typeface = "moonbit_skia_typeface_c
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_unichar_to_glyph(typeface : Typeface, unichar : Int) -> UInt16 = "moonbit_skia_typeface_unichar_to_glyph"
+pub extern "c" fn typeface_unichar_to_glyph(typeface : Typeface, unichar : Int32) -> UInt32 = "moonbit_skia_typeface_unichar_to_glyph"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_count_glyphs(typeface : Typeface) -> Int = "moonbit_skia_typeface_count_glyphs"
+pub extern "c" fn typeface_count_glyphs(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_count_glyphs"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_count_tables(typeface : Typeface) -> Int = "moonbit_skia_typeface_count_tables"
+pub extern "c" fn typeface_count_tables(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_count_tables"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_get_table_size(typeface : Typeface, tag : UInt) -> UInt64 = "moonbit_skia_typeface_get_table_size"
+pub extern "c" fn typeface_get_table_size(typeface : Typeface, tag : UInt32) -> UInt64 = "moonbit_skia_typeface_get_table_size"
 
 ///|
 #borrow(typeface, data)
-pub extern "c" fn typeface_get_table_data(typeface : Typeface, tag : UInt, offset : UInt64, length : UInt64, data : Bytes) -> UInt64 = "moonbit_skia_typeface_get_table_data"
+pub extern "c" fn typeface_get_table_data(typeface : Typeface, tag : UInt32, offset : UInt64, length : UInt64, data : Bytes) -> UInt64 = "moonbit_skia_typeface_get_table_data"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_copy_table_data(typeface : Typeface, tag : UInt) -> Data = "moonbit_skia_typeface_copy_table_data"
+pub extern "c" fn typeface_copy_table_data(typeface : Typeface, tag : UInt32) -> Data = "moonbit_skia_typeface_copy_table_data"
 
 ///|
 #borrow(typeface)
-pub extern "c" fn typeface_get_units_per_em(typeface : Typeface) -> Int = "moonbit_skia_typeface_get_units_per_em"
+pub extern "c" fn typeface_get_units_per_em(typeface : Typeface) -> Int32 = "moonbit_skia_typeface_get_units_per_em"
 
 ///|
 #borrow(typeface)
@@ -65,7 +65,7 @@ pub extern "c" fn typeface_get_post_script_name(typeface : Typeface) -> StringLi
 
 ///|
 #borrow(typeface, ttcIndex)
-pub extern "c" fn typeface_open_stream(typeface : Typeface, ttcIndex : Ref[Int]) -> StreamAsset = "moonbit_skia_typeface_open_stream"
+pub extern "c" fn typeface_open_stream(typeface : Typeface, ttcIndex : Ref[Int32]) -> StreamAsset = "moonbit_skia_typeface_open_stream"
 
 ///|
 pub extern "c" fn fontmgr_create_default() -> Fontmgr = "moonbit_skia_fontmgr_create_default"
@@ -74,13 +74,13 @@ pub extern "c" fn fontmgr_create_default() -> Fontmgr = "moonbit_skia_fontmgr_cr
 pub extern "c" fn fontmgr_unref(arg0 : Fontmgr) = "moonbit_skia_fontmgr_unref"
 
 ///|
-pub extern "c" fn fontmgr_count_families(arg0 : Fontmgr) -> Int = "moonbit_skia_fontmgr_count_families"
+pub extern "c" fn fontmgr_count_families(arg0 : Fontmgr) -> Int32 = "moonbit_skia_fontmgr_count_families"
 
 ///|
-pub extern "c" fn fontmgr_get_family_name(arg0 : Fontmgr, index : Int, familyName : StringLib) = "moonbit_skia_fontmgr_get_family_name"
+pub extern "c" fn fontmgr_get_family_name(arg0 : Fontmgr, index : Int32, familyName : StringLib) = "moonbit_skia_fontmgr_get_family_name"
 
 ///|
-pub extern "c" fn fontmgr_create_styleset(arg0 : Fontmgr, index : Int) -> Fontstyleset = "moonbit_skia_fontmgr_create_styleset"
+pub extern "c" fn fontmgr_create_styleset(arg0 : Fontmgr, index : Int32) -> Fontstyleset = "moonbit_skia_fontmgr_create_styleset"
 
 ///|
 #borrow(familyName)
@@ -91,32 +91,32 @@ pub extern "c" fn fontmgr_match_family(arg0 : Fontmgr, familyName : Bytes) -> Fo
 pub extern "c" fn fontmgr_match_family_style(arg0 : Fontmgr, familyName : Bytes, style : Fontstyle) -> Typeface = "moonbit_skia_fontmgr_match_family_style"
 
 ///|
-pub extern "c" fn fontmgr_create_from_data(arg0 : Fontmgr, data : Data, index : Int) -> Typeface = "moonbit_skia_fontmgr_create_from_data"
+pub extern "c" fn fontmgr_create_from_data(arg0 : Fontmgr, data : Data, index : Int32) -> Typeface = "moonbit_skia_fontmgr_create_from_data"
 
 ///|
-pub extern "c" fn fontmgr_create_from_stream(arg0 : Fontmgr, stream : StreamAsset, index : Int) -> Typeface = "moonbit_skia_fontmgr_create_from_stream"
+pub extern "c" fn fontmgr_create_from_stream(arg0 : Fontmgr, stream : StreamAsset, index : Int32) -> Typeface = "moonbit_skia_fontmgr_create_from_stream"
 
 ///|
 #borrow(path)
-pub extern "c" fn fontmgr_create_from_file(arg0 : Fontmgr, path : Bytes, index : Int) -> Typeface = "moonbit_skia_fontmgr_create_from_file"
+pub extern "c" fn fontmgr_create_from_file(arg0 : Fontmgr, path : Bytes, index : Int32) -> Typeface = "moonbit_skia_fontmgr_create_from_file"
 
 ///|
 pub extern "c" fn fontmgr_legacy_create_typeface(arg0 : Fontmgr, style : Fontstyle) -> Typeface = "moonbit_skia_fontmgr_legacy_create_typeface"
 
 ///|
-pub extern "c" fn fontstyle_new(weight : Int, width : Int, slant : Int) -> Fontstyle = "moonbit_skia_fontstyle_new"
+pub extern "c" fn fontstyle_new(weight : Int32, width : Int32, slant : Int32) -> Fontstyle = "moonbit_skia_fontstyle_new"
 
 ///|
 pub extern "c" fn fontstyle_delete(fs : Fontstyle) = "moonbit_skia_fontstyle_delete"
 
 ///|
-pub extern "c" fn fontstyle_get_weight(fs : Fontstyle) -> Int = "moonbit_skia_fontstyle_get_weight"
+pub extern "c" fn fontstyle_get_weight(fs : Fontstyle) -> Int32 = "moonbit_skia_fontstyle_get_weight"
 
 ///|
-pub extern "c" fn fontstyle_get_width(fs : Fontstyle) -> Int = "moonbit_skia_fontstyle_get_width"
+pub extern "c" fn fontstyle_get_width(fs : Fontstyle) -> Int32 = "moonbit_skia_fontstyle_get_width"
 
 ///|
-pub extern "c" fn fontstyle_get_slant(fs : Fontstyle) -> Int = "moonbit_skia_fontstyle_get_slant"
+pub extern "c" fn fontstyle_get_slant(fs : Fontstyle) -> Int32 = "moonbit_skia_fontstyle_get_slant"
 
 ///|
 pub extern "c" fn fontstyleset_create_empty() -> Fontstyleset = "moonbit_skia_fontstyleset_create_empty"
@@ -125,13 +125,13 @@ pub extern "c" fn fontstyleset_create_empty() -> Fontstyleset = "moonbit_skia_fo
 pub extern "c" fn fontstyleset_unref(fss : Fontstyleset) = "moonbit_skia_fontstyleset_unref"
 
 ///|
-pub extern "c" fn fontstyleset_get_count(fss : Fontstyleset) -> Int = "moonbit_skia_fontstyleset_get_count"
+pub extern "c" fn fontstyleset_get_count(fss : Fontstyleset) -> Int32 = "moonbit_skia_fontstyleset_get_count"
 
 ///|
-pub extern "c" fn fontstyleset_get_style(fss : Fontstyleset, index : Int, fs : Fontstyle, style : StringLib) = "moonbit_skia_fontstyleset_get_style"
+pub extern "c" fn fontstyleset_get_style(fss : Fontstyleset, index : Int32, fs : Fontstyle, style : StringLib) = "moonbit_skia_fontstyleset_get_style"
 
 ///|
-pub extern "c" fn fontstyleset_create_typeface(fss : Fontstyleset, index : Int) -> Typeface = "moonbit_skia_fontstyleset_create_typeface"
+pub extern "c" fn fontstyleset_create_typeface(fss : Fontstyleset, index : Int32) -> Typeface = "moonbit_skia_fontstyleset_create_typeface"
 
 ///|
 pub extern "c" fn fontstyleset_match_style(fss : Fontstyleset, style : Fontstyle) -> Typeface = "moonbit_skia_fontstyleset_match_style"
