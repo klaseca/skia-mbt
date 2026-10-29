@@ -1,5 +1,8 @@
 # Skia bindings for MoonBit
 
+[![Mooncakes Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmooncakes.io%2Fapi%2Fv0%2Fmanifest%2Fklaseca%2Fskia&query=version&prefix=v&label=skia&color=d08700)](https://mooncakes.io/docs/klaseca/skia)
+[![Mooncakes Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmooncakes.io%2Fapi%2Fv0%2Fmanifest%2Fklaseca%2Fskia-sys&query=version&prefix=v&label=skia-sys&color=d08700)](https://mooncakes.io/docs/klaseca/skia-sys)
+
 Native MoonBit bindings for the Skia C API. The repository contains two
 modules:
 
