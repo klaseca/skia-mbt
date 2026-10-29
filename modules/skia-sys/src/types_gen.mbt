@@ -97,15 +97,15 @@ pub fn OverdrawCanvas::is_null(self : Self) -> Bool {
 }
 
 ///|
-#external
 pub type Data
 
 ///|
-pub fn Data::to_pointer(self : Self) -> Pointer = "%identity"
+#borrow(resource)
+extern "c" fn data_is_null(resource : Data) -> Bool = "moonbit_skia_data_is_null"
 
 ///|
 pub fn Data::is_null(self : Self) -> Bool {
-  self.to_pointer().is_null()
+  data_is_null(self)
 }
 
 ///|
@@ -121,15 +121,15 @@ pub fn Drawable::is_null(self : Self) -> Bool {
 }
 
 ///|
-#external
 pub type Image
 
 ///|
-pub fn Image::to_pointer(self : Self) -> Pointer = "%identity"
+#borrow(resource)
+extern "c" fn image_is_null(resource : Image) -> Bool = "moonbit_skia_image_is_null"
 
 ///|
 pub fn Image::is_null(self : Self) -> Bool {
-  self.to_pointer().is_null()
+  image_is_null(self)
 }
 
 ///|
@@ -450,6 +450,9 @@ pub type Colorspace
 
 ///|
 pub fn Colorspace::to_pointer(self : Self) -> Pointer = "%identity"
+
+///|
+fn Colorspace::from_pointer(pointer : Pointer) -> Self = "%identity"
 
 ///|
 pub fn Colorspace::is_null(self : Self) -> Bool {
@@ -1107,60 +1110,59 @@ pub fn D3dAlloc::is_null(self : Self) -> Bool {
 ///|
 struct Color4f {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
-extern "c" fn color4f_make(fR : Float, fG : Float, fB : Float, fA : Float) -> Bytes = "moonbit_skia_color4f_make"
+extern "c" fn color4f_make(f_r : Float, f_g : Float, f_b : Float, f_a : Float) -> Bytes = "moonbit_skia_color4f_make"
 
 ///|
-pub fn Color4f::Color4f(fR : Float, fG : Float, fB : Float, fA : Float) -> Color4f {
-  { bytes: color4f_make(fR, fG, fB, fA) }
+pub fn Color4f::Color4f(f_r : Float, f_g : Float, f_b : Float, f_a : Float) -> Color4f {
+  { bytes: color4f_make(f_r, f_g, f_b, f_a), offset: 0 }
 }
 
 ///|
-pub fn Color4f::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn color4f_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_color4f_layout"
+
+///|
+let color4f_layout : FixedArray[Int32] = color4f_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Color4f::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + color4f_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn color4f_fR(bytes : Bytes) -> Float = "moonbit_skia_color4f_fr"
-
-///|
-pub fn Color4f::fR(self : Self) -> Float {
-  color4f_fR(self.to_bytes())
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Color4f::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, color4f_layout[0]), offset: 0 }
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn color4f_fG(bytes : Bytes) -> Float = "moonbit_skia_color4f_fg"
-
-///|
-pub fn Color4f::fG(self : Self) -> Float {
-  color4f_fG(self.to_bytes())
+pub fn Color4f::f_r(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + color4f_layout[1], color4f_layout[2], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn color4f_fB(bytes : Bytes) -> Float = "moonbit_skia_color4f_fb"
-
-///|
-pub fn Color4f::fB(self : Self) -> Float {
-  color4f_fB(self.to_bytes())
+pub fn Color4f::f_g(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + color4f_layout[4], color4f_layout[5], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn color4f_fA(bytes : Bytes) -> Float = "moonbit_skia_color4f_fa"
+pub fn Color4f::f_b(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + color4f_layout[7], color4f_layout[8], value_little_endian)
+}
 
 ///|
-pub fn Color4f::fA(self : Self) -> Float {
-  color4f_fA(self.to_bytes())
+pub fn Color4f::f_a(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + color4f_layout[10], color4f_layout[11], value_little_endian)
 }
 
 ///|
 struct Point {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1168,35 +1170,41 @@ extern "c" fn point_make(x : Float, y : Float) -> Bytes = "moonbit_skia_point_ma
 
 ///|
 pub fn Point::Point(x : Float, y : Float) -> Point {
-  { bytes: point_make(x, y) }
+  { bytes: point_make(x, y), offset: 0 }
 }
 
 ///|
-pub fn Point::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn point_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_point_layout"
+
+///|
+let point_layout : FixedArray[Int32] = point_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Point::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + point_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn point_x(bytes : Bytes) -> Float = "moonbit_skia_point_x"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Point::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, point_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Point::x(self : Self) -> Float {
-  point_x(self.to_bytes())
+  value_read_float(self.bytes, self.offset + point_layout[1], point_layout[2], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn point_y(bytes : Bytes) -> Float = "moonbit_skia_point_y"
-
-///|
 pub fn Point::y(self : Self) -> Float {
-  point_y(self.to_bytes())
+  value_read_float(self.bytes, self.offset + point_layout[4], point_layout[5], value_little_endian)
 }
 
 ///|
 struct Irect {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1204,53 +1212,51 @@ extern "c" fn irect_make(left : Int32, top : Int32, right : Int32, bottom : Int3
 
 ///|
 pub fn Irect::Irect(left : Int32, top : Int32, right : Int32, bottom : Int32) -> Irect {
-  { bytes: irect_make(left, top, right, bottom) }
+  { bytes: irect_make(left, top, right, bottom), offset: 0 }
 }
 
 ///|
-pub fn Irect::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn irect_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_irect_layout"
+
+///|
+let irect_layout : FixedArray[Int32] = irect_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Irect::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + irect_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn irect_left(bytes : Bytes) -> Int32 = "moonbit_skia_irect_left"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Irect::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, irect_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Irect::left(self : Self) -> Int32 {
-  irect_left(self.to_bytes())
+  read_integer(self.bytes, self.offset + irect_layout[1], irect_layout[2], irect_layout[3] != 0, value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn irect_top(bytes : Bytes) -> Int32 = "moonbit_skia_irect_top"
 
 ///|
 pub fn Irect::top(self : Self) -> Int32 {
-  irect_top(self.to_bytes())
+  read_integer(self.bytes, self.offset + irect_layout[4], irect_layout[5], irect_layout[6] != 0, value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn irect_right(bytes : Bytes) -> Int32 = "moonbit_skia_irect_right"
 
 ///|
 pub fn Irect::right(self : Self) -> Int32 {
-  irect_right(self.to_bytes())
+  read_integer(self.bytes, self.offset + irect_layout[7], irect_layout[8], irect_layout[9] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn irect_bottom(bytes : Bytes) -> Int32 = "moonbit_skia_irect_bottom"
-
-///|
 pub fn Irect::bottom(self : Self) -> Int32 {
-  irect_bottom(self.to_bytes())
+  read_integer(self.bytes, self.offset + irect_layout[10], irect_layout[11], irect_layout[12] != 0, value_little_endian)
 }
 
 ///|
 struct Rect {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1258,152 +1264,128 @@ extern "c" fn rect_make(left : Float, top : Float, right : Float, bottom : Float
 
 ///|
 pub fn Rect::Rect(left : Float, top : Float, right : Float, bottom : Float) -> Rect {
-  { bytes: rect_make(left, top, right, bottom) }
+  { bytes: rect_make(left, top, right, bottom), offset: 0 }
 }
 
 ///|
-pub fn Rect::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn rect_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_rect_layout"
+
+///|
+let rect_layout : FixedArray[Int32] = rect_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Rect::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + rect_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rect_left(bytes : Bytes) -> Float = "moonbit_skia_rect_left"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Rect::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, rect_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Rect::left(self : Self) -> Float {
-  rect_left(self.to_bytes())
+  value_read_float(self.bytes, self.offset + rect_layout[1], rect_layout[2], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn rect_top(bytes : Bytes) -> Float = "moonbit_skia_rect_top"
 
 ///|
 pub fn Rect::top(self : Self) -> Float {
-  rect_top(self.to_bytes())
+  value_read_float(self.bytes, self.offset + rect_layout[4], rect_layout[5], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn rect_right(bytes : Bytes) -> Float = "moonbit_skia_rect_right"
 
 ///|
 pub fn Rect::right(self : Self) -> Float {
-  rect_right(self.to_bytes())
+  value_read_float(self.bytes, self.offset + rect_layout[7], rect_layout[8], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rect_bottom(bytes : Bytes) -> Float = "moonbit_skia_rect_bottom"
-
-///|
 pub fn Rect::bottom(self : Self) -> Float {
-  rect_bottom(self.to_bytes())
+  value_read_float(self.bytes, self.offset + rect_layout[10], rect_layout[11], value_little_endian)
 }
 
 ///|
 struct Matrix {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
-extern "c" fn matrix_make(scaleX : Float, skewX : Float, transX : Float, skewY : Float, scaleY : Float, transY : Float, persp0 : Float, persp1 : Float, persp2 : Float) -> Bytes = "moonbit_skia_matrix_make"
+extern "c" fn matrix_make(scale_x : Float, skew_x : Float, trans_x : Float, skew_y : Float, scale_y : Float, trans_y : Float, persp0 : Float, persp1 : Float, persp2 : Float) -> Bytes = "moonbit_skia_matrix_make"
 
 ///|
-pub fn Matrix::Matrix(scaleX : Float, skewX : Float, transX : Float, skewY : Float, scaleY : Float, transY : Float, persp0 : Float, persp1 : Float, persp2 : Float) -> Matrix {
-  { bytes: matrix_make(scaleX, skewX, transX, skewY, scaleY, transY, persp0, persp1, persp2) }
+pub fn Matrix::Matrix(scale_x : Float, skew_x : Float, trans_x : Float, skew_y : Float, scale_y : Float, trans_y : Float, persp0 : Float, persp1 : Float, persp2 : Float) -> Matrix {
+  { bytes: matrix_make(scale_x, skew_x, trans_x, skew_y, scale_y, trans_y, persp0, persp1, persp2), offset: 0 }
 }
 
 ///|
-pub fn Matrix::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn matrix_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_matrix_layout"
+
+///|
+let matrix_layout : FixedArray[Int32] = matrix_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Matrix::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + matrix_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_scaleX(bytes : Bytes) -> Float = "moonbit_skia_matrix_scalex"
-
-///|
-pub fn Matrix::scaleX(self : Self) -> Float {
-  matrix_scaleX(self.to_bytes())
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Matrix::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, matrix_layout[0]), offset: 0 }
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_skewX(bytes : Bytes) -> Float = "moonbit_skia_matrix_skewx"
-
-///|
-pub fn Matrix::skewX(self : Self) -> Float {
-  matrix_skewX(self.to_bytes())
+pub fn Matrix::scale_x(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[1], matrix_layout[2], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_transX(bytes : Bytes) -> Float = "moonbit_skia_matrix_transx"
-
-///|
-pub fn Matrix::transX(self : Self) -> Float {
-  matrix_transX(self.to_bytes())
+pub fn Matrix::skew_x(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[4], matrix_layout[5], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_skewY(bytes : Bytes) -> Float = "moonbit_skia_matrix_skewy"
-
-///|
-pub fn Matrix::skewY(self : Self) -> Float {
-  matrix_skewY(self.to_bytes())
+pub fn Matrix::trans_x(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[7], matrix_layout[8], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_scaleY(bytes : Bytes) -> Float = "moonbit_skia_matrix_scaley"
-
-///|
-pub fn Matrix::scaleY(self : Self) -> Float {
-  matrix_scaleY(self.to_bytes())
+pub fn Matrix::skew_y(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[10], matrix_layout[11], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_transY(bytes : Bytes) -> Float = "moonbit_skia_matrix_transy"
-
-///|
-pub fn Matrix::transY(self : Self) -> Float {
-  matrix_transY(self.to_bytes())
+pub fn Matrix::scale_y(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[13], matrix_layout[14], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_persp0(bytes : Bytes) -> Float = "moonbit_skia_matrix_persp0"
+pub fn Matrix::trans_y(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + matrix_layout[16], matrix_layout[17], value_little_endian)
+}
 
 ///|
 pub fn Matrix::persp0(self : Self) -> Float {
-  matrix_persp0(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix_layout[19], matrix_layout[20], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix_persp1(bytes : Bytes) -> Float = "moonbit_skia_matrix_persp1"
 
 ///|
 pub fn Matrix::persp1(self : Self) -> Float {
-  matrix_persp1(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix_layout[22], matrix_layout[23], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix_persp2(bytes : Bytes) -> Float = "moonbit_skia_matrix_persp2"
-
-///|
 pub fn Matrix::persp2(self : Self) -> Float {
-  matrix_persp2(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix_layout[25], matrix_layout[26], value_little_endian)
 }
 
 ///|
 struct Matrix44 {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1411,161 +1393,111 @@ extern "c" fn matrix44_make(m00 : Float, m01 : Float, m02 : Float, m03 : Float, 
 
 ///|
 pub fn Matrix44::Matrix44(m00 : Float, m01 : Float, m02 : Float, m03 : Float, m10 : Float, m11 : Float, m12 : Float, m13 : Float, m20 : Float, m21 : Float, m22 : Float, m23 : Float, m30 : Float, m31 : Float, m32 : Float, m33 : Float) -> Matrix44 {
-  { bytes: matrix44_make(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) }
+  { bytes: matrix44_make(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33), offset: 0 }
 }
 
 ///|
-pub fn Matrix44::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn matrix44_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_matrix44_layout"
+
+///|
+let matrix44_layout : FixedArray[Int32] = matrix44_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Matrix44::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + matrix44_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix44_m00(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m00"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Matrix44::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, matrix44_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Matrix44::m00(self : Self) -> Float {
-  matrix44_m00(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[1], matrix44_layout[2], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m01(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m01"
 
 ///|
 pub fn Matrix44::m01(self : Self) -> Float {
-  matrix44_m01(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[4], matrix44_layout[5], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m02(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m02"
 
 ///|
 pub fn Matrix44::m02(self : Self) -> Float {
-  matrix44_m02(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[7], matrix44_layout[8], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m03(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m03"
 
 ///|
 pub fn Matrix44::m03(self : Self) -> Float {
-  matrix44_m03(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[10], matrix44_layout[11], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m10(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m10"
 
 ///|
 pub fn Matrix44::m10(self : Self) -> Float {
-  matrix44_m10(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[13], matrix44_layout[14], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m11(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m11"
 
 ///|
 pub fn Matrix44::m11(self : Self) -> Float {
-  matrix44_m11(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[16], matrix44_layout[17], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m12(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m12"
 
 ///|
 pub fn Matrix44::m12(self : Self) -> Float {
-  matrix44_m12(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[19], matrix44_layout[20], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m13(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m13"
 
 ///|
 pub fn Matrix44::m13(self : Self) -> Float {
-  matrix44_m13(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[22], matrix44_layout[23], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m20(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m20"
 
 ///|
 pub fn Matrix44::m20(self : Self) -> Float {
-  matrix44_m20(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[25], matrix44_layout[26], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m21(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m21"
 
 ///|
 pub fn Matrix44::m21(self : Self) -> Float {
-  matrix44_m21(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[28], matrix44_layout[29], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m22(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m22"
 
 ///|
 pub fn Matrix44::m22(self : Self) -> Float {
-  matrix44_m22(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[31], matrix44_layout[32], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m23(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m23"
 
 ///|
 pub fn Matrix44::m23(self : Self) -> Float {
-  matrix44_m23(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[34], matrix44_layout[35], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m30(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m30"
 
 ///|
 pub fn Matrix44::m30(self : Self) -> Float {
-  matrix44_m30(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[37], matrix44_layout[38], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m31(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m31"
 
 ///|
 pub fn Matrix44::m31(self : Self) -> Float {
-  matrix44_m31(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[40], matrix44_layout[41], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn matrix44_m32(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m32"
 
 ///|
 pub fn Matrix44::m32(self : Self) -> Float {
-  matrix44_m32(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[43], matrix44_layout[44], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn matrix44_m33(bytes : Bytes) -> Float = "moonbit_skia_matrix44_m33"
-
-///|
 pub fn Matrix44::m33(self : Self) -> Float {
-  matrix44_m33(self.to_bytes())
+  value_read_float(self.bytes, self.offset + matrix44_layout[46], matrix44_layout[47], value_little_endian)
 }
 
 ///|
 struct Point3 {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1573,44 +1505,46 @@ extern "c" fn point3_make(x : Float, y : Float, z : Float) -> Bytes = "moonbit_s
 
 ///|
 pub fn Point3::Point3(x : Float, y : Float, z : Float) -> Point3 {
-  { bytes: point3_make(x, y, z) }
+  { bytes: point3_make(x, y, z), offset: 0 }
 }
 
 ///|
-pub fn Point3::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn point3_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_point3_layout"
+
+///|
+let point3_layout : FixedArray[Int32] = point3_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Point3::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + point3_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn point3_x(bytes : Bytes) -> Float = "moonbit_skia_point3_x"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Point3::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, point3_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Point3::x(self : Self) -> Float {
-  point3_x(self.to_bytes())
+  value_read_float(self.bytes, self.offset + point3_layout[1], point3_layout[2], value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn point3_y(bytes : Bytes) -> Float = "moonbit_skia_point3_y"
 
 ///|
 pub fn Point3::y(self : Self) -> Float {
-  point3_y(self.to_bytes())
+  value_read_float(self.bytes, self.offset + point3_layout[4], point3_layout[5], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn point3_z(bytes : Bytes) -> Float = "moonbit_skia_point3_z"
-
-///|
 pub fn Point3::z(self : Self) -> Float {
-  point3_z(self.to_bytes())
+  value_read_float(self.bytes, self.offset + point3_layout[7], point3_layout[8], value_little_endian)
 }
 
 ///|
 struct Ipoint {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1618,35 +1552,41 @@ extern "c" fn ipoint_make(x : Int32, y : Int32) -> Bytes = "moonbit_skia_ipoint_
 
 ///|
 pub fn Ipoint::Ipoint(x : Int32, y : Int32) -> Ipoint {
-  { bytes: ipoint_make(x, y) }
+  { bytes: ipoint_make(x, y), offset: 0 }
 }
 
 ///|
-pub fn Ipoint::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn ipoint_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_ipoint_layout"
+
+///|
+let ipoint_layout : FixedArray[Int32] = ipoint_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Ipoint::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + ipoint_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn ipoint_x(bytes : Bytes) -> Int32 = "moonbit_skia_ipoint_x"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Ipoint::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, ipoint_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Ipoint::x(self : Self) -> Int32 {
-  ipoint_x(self.to_bytes())
+  read_integer(self.bytes, self.offset + ipoint_layout[1], ipoint_layout[2], ipoint_layout[3] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn ipoint_y(bytes : Bytes) -> Int32 = "moonbit_skia_ipoint_y"
-
-///|
 pub fn Ipoint::y(self : Self) -> Int32 {
-  ipoint_y(self.to_bytes())
+  read_integer(self.bytes, self.offset + ipoint_layout[4], ipoint_layout[5], ipoint_layout[6] != 0, value_little_endian)
 }
 
 ///|
 struct Size {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1654,35 +1594,41 @@ extern "c" fn size_make(w : Float, h : Float) -> Bytes = "moonbit_skia_size_make
 
 ///|
 pub fn Size::Size(w : Float, h : Float) -> Size {
-  { bytes: size_make(w, h) }
+  { bytes: size_make(w, h), offset: 0 }
 }
 
 ///|
-pub fn Size::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn size_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_size_layout"
+
+///|
+let size_layout : FixedArray[Int32] = size_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Size::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + size_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn size_w(bytes : Bytes) -> Float = "moonbit_skia_size_w"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Size::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, size_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Size::w(self : Self) -> Float {
-  size_w(self.to_bytes())
+  value_read_float(self.bytes, self.offset + size_layout[1], size_layout[2], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn size_h(bytes : Bytes) -> Float = "moonbit_skia_size_h"
-
-///|
 pub fn Size::h(self : Self) -> Float {
-  size_h(self.to_bytes())
+  value_read_float(self.bytes, self.offset + size_layout[4], size_layout[5], value_little_endian)
 }
 
 ///|
 struct Isize {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
@@ -1690,307 +1636,361 @@ extern "c" fn isize_make(w : Int32, h : Int32) -> Bytes = "moonbit_skia_isize_ma
 
 ///|
 pub fn Isize::Isize(w : Int32, h : Int32) -> Isize {
-  { bytes: isize_make(w, h) }
+  { bytes: isize_make(w, h), offset: 0 }
 }
 
 ///|
-pub fn Isize::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn isize_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_isize_layout"
+
+///|
+let isize_layout : FixedArray[Int32] = isize_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Isize::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + isize_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn isize_w(bytes : Bytes) -> Int32 = "moonbit_skia_isize_w"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Isize::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, isize_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Isize::w(self : Self) -> Int32 {
-  isize_w(self.to_bytes())
+  read_integer(self.bytes, self.offset + isize_layout[1], isize_layout[2], isize_layout[3] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn isize_h(bytes : Bytes) -> Int32 = "moonbit_skia_isize_h"
-
-///|
 pub fn Isize::h(self : Self) -> Int32 {
-  isize_h(self.to_bytes())
+  read_integer(self.bytes, self.offset + isize_layout[4], isize_layout[5], isize_layout[6] != 0, value_little_endian)
 }
 
 ///|
 struct Fontmetrics {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
-extern "c" fn fontmetrics_make(fFlags : UInt32, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Bytes = "moonbit_skia_fontmetrics_make"
+extern "c" fn fontmetrics_make(f_flags : UInt32, f_top : Float, f_ascent : Float, f_descent : Float, f_bottom : Float, f_leading : Float, f_avg_char_width : Float, f_max_char_width : Float, f_x_min : Float, f_x_max : Float, f_x_height : Float, f_cap_height : Float, f_underline_thickness : Float, f_underline_position : Float, f_strikeout_thickness : Float, f_strikeout_position : Float) -> Bytes = "moonbit_skia_fontmetrics_make"
 
 ///|
-pub fn Fontmetrics::Fontmetrics(fFlags : UInt32, fTop : Float, fAscent : Float, fDescent : Float, fBottom : Float, fLeading : Float, fAvgCharWidth : Float, fMaxCharWidth : Float, fXMin : Float, fXMax : Float, fXHeight : Float, fCapHeight : Float, fUnderlineThickness : Float, fUnderlinePosition : Float, fStrikeoutThickness : Float, fStrikeoutPosition : Float) -> Fontmetrics {
-  { bytes: fontmetrics_make(fFlags, fTop, fAscent, fDescent, fBottom, fLeading, fAvgCharWidth, fMaxCharWidth, fXMin, fXMax, fXHeight, fCapHeight, fUnderlineThickness, fUnderlinePosition, fStrikeoutThickness, fStrikeoutPosition) }
+pub fn Fontmetrics::Fontmetrics(f_flags : UInt32, f_top : Float, f_ascent : Float, f_descent : Float, f_bottom : Float, f_leading : Float, f_avg_char_width : Float, f_max_char_width : Float, f_x_min : Float, f_x_max : Float, f_x_height : Float, f_cap_height : Float, f_underline_thickness : Float, f_underline_position : Float, f_strikeout_thickness : Float, f_strikeout_position : Float) -> Fontmetrics {
+  { bytes: fontmetrics_make(f_flags, f_top, f_ascent, f_descent, f_bottom, f_leading, f_avg_char_width, f_max_char_width, f_x_min, f_x_max, f_x_height, f_cap_height, f_underline_thickness, f_underline_position, f_strikeout_thickness, f_strikeout_position), offset: 0 }
 }
 
 ///|
-pub fn Fontmetrics::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn fontmetrics_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_fontmetrics_layout"
+
+///|
+let fontmetrics_layout : FixedArray[Int32] = fontmetrics_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Fontmetrics::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + fontmetrics_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fFlags(bytes : Bytes) -> UInt32 = "moonbit_skia_fontmetrics_fflags"
-
-///|
-pub fn Fontmetrics::fFlags(self : Self) -> UInt32 {
-  fontmetrics_fFlags(self.to_bytes())
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Fontmetrics::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, fontmetrics_layout[0]), offset: 0 }
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fTop(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_ftop"
-
-///|
-pub fn Fontmetrics::fTop(self : Self) -> Float {
-  fontmetrics_fTop(self.to_bytes())
+pub fn Fontmetrics::f_flags(self : Self) -> UInt32 {
+  read_integer(self.bytes, self.offset + fontmetrics_layout[1], fontmetrics_layout[2], fontmetrics_layout[3] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fAscent(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fascent"
-
-///|
-pub fn Fontmetrics::fAscent(self : Self) -> Float {
-  fontmetrics_fAscent(self.to_bytes())
+pub fn Fontmetrics::f_top(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[4], fontmetrics_layout[5], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fDescent(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fdescent"
-
-///|
-pub fn Fontmetrics::fDescent(self : Self) -> Float {
-  fontmetrics_fDescent(self.to_bytes())
+pub fn Fontmetrics::f_ascent(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[7], fontmetrics_layout[8], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fBottom(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fbottom"
-
-///|
-pub fn Fontmetrics::fBottom(self : Self) -> Float {
-  fontmetrics_fBottom(self.to_bytes())
+pub fn Fontmetrics::f_descent(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[10], fontmetrics_layout[11], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fLeading(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fleading"
-
-///|
-pub fn Fontmetrics::fLeading(self : Self) -> Float {
-  fontmetrics_fLeading(self.to_bytes())
+pub fn Fontmetrics::f_bottom(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[13], fontmetrics_layout[14], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fAvgCharWidth(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_favgcharwidth"
-
-///|
-pub fn Fontmetrics::fAvgCharWidth(self : Self) -> Float {
-  fontmetrics_fAvgCharWidth(self.to_bytes())
+pub fn Fontmetrics::f_leading(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[16], fontmetrics_layout[17], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fMaxCharWidth(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fmaxcharwidth"
-
-///|
-pub fn Fontmetrics::fMaxCharWidth(self : Self) -> Float {
-  fontmetrics_fMaxCharWidth(self.to_bytes())
+pub fn Fontmetrics::f_avg_char_width(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[19], fontmetrics_layout[20], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fXMin(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fxmin"
-
-///|
-pub fn Fontmetrics::fXMin(self : Self) -> Float {
-  fontmetrics_fXMin(self.to_bytes())
+pub fn Fontmetrics::f_max_char_width(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[22], fontmetrics_layout[23], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fXMax(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fxmax"
-
-///|
-pub fn Fontmetrics::fXMax(self : Self) -> Float {
-  fontmetrics_fXMax(self.to_bytes())
+pub fn Fontmetrics::f_x_min(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[25], fontmetrics_layout[26], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fXHeight(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fxheight"
-
-///|
-pub fn Fontmetrics::fXHeight(self : Self) -> Float {
-  fontmetrics_fXHeight(self.to_bytes())
+pub fn Fontmetrics::f_x_max(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[28], fontmetrics_layout[29], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fCapHeight(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fcapheight"
-
-///|
-pub fn Fontmetrics::fCapHeight(self : Self) -> Float {
-  fontmetrics_fCapHeight(self.to_bytes())
+pub fn Fontmetrics::f_x_height(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[31], fontmetrics_layout[32], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fUnderlineThickness(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_funderlinethickness"
-
-///|
-pub fn Fontmetrics::fUnderlineThickness(self : Self) -> Float {
-  fontmetrics_fUnderlineThickness(self.to_bytes())
+pub fn Fontmetrics::f_cap_height(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[34], fontmetrics_layout[35], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fUnderlinePosition(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_funderlineposition"
-
-///|
-pub fn Fontmetrics::fUnderlinePosition(self : Self) -> Float {
-  fontmetrics_fUnderlinePosition(self.to_bytes())
+pub fn Fontmetrics::f_underline_thickness(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[37], fontmetrics_layout[38], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fStrikeoutThickness(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fstrikeoutthickness"
-
-///|
-pub fn Fontmetrics::fStrikeoutThickness(self : Self) -> Float {
-  fontmetrics_fStrikeoutThickness(self.to_bytes())
+pub fn Fontmetrics::f_underline_position(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[40], fontmetrics_layout[41], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn fontmetrics_fStrikeoutPosition(bytes : Bytes) -> Float = "moonbit_skia_fontmetrics_fstrikeoutposition"
+pub fn Fontmetrics::f_strikeout_thickness(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[43], fontmetrics_layout[44], value_little_endian)
+}
 
 ///|
-pub fn Fontmetrics::fStrikeoutPosition(self : Self) -> Float {
-  fontmetrics_fStrikeoutPosition(self.to_bytes())
+pub fn Fontmetrics::f_strikeout_position(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + fontmetrics_layout[46], fontmetrics_layout[47], value_little_endian)
 }
 
 ///|
 struct Imageinfo {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
-extern "c" fn imageinfo_make(colorspace : Colorspace, width : Int32, height : Int32, colorType : Int32, alphaType : Int32) -> Bytes = "moonbit_skia_imageinfo_make"
+extern "c" fn imageinfo_make(colorspace : Colorspace, width : Int32, height : Int32, color_type : Int32, alpha_type : Int32) -> Bytes = "moonbit_skia_imageinfo_make"
 
 ///|
-pub fn Imageinfo::Imageinfo(colorspace : Colorspace, width : Int32, height : Int32, colorType : Int32, alphaType : Int32) -> Imageinfo {
-  { bytes: imageinfo_make(colorspace, width, height, colorType, alphaType) }
+pub fn Imageinfo::Imageinfo(colorspace : Colorspace, width : Int32, height : Int32, color_type : Int32, alpha_type : Int32) -> Imageinfo {
+  { bytes: imageinfo_make(colorspace, width, height, color_type, alpha_type), offset: 0 }
 }
 
 ///|
-pub fn Imageinfo::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn imageinfo_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_imageinfo_layout"
+
+///|
+let imageinfo_layout : FixedArray[Int32] = imageinfo_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Imageinfo::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + imageinfo_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn imageinfo_colorspace(bytes : Bytes) -> Colorspace = "moonbit_skia_imageinfo_colorspace"
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Imageinfo::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, imageinfo_layout[0]), offset: 0 }
+}
 
 ///|
 pub fn Imageinfo::colorspace(self : Self) -> Colorspace {
-  imageinfo_colorspace(self.to_bytes())
+  Colorspace::from_pointer(value_read_pointer(self.bytes, self.offset + imageinfo_layout[1]))
 }
-
-///|
-#borrow(bytes)
-extern "c" fn imageinfo_width(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_width"
 
 ///|
 pub fn Imageinfo::width(self : Self) -> Int32 {
-  imageinfo_width(self.to_bytes())
+  read_integer(self.bytes, self.offset + imageinfo_layout[4], imageinfo_layout[5], imageinfo_layout[6] != 0, value_little_endian)
 }
-
-///|
-#borrow(bytes)
-extern "c" fn imageinfo_height(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_height"
 
 ///|
 pub fn Imageinfo::height(self : Self) -> Int32 {
-  imageinfo_height(self.to_bytes())
+  read_integer(self.bytes, self.offset + imageinfo_layout[7], imageinfo_layout[8], imageinfo_layout[9] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn imageinfo_colorType(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_colortype"
-
-///|
-pub fn Imageinfo::colorType(self : Self) -> Int32 {
-  imageinfo_colorType(self.to_bytes())
+pub fn Imageinfo::color_type(self : Self) -> Int32 {
+  read_integer(self.bytes, self.offset + imageinfo_layout[10], imageinfo_layout[11], imageinfo_layout[12] != 0, value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn imageinfo_alphaType(bytes : Bytes) -> Int32 = "moonbit_skia_imageinfo_alphatype"
-
-///|
-pub fn Imageinfo::alphaType(self : Self) -> Int32 {
-  imageinfo_alphaType(self.to_bytes())
+pub fn Imageinfo::alpha_type(self : Self) -> Int32 {
+  read_integer(self.bytes, self.offset + imageinfo_layout[13], imageinfo_layout[14], imageinfo_layout[15] != 0, value_little_endian)
 }
 
 ///|
 struct Rsxform {
   bytes : Bytes
+  offset : Int32
 }
 
 ///|
-extern "c" fn rsxform_make(fSCos : Float, fSSin : Float, fTX : Float, fTY : Float) -> Bytes = "moonbit_skia_rsxform_make"
+extern "c" fn rsxform_make(f_s_cos : Float, f_s_sin : Float, f_tx : Float, f_ty : Float) -> Bytes = "moonbit_skia_rsxform_make"
 
 ///|
-pub fn Rsxform::Rsxform(fSCos : Float, fSSin : Float, fTX : Float, fTY : Float) -> Rsxform {
-  { bytes: rsxform_make(fSCos, fSSin, fTX, fTY) }
+pub fn Rsxform::Rsxform(f_s_cos : Float, f_s_sin : Float, f_tx : Float, f_ty : Float) -> Rsxform {
+  { bytes: rsxform_make(f_s_cos, f_s_sin, f_tx, f_ty), offset: 0 }
 }
 
 ///|
-pub fn Rsxform::to_bytes(self : Self) -> Bytes {
-  self.bytes
+extern "c" fn rsxform_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_rsxform_layout"
+
+///|
+let rsxform_layout : FixedArray[Int32] = rsxform_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn Rsxform::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + rsxform_layout[0])
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rsxform_fSCos(bytes : Bytes) -> Float = "moonbit_skia_rsxform_fscos"
-
-///|
-pub fn Rsxform::fSCos(self : Self) -> Float {
-  rsxform_fSCos(self.to_bytes())
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn Rsxform::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, rsxform_layout[0]), offset: 0 }
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rsxform_fSSin(bytes : Bytes) -> Float = "moonbit_skia_rsxform_fssin"
-
-///|
-pub fn Rsxform::fSSin(self : Self) -> Float {
-  rsxform_fSSin(self.to_bytes())
+pub fn Rsxform::f_s_cos(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + rsxform_layout[1], rsxform_layout[2], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rsxform_fTX(bytes : Bytes) -> Float = "moonbit_skia_rsxform_ftx"
-
-///|
-pub fn Rsxform::fTX(self : Self) -> Float {
-  rsxform_fTX(self.to_bytes())
+pub fn Rsxform::f_s_sin(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + rsxform_layout[4], rsxform_layout[5], value_little_endian)
 }
 
 ///|
-#borrow(bytes)
-extern "c" fn rsxform_fTY(bytes : Bytes) -> Float = "moonbit_skia_rsxform_fty"
+pub fn Rsxform::f_tx(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + rsxform_layout[7], rsxform_layout[8], value_little_endian)
+}
 
 ///|
-pub fn Rsxform::fTY(self : Self) -> Float {
-  rsxform_fTY(self.to_bytes())
+pub fn Rsxform::f_ty(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + rsxform_layout[10], rsxform_layout[11], value_little_endian)
 }
+
+///|
+struct CubicResampler {
+  bytes : Bytes
+  offset : Int32
+}
+
+///|
+extern "c" fn cubicresampler_make(f_b : Float, f_c : Float) -> Bytes = "moonbit_skia_cubicresampler_make"
+
+///|
+pub fn CubicResampler::CubicResampler(f_b : Float, f_c : Float) -> CubicResampler {
+  { bytes: cubicresampler_make(f_b, f_c), offset: 0 }
+}
+
+///|
+extern "c" fn cubicresampler_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_cubicresampler_layout"
+
+///|
+let cubicresampler_layout : FixedArray[Int32] = cubicresampler_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn CubicResampler::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + cubicresampler_layout[0])
+}
+
+///|
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn CubicResampler::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, cubicresampler_layout[0]), offset: 0 }
+}
+
+///|
+pub fn CubicResampler::f_b(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + cubicresampler_layout[1], cubicresampler_layout[2], value_little_endian)
+}
+
+///|
+pub fn CubicResampler::f_c(self : Self) -> Float {
+  value_read_float(self.bytes, self.offset + cubicresampler_layout[4], cubicresampler_layout[5], value_little_endian)
+}
+
+///|
+struct SamplingOptions {
+  bytes : Bytes
+  offset : Int32
+}
+
+///|
+#borrow(f_cubic)
+extern "c" fn samplingoptions_make(f_max_aniso : Int32, f_use_cubic : Bool, f_cubic : Bytes, f_cubic_offset : Int32, f_filter : Int32, f_mipmap : Int32) -> Bytes = "moonbit_skia_samplingoptions_make"
+
+///|
+pub fn SamplingOptions::SamplingOptions(f_max_aniso : Int32, f_use_cubic : Bool, f_cubic : CubicResampler, f_filter : Int32, f_mipmap : Int32) -> SamplingOptions {
+  { bytes: samplingoptions_make(f_max_aniso, f_use_cubic, f_cubic.bytes, f_cubic.offset, f_filter, f_mipmap), offset: 0 }
+}
+
+///|
+extern "c" fn samplingoptions_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_samplingoptions_layout"
+
+///|
+let samplingoptions_layout : FixedArray[Int32] = samplingoptions_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn SamplingOptions::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + samplingoptions_layout[0])
+}
+
+///|
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn SamplingOptions::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, samplingoptions_layout[0]), offset: 0 }
+}
+
+///|
+pub fn SamplingOptions::f_max_aniso(self : Self) -> Int32 {
+  read_integer(self.bytes, self.offset + samplingoptions_layout[1], samplingoptions_layout[2], samplingoptions_layout[3] != 0, value_little_endian)
+}
+
+///|
+pub fn SamplingOptions::f_use_cubic(self : Self) -> Bool {
+  value_read_bool(self.bytes, self.offset + samplingoptions_layout[4], samplingoptions_layout[5])
+}
+
+///|
+/// A view into the original buffer; writes and native buffer reuse are shared.
+pub fn SamplingOptions::f_cubic(self : Self) -> CubicResampler {
+  { bytes: self.bytes, offset: self.offset + samplingoptions_layout[7] }
+}
+
+///|
+pub fn SamplingOptions::f_filter(self : Self) -> Int32 {
+  read_integer(self.bytes, self.offset + samplingoptions_layout[10], samplingoptions_layout[11], samplingoptions_layout[12] != 0, value_little_endian)
+}
+
+///|
+pub fn SamplingOptions::f_mipmap(self : Self) -> Int32 {
+  read_integer(self.bytes, self.offset + samplingoptions_layout[13], samplingoptions_layout[14], samplingoptions_layout[15] != 0, value_little_endian)
+}
+
+///|
+pub const LINEAR_SK_FILTER_MODE : Int32 = 0
+
+///|
+pub const NONE_SK_MIPMAP_MODE : Int32 = 0

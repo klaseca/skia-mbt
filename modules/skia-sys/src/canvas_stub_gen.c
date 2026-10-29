@@ -69,7 +69,11 @@ int32_t moonbit_skia_canvas_is_null(void *self) {
   return moonbit_skia_canvas_ptr(self) == NULL;
 }
 
+sk_data_t *moonbit_skia_data_ptr(void *self);
+
 sk_font_t *moonbit_skia_font_ptr(void *self);
+
+sk_image_t *moonbit_skia_image_ptr(void *self);
 
 sk_paint_t *moonbit_skia_paint_ptr(void *self);
 
@@ -128,23 +132,23 @@ void moonbit_skia_canvas_reset_matrix(void * ccanvas) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_set_matrix_ffi(void * ccanvas, moonbit_bytes_t cmatrix) {
-  sk_canvas_set_matrix(moonbit_skia_canvas_ptr(ccanvas), ((const sk_matrix44_t *)cmatrix));
+void moonbit_skia_canvas_set_matrix_ffi(void * ccanvas, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  sk_canvas_set_matrix(moonbit_skia_canvas_ptr(ccanvas), ((const sk_matrix44_t *)(cmatrix + cmatrix_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_get_matrix_ffi(void * ccanvas, moonbit_bytes_t cmatrix) {
-  sk_canvas_get_matrix(moonbit_skia_canvas_ptr(ccanvas), ((sk_matrix44_t *)cmatrix));
+void moonbit_skia_canvas_get_matrix_ffi(void * ccanvas, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  sk_canvas_get_matrix(moonbit_skia_canvas_ptr(ccanvas), ((sk_matrix44_t *)(cmatrix + cmatrix_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_round_rect_ffi(void * ccanvas, moonbit_bytes_t crect, float rx, float ry, void * cpaint) {
-  sk_canvas_draw_round_rect(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect), rx, ry, moonbit_skia_paint_ptr(cpaint));
+void moonbit_skia_canvas_draw_round_rect_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset, float rx, float ry, void * cpaint) {
+  sk_canvas_draw_round_rect(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)), rx, ry, moonbit_skia_paint_ptr(cpaint));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_clip_rect_with_operation_ffi(void * ccanvas, moonbit_bytes_t crect, sk_clipop_t op, int32_t doAA) {
-  sk_canvas_clip_rect_with_operation(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect), op, doAA);
+void moonbit_skia_canvas_clip_rect_with_operation_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset, sk_clipop_t op, int32_t doAA) {
+  sk_canvas_clip_rect_with_operation(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)), op, doAA);
 }
 
 MOONBIT_FFI_EXPORT
@@ -158,13 +162,13 @@ void moonbit_skia_canvas_clip_rrect_with_operation(void * ccanvas, const sk_rrec
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_canvas_get_local_clip_bounds_ffi(void * ccanvas, moonbit_bytes_t cbounds) {
-  return sk_canvas_get_local_clip_bounds(moonbit_skia_canvas_ptr(ccanvas), ((sk_rect_t *)cbounds));
+int32_t moonbit_skia_canvas_get_local_clip_bounds_ffi(void * ccanvas, moonbit_bytes_t cbounds, int32_t cbounds_offset) {
+  return sk_canvas_get_local_clip_bounds(moonbit_skia_canvas_ptr(ccanvas), ((sk_rect_t *)(cbounds + cbounds_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_canvas_get_device_clip_bounds_ffi(void * ccanvas, moonbit_bytes_t cbounds) {
-  return sk_canvas_get_device_clip_bounds(moonbit_skia_canvas_ptr(ccanvas), ((sk_irect_t *)cbounds));
+int32_t moonbit_skia_canvas_get_device_clip_bounds_ffi(void * ccanvas, moonbit_bytes_t cbounds, int32_t cbounds_offset) {
+  return sk_canvas_get_device_clip_bounds(moonbit_skia_canvas_ptr(ccanvas), ((sk_irect_t *)(cbounds + cbounds_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -173,8 +177,8 @@ int32_t moonbit_skia_canvas_save(void * ccanvas) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_canvas_save_layer_ffi(void * ccanvas, moonbit_bytes_t crect, void * cpaint) {
-  return sk_canvas_save_layer(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect), moonbit_skia_paint_ptr(cpaint));
+int32_t moonbit_skia_canvas_save_layer_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset, void * cpaint) {
+  return sk_canvas_save_layer(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)), moonbit_skia_paint_ptr(cpaint));
 }
 
 MOONBIT_FFI_EXPORT
@@ -208,13 +212,13 @@ void moonbit_skia_canvas_skew(void * ccanvas, float sx, float sy) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_concat_ffi(void * ccanvas, moonbit_bytes_t cmatrix) {
-  sk_canvas_concat(moonbit_skia_canvas_ptr(ccanvas), ((const sk_matrix44_t *)cmatrix));
+void moonbit_skia_canvas_concat_ffi(void * ccanvas, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  sk_canvas_concat(moonbit_skia_canvas_ptr(ccanvas), ((const sk_matrix44_t *)(cmatrix + cmatrix_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_canvas_quick_reject_ffi(void * ccanvas, moonbit_bytes_t crect) {
-  return sk_canvas_quick_reject(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect));
+int32_t moonbit_skia_canvas_quick_reject_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset) {
+  return sk_canvas_quick_reject(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -233,8 +237,8 @@ void moonbit_skia_canvas_draw_region(void * ccanvas, const sk_region_t * cregion
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_rect_ffi(void * ccanvas, moonbit_bytes_t crect, void * cpaint) {
-  sk_canvas_draw_rect(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect), moonbit_skia_paint_ptr(cpaint));
+void moonbit_skia_canvas_draw_rect_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset, void * cpaint) {
+  sk_canvas_draw_rect(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)), moonbit_skia_paint_ptr(cpaint));
 }
 
 MOONBIT_FFI_EXPORT
@@ -248,8 +252,8 @@ void moonbit_skia_canvas_draw_circle(void * ccanvas, float cx, float cy, float r
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_oval_ffi(void * ccanvas, moonbit_bytes_t crect, void * cpaint) {
-  sk_canvas_draw_oval(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)crect), moonbit_skia_paint_ptr(cpaint));
+void moonbit_skia_canvas_draw_oval_ffi(void * ccanvas, moonbit_bytes_t crect, int32_t crect_offset, void * cpaint) {
+  sk_canvas_draw_oval(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(crect + crect_offset)), moonbit_skia_paint_ptr(cpaint));
 }
 
 MOONBIT_FFI_EXPORT
@@ -258,13 +262,23 @@ void moonbit_skia_canvas_draw_path(void * ccanvas, void * cpath, void * cpaint) 
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_picture_ffi(void * ccanvas, const sk_picture_t * cpicture, moonbit_bytes_t cmatrix, void * cpaint) {
-  sk_canvas_draw_picture(moonbit_skia_canvas_ptr(ccanvas), cpicture, ((const sk_matrix_t *)cmatrix), moonbit_skia_paint_ptr(cpaint));
+void moonbit_skia_canvas_draw_image_ffi(void * ccanvas, void * cimage, float x, float y, moonbit_bytes_t sampling, int32_t sampling_offset, void * cpaint) {
+  sk_canvas_draw_image(moonbit_skia_canvas_ptr(ccanvas), moonbit_skia_image_ptr(cimage), x, y, ((const sk_sampling_options_t *)(sampling + sampling_offset)), moonbit_skia_paint_ptr(cpaint));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_drawable_ffi(void * ccanvas, sk_drawable_t * cdrawable, moonbit_bytes_t cmatrix) {
-  sk_canvas_draw_drawable(moonbit_skia_canvas_ptr(ccanvas), cdrawable, ((const sk_matrix_t *)cmatrix));
+void moonbit_skia_canvas_draw_image_rect_ffi(void * ccanvas, void * cimage, moonbit_bytes_t csrcR, int32_t csrcR_offset, moonbit_bytes_t cdstR, int32_t cdstR_offset, moonbit_bytes_t sampling, int32_t sampling_offset, void * cpaint) {
+  sk_canvas_draw_image_rect(moonbit_skia_canvas_ptr(ccanvas), moonbit_skia_image_ptr(cimage), ((const sk_rect_t *)(csrcR + csrcR_offset)), ((const sk_rect_t *)(cdstR + cdstR_offset)), ((const sk_sampling_options_t *)(sampling + sampling_offset)), moonbit_skia_paint_ptr(cpaint));
+}
+
+MOONBIT_FFI_EXPORT
+void moonbit_skia_canvas_draw_picture_ffi(void * ccanvas, const sk_picture_t * cpicture, moonbit_bytes_t cmatrix, int32_t cmatrix_offset, void * cpaint) {
+  sk_canvas_draw_picture(moonbit_skia_canvas_ptr(ccanvas), cpicture, ((const sk_matrix_t *)(cmatrix + cmatrix_offset)), moonbit_skia_paint_ptr(cpaint));
+}
+
+MOONBIT_FFI_EXPORT
+void moonbit_skia_canvas_draw_drawable_ffi(void * ccanvas, sk_drawable_t * cdrawable, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  sk_canvas_draw_drawable(moonbit_skia_canvas_ptr(ccanvas), cdrawable, ((const sk_matrix_t *)(cmatrix + cmatrix_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -273,33 +287,33 @@ void * moonbit_skia_canvas_new_from_bitmap(const sk_bitmap_t * bitmap) {
 }
 
 MOONBIT_FFI_EXPORT
-void * moonbit_skia_canvas_new_from_raster_ffi(moonbit_bytes_t cinfo, moonbit_bytes_t pixels, uint64_t rowBytes, const sk_surfaceprops_t * props) {
-  return moonbit_skia_canvas_make_owned(sk_canvas_new_from_raster(((const sk_imageinfo_t *)cinfo), ((void *)pixels), rowBytes, props));
+void * moonbit_skia_canvas_new_from_raster_ffi(moonbit_bytes_t cinfo, int32_t cinfo_offset, moonbit_bytes_t pixels, uint64_t rowBytes, const sk_surfaceprops_t * props) {
+  return moonbit_skia_canvas_make_owned(sk_canvas_new_from_raster(((const sk_imageinfo_t *)(cinfo + cinfo_offset)), ((void *)pixels), rowBytes, props));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_annotation_ffi(void * t, moonbit_bytes_t rect, moonbit_bytes_t key, sk_data_t * value) {
-  sk_canvas_draw_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)rect), (const char *)key, value);
+void moonbit_skia_canvas_draw_annotation_ffi(void * t, moonbit_bytes_t rect, int32_t rect_offset, moonbit_bytes_t key, void * value) {
+  sk_canvas_draw_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)(rect + rect_offset)), (const char *)key, moonbit_skia_data_ptr(value));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_url_annotation_ffi(void * t, moonbit_bytes_t rect, sk_data_t * value) {
-  sk_canvas_draw_url_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)rect), value);
+void moonbit_skia_canvas_draw_url_annotation_ffi(void * t, moonbit_bytes_t rect, int32_t rect_offset, void * value) {
+  sk_canvas_draw_url_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)(rect + rect_offset)), moonbit_skia_data_ptr(value));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_named_destination_annotation_ffi(void * t, moonbit_bytes_t point, sk_data_t * value) {
-  sk_canvas_draw_named_destination_annotation(moonbit_skia_canvas_ptr(t), ((const sk_point_t *)point), value);
+void moonbit_skia_canvas_draw_named_destination_annotation_ffi(void * t, moonbit_bytes_t point, int32_t point_offset, void * value) {
+  sk_canvas_draw_named_destination_annotation(moonbit_skia_canvas_ptr(t), ((const sk_point_t *)(point + point_offset)), moonbit_skia_data_ptr(value));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_link_destination_annotation_ffi(void * t, moonbit_bytes_t rect, sk_data_t * value) {
-  sk_canvas_draw_link_destination_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)rect), value);
+void moonbit_skia_canvas_draw_link_destination_annotation_ffi(void * t, moonbit_bytes_t rect, int32_t rect_offset, void * value) {
+  sk_canvas_draw_link_destination_annotation(moonbit_skia_canvas_ptr(t), ((const sk_rect_t *)(rect + rect_offset)), moonbit_skia_data_ptr(value));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_image_nine_ffi(void * ccanvas, const sk_image_t * image, moonbit_bytes_t center, moonbit_bytes_t dst, sk_filter_mode_t mode, void * paint) {
-  sk_canvas_draw_image_nine(moonbit_skia_canvas_ptr(ccanvas), image, ((const sk_irect_t *)center), ((const sk_rect_t *)dst), mode, moonbit_skia_paint_ptr(paint));
+void moonbit_skia_canvas_draw_image_nine_ffi(void * ccanvas, void * image, moonbit_bytes_t center, int32_t center_offset, moonbit_bytes_t dst, int32_t dst_offset, sk_filter_mode_t mode, void * paint) {
+  sk_canvas_draw_image_nine(moonbit_skia_canvas_ptr(ccanvas), moonbit_skia_image_ptr(image), ((const sk_irect_t *)(center + center_offset)), ((const sk_rect_t *)(dst + dst_offset)), mode, moonbit_skia_paint_ptr(paint));
 }
 
 MOONBIT_FFI_EXPORT
@@ -308,8 +322,8 @@ void moonbit_skia_canvas_draw_vertices(void * ccanvas, const sk_vertices_t * ver
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_canvas_draw_arc_ffi(void * ccanvas, moonbit_bytes_t oval, float startAngle, float sweepAngle, int32_t useCenter, void * paint) {
-  sk_canvas_draw_arc(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)oval), startAngle, sweepAngle, useCenter, moonbit_skia_paint_ptr(paint));
+void moonbit_skia_canvas_draw_arc_ffi(void * ccanvas, moonbit_bytes_t oval, int32_t oval_offset, float startAngle, float sweepAngle, int32_t useCenter, void * paint) {
+  sk_canvas_draw_arc(moonbit_skia_canvas_ptr(ccanvas), ((const sk_rect_t *)(oval + oval_offset)), startAngle, sweepAngle, useCenter, moonbit_skia_paint_ptr(paint));
 }
 
 MOONBIT_FFI_EXPORT

@@ -91,6 +91,7 @@ pub extern "c" fn fontmgr_match_family(arg0 : Fontmgr, familyName : Bytes) -> Fo
 pub extern "c" fn fontmgr_match_family_style(arg0 : Fontmgr, familyName : Bytes, style : Fontstyle) -> Typeface = "moonbit_skia_fontmgr_match_family_style"
 
 ///|
+#borrow(data)
 pub extern "c" fn fontmgr_create_from_data(arg0 : Fontmgr, data : Data, index : Int32) -> Typeface = "moonbit_skia_fontmgr_create_from_data"
 
 ///|

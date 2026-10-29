@@ -6,6 +6,10 @@ import {
 }
 
 // Values
+pub const LINEAR_SK_FILTER_MODE : Int32 = 0
+
+pub const NONE_SK_MIPMAP_MODE : Int32 = 0
+
 pub fn canvas_clear(Canvas, UInt32) -> Unit
 
 pub fn canvas_clip_path_with_operation(Canvas, Path, Int32, Bool) -> Unit
@@ -34,7 +38,11 @@ pub fn canvas_draw_drawable(Canvas, Drawable, Matrix) -> Unit
 
 pub fn canvas_draw_drrect(Canvas, Rrect, Rrect, Paint) -> Unit
 
+pub fn canvas_draw_image(Canvas, Image, Float, Float, SamplingOptions, Paint) -> Unit
+
 pub fn canvas_draw_image_nine(Canvas, Image, Irect, Rect, Int32, Paint) -> Unit
+
+pub fn canvas_draw_image_rect(Canvas, Image, Rect, Rect, SamplingOptions, Paint) -> Unit
 
 pub fn canvas_draw_line(Canvas, Float, Float, Float, Float, Paint) -> Unit
 
@@ -140,7 +148,7 @@ pub fn font_get_hinting(Font) -> Int32
 
 pub fn font_get_metrics(Font, Fontmetrics) -> Float
 
-pub fn font_get_path(Font, UInt16, Path) -> Bool
+pub fn font_get_path(Font, UInt32, Path) -> Bool
 
 pub fn font_get_scale_x(Font) -> Float
 
@@ -192,7 +200,7 @@ pub fn font_set_subpixel(Font, Bool) -> Unit
 
 pub fn font_set_typeface(Font, Typeface) -> Unit
 
-pub fn font_unichar_to_glyph(Font, Int32) -> UInt16
+pub fn font_unichar_to_glyph(Font, Int32) -> UInt32
 
 pub fn fontmgr_count_families(Fontmgr) -> Int32
 
@@ -298,6 +306,10 @@ pub fn image_make_non_texture_image(Image) -> Image
 
 pub fn image_make_raster_image(Image) -> Image
 
+pub fn image_make_raw_shader(Image, Int32, Int32, SamplingOptions, Matrix) -> Shader
+
+pub fn image_make_shader(Image, Int32, Int32, SamplingOptions, Matrix) -> Shader
+
 pub fn image_make_subset(Image, GrDirectContext, Irect) -> Image
 
 pub fn image_make_subset_raster(Image, Irect) -> Image
@@ -331,6 +343,8 @@ pub fn image_read_pixels_into_pixmap(Image, Pixmap, Int32, Int32, Int32) -> Bool
 pub fn image_ref(Image) -> Unit
 
 pub fn image_ref_encoded(Image) -> Data
+
+pub fn image_scale_pixels(Image, Pixmap, SamplingOptions, Int32) -> Bool
 
 pub fn image_unref(Image) -> Unit
 
@@ -518,6 +532,8 @@ pub fn pathmeasure_get_length(Pathmeasure) -> Float
 
 pub fn pathmeasure_get_matrix(Pathmeasure, Float, Matrix, Int32) -> Bool
 
+pub fn pathmeasure_get_pos_tan(Pathmeasure, Float, Point, Point) -> Bool
+
 pub fn pathmeasure_get_segment(Pathmeasure, Float, Float, Pathbuilder, Bool) -> Bool
 
 pub fn pathmeasure_is_closed(Pathmeasure) -> Bool
@@ -549,6 +565,8 @@ pub fn refcnt_unique(Refcnt) -> Bool
 pub fn skia_write_surface_png(Surface, Bytes) -> Int32
 
 pub fn surface_draw(Surface, Canvas, Float, Float, Paint) -> Unit
+
+pub fn surface_draw_with_sampling(Surface, Canvas, Float, Float, SamplingOptions, Paint) -> Unit
 
 pub fn surface_get_canvas(Surface) -> Canvas
 
@@ -616,7 +634,7 @@ pub fn typeface_is_fixed_pitch(Typeface) -> Bool
 
 pub fn typeface_open_stream(Typeface, @ref.Ref[Int32]) -> StreamAsset
 
-pub fn typeface_unichar_to_glyph(Typeface, Int32) -> UInt16
+pub fn typeface_unichar_to_glyph(Typeface, Int32) -> UInt32
 
 pub fn typeface_unref(Typeface) -> Unit
 
@@ -654,11 +672,12 @@ pub fn Codec::to_pointer(Self) -> Pointer
 
 type Color4f
 pub fn Color4f::Color4f(Float, Float, Float, Float) -> Self
-pub fn Color4f::fA(Self) -> Float
-pub fn Color4f::fB(Self) -> Float
-pub fn Color4f::fG(Self) -> Float
-pub fn Color4f::fR(Self) -> Float
-pub fn Color4f::to_bytes(Self) -> Bytes
+pub fn Color4f::as_bytes(Self) -> BytesView
+pub fn Color4f::copy(Self) -> Self
+pub fn Color4f::f_a(Self) -> Float
+pub fn Color4f::f_b(Self) -> Float
+pub fn Color4f::f_g(Self) -> Float
+pub fn Color4f::f_r(Self) -> Float
 
 #external
 pub type Colorfilter
@@ -674,6 +693,13 @@ pub fn Colorspace::to_pointer(Self) -> Pointer
 pub type ColorspaceIccProfile
 pub fn ColorspaceIccProfile::is_null(Self) -> Bool
 pub fn ColorspaceIccProfile::to_pointer(Self) -> Pointer
+
+type CubicResampler
+pub fn CubicResampler::CubicResampler(Float, Float) -> Self
+pub fn CubicResampler::as_bytes(Self) -> BytesView
+pub fn CubicResampler::copy(Self) -> Self
+pub fn CubicResampler::f_b(Self) -> Float
+pub fn CubicResampler::f_c(Self) -> Float
 
 #external
 pub type D3dAlloc
@@ -700,10 +726,8 @@ pub type D3dDxgiAdapter
 pub fn D3dDxgiAdapter::is_null(Self) -> Bool
 pub fn D3dDxgiAdapter::to_pointer(Self) -> Pointer
 
-#external
 pub type Data
 pub fn Data::is_null(Self) -> Bool
-pub fn Data::to_pointer(Self) -> Pointer
 
 #external
 pub type Document
@@ -725,23 +749,24 @@ pub fn Font::is_null(Self) -> Bool
 
 type Fontmetrics
 pub fn Fontmetrics::Fontmetrics(UInt32, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -> Self
-pub fn Fontmetrics::fAscent(Self) -> Float
-pub fn Fontmetrics::fAvgCharWidth(Self) -> Float
-pub fn Fontmetrics::fBottom(Self) -> Float
-pub fn Fontmetrics::fCapHeight(Self) -> Float
-pub fn Fontmetrics::fDescent(Self) -> Float
-pub fn Fontmetrics::fFlags(Self) -> UInt32
-pub fn Fontmetrics::fLeading(Self) -> Float
-pub fn Fontmetrics::fMaxCharWidth(Self) -> Float
-pub fn Fontmetrics::fStrikeoutPosition(Self) -> Float
-pub fn Fontmetrics::fStrikeoutThickness(Self) -> Float
-pub fn Fontmetrics::fTop(Self) -> Float
-pub fn Fontmetrics::fUnderlinePosition(Self) -> Float
-pub fn Fontmetrics::fUnderlineThickness(Self) -> Float
-pub fn Fontmetrics::fXHeight(Self) -> Float
-pub fn Fontmetrics::fXMax(Self) -> Float
-pub fn Fontmetrics::fXMin(Self) -> Float
-pub fn Fontmetrics::to_bytes(Self) -> Bytes
+pub fn Fontmetrics::as_bytes(Self) -> BytesView
+pub fn Fontmetrics::copy(Self) -> Self
+pub fn Fontmetrics::f_ascent(Self) -> Float
+pub fn Fontmetrics::f_avg_char_width(Self) -> Float
+pub fn Fontmetrics::f_bottom(Self) -> Float
+pub fn Fontmetrics::f_cap_height(Self) -> Float
+pub fn Fontmetrics::f_descent(Self) -> Float
+pub fn Fontmetrics::f_flags(Self) -> UInt32
+pub fn Fontmetrics::f_leading(Self) -> Float
+pub fn Fontmetrics::f_max_char_width(Self) -> Float
+pub fn Fontmetrics::f_strikeout_position(Self) -> Float
+pub fn Fontmetrics::f_strikeout_thickness(Self) -> Float
+pub fn Fontmetrics::f_top(Self) -> Float
+pub fn Fontmetrics::f_underline_position(Self) -> Float
+pub fn Fontmetrics::f_underline_thickness(Self) -> Float
+pub fn Fontmetrics::f_x_height(Self) -> Float
+pub fn Fontmetrics::f_x_max(Self) -> Float
+pub fn Fontmetrics::f_x_min(Self) -> Float
 
 #external
 pub type Fontmgr
@@ -803,10 +828,8 @@ pub type GrVkinterface
 pub fn GrVkinterface::is_null(Self) -> Bool
 pub fn GrVkinterface::to_pointer(Self) -> Pointer
 
-#external
 pub type Image
 pub fn Image::is_null(Self) -> Bool
-pub fn Image::to_pointer(Self) -> Pointer
 
 #external
 pub type Imagefilter
@@ -815,31 +838,35 @@ pub fn Imagefilter::to_pointer(Self) -> Pointer
 
 type Imageinfo
 pub fn Imageinfo::Imageinfo(Colorspace, Int32, Int32, Int32, Int32) -> Self
-pub fn Imageinfo::alphaType(Self) -> Int32
-pub fn Imageinfo::colorType(Self) -> Int32
+pub fn Imageinfo::alpha_type(Self) -> Int32
+pub fn Imageinfo::as_bytes(Self) -> BytesView
+pub fn Imageinfo::color_type(Self) -> Int32
 pub fn Imageinfo::colorspace(Self) -> Colorspace
+pub fn Imageinfo::copy(Self) -> Self
 pub fn Imageinfo::height(Self) -> Int32
-pub fn Imageinfo::to_bytes(Self) -> Bytes
 pub fn Imageinfo::width(Self) -> Int32
 
 type Ipoint
 pub fn Ipoint::Ipoint(Int32, Int32) -> Self
-pub fn Ipoint::to_bytes(Self) -> Bytes
+pub fn Ipoint::as_bytes(Self) -> BytesView
+pub fn Ipoint::copy(Self) -> Self
 pub fn Ipoint::x(Self) -> Int32
 pub fn Ipoint::y(Self) -> Int32
 
 type Irect
 pub fn Irect::Irect(Int32, Int32, Int32, Int32) -> Self
+pub fn Irect::as_bytes(Self) -> BytesView
 pub fn Irect::bottom(Self) -> Int32
+pub fn Irect::copy(Self) -> Self
 pub fn Irect::left(Self) -> Int32
 pub fn Irect::right(Self) -> Int32
-pub fn Irect::to_bytes(Self) -> Bytes
 pub fn Irect::top(Self) -> Int32
 
 type Isize
 pub fn Isize::Isize(Int32, Int32) -> Self
+pub fn Isize::as_bytes(Self) -> BytesView
+pub fn Isize::copy(Self) -> Self
 pub fn Isize::h(Self) -> Int32
-pub fn Isize::to_bytes(Self) -> Bytes
 pub fn Isize::w(Self) -> Int32
 
 #external
@@ -849,19 +876,22 @@ pub fn Maskfilter::to_pointer(Self) -> Pointer
 
 type Matrix
 pub fn Matrix::Matrix(Float, Float, Float, Float, Float, Float, Float, Float, Float) -> Self
+pub fn Matrix::as_bytes(Self) -> BytesView
+pub fn Matrix::copy(Self) -> Self
 pub fn Matrix::persp0(Self) -> Float
 pub fn Matrix::persp1(Self) -> Float
 pub fn Matrix::persp2(Self) -> Float
-pub fn Matrix::scaleX(Self) -> Float
-pub fn Matrix::scaleY(Self) -> Float
-pub fn Matrix::skewX(Self) -> Float
-pub fn Matrix::skewY(Self) -> Float
-pub fn Matrix::to_bytes(Self) -> Bytes
-pub fn Matrix::transX(Self) -> Float
-pub fn Matrix::transY(Self) -> Float
+pub fn Matrix::scale_x(Self) -> Float
+pub fn Matrix::scale_y(Self) -> Float
+pub fn Matrix::skew_x(Self) -> Float
+pub fn Matrix::skew_y(Self) -> Float
+pub fn Matrix::trans_x(Self) -> Float
+pub fn Matrix::trans_y(Self) -> Float
 
 type Matrix44
 pub fn Matrix44::Matrix44(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -> Self
+pub fn Matrix44::as_bytes(Self) -> BytesView
+pub fn Matrix44::copy(Self) -> Self
 pub fn Matrix44::m00(Self) -> Float
 pub fn Matrix44::m01(Self) -> Float
 pub fn Matrix44::m02(Self) -> Float
@@ -878,7 +908,6 @@ pub fn Matrix44::m30(Self) -> Float
 pub fn Matrix44::m31(Self) -> Float
 pub fn Matrix44::m32(Self) -> Float
 pub fn Matrix44::m33(Self) -> Float
-pub fn Matrix44::to_bytes(Self) -> Bytes
 
 #external
 pub type NodrawCanvas
@@ -958,13 +987,15 @@ pub fn Pixmap::to_pointer(Self) -> Pointer
 
 type Point
 pub fn Point::Point(Float, Float) -> Self
-pub fn Point::to_bytes(Self) -> Bytes
+pub fn Point::as_bytes(Self) -> BytesView
+pub fn Point::copy(Self) -> Self
 pub fn Point::x(Self) -> Float
 pub fn Point::y(Self) -> Float
 
 type Point3
 pub fn Point3::Point3(Float, Float, Float) -> Self
-pub fn Point3::to_bytes(Self) -> Bytes
+pub fn Point3::as_bytes(Self) -> BytesView
+pub fn Point3::copy(Self) -> Self
 pub fn Point3::x(Self) -> Float
 pub fn Point3::y(Self) -> Float
 pub fn Point3::z(Self) -> Float
@@ -976,10 +1007,11 @@ pub fn Pointer::null() -> Self
 
 type Rect
 pub fn Rect::Rect(Float, Float, Float, Float) -> Self
+pub fn Rect::as_bytes(Self) -> BytesView
 pub fn Rect::bottom(Self) -> Float
+pub fn Rect::copy(Self) -> Self
 pub fn Rect::left(Self) -> Float
 pub fn Rect::right(Self) -> Float
-pub fn Rect::to_bytes(Self) -> Bytes
 pub fn Rect::top(Self) -> Float
 
 #external
@@ -1014,11 +1046,12 @@ pub fn Rrect::to_pointer(Self) -> Pointer
 
 type Rsxform
 pub fn Rsxform::Rsxform(Float, Float, Float, Float) -> Self
-pub fn Rsxform::fSCos(Self) -> Float
-pub fn Rsxform::fSSin(Self) -> Float
-pub fn Rsxform::fTX(Self) -> Float
-pub fn Rsxform::fTY(Self) -> Float
-pub fn Rsxform::to_bytes(Self) -> Bytes
+pub fn Rsxform::as_bytes(Self) -> BytesView
+pub fn Rsxform::copy(Self) -> Self
+pub fn Rsxform::f_s_cos(Self) -> Float
+pub fn Rsxform::f_s_sin(Self) -> Float
+pub fn Rsxform::f_tx(Self) -> Float
+pub fn Rsxform::f_ty(Self) -> Float
 
 #external
 pub type RtreeFactory
@@ -1030,6 +1063,16 @@ pub type Runtimeeffect
 pub fn Runtimeeffect::is_null(Self) -> Bool
 pub fn Runtimeeffect::to_pointer(Self) -> Pointer
 
+type SamplingOptions
+pub fn SamplingOptions::SamplingOptions(Int32, Bool, CubicResampler, Int32, Int32) -> Self
+pub fn SamplingOptions::as_bytes(Self) -> BytesView
+pub fn SamplingOptions::copy(Self) -> Self
+pub fn SamplingOptions::f_cubic(Self) -> CubicResampler
+pub fn SamplingOptions::f_filter(Self) -> Int32
+pub fn SamplingOptions::f_max_aniso(Self) -> Int32
+pub fn SamplingOptions::f_mipmap(Self) -> Int32
+pub fn SamplingOptions::f_use_cubic(Self) -> Bool
+
 #external
 pub type Shader
 pub fn Shader::is_null(Self) -> Bool
@@ -1037,8 +1080,9 @@ pub fn Shader::to_pointer(Self) -> Pointer
 
 type Size
 pub fn Size::Size(Float, Float) -> Self
+pub fn Size::as_bytes(Self) -> BytesView
+pub fn Size::copy(Self) -> Self
 pub fn Size::h(Self) -> Float
-pub fn Size::to_bytes(Self) -> Bytes
 pub fn Size::w(Self) -> Float
 
 #external

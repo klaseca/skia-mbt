@@ -92,8 +92,8 @@ uint32_t moonbit_skia_paint_get_color(void * arg0) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_paint_get_color4f_ffi(void * paint, moonbit_bytes_t color) {
-  sk_paint_get_color4f(moonbit_skia_paint_ptr(paint), ((sk_color4f_t *)color));
+void moonbit_skia_paint_get_color4f_ffi(void * paint, moonbit_bytes_t color, int32_t color_offset) {
+  sk_paint_get_color4f(moonbit_skia_paint_ptr(paint), ((sk_color4f_t *)(color + color_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -102,8 +102,8 @@ void moonbit_skia_paint_set_color(void * arg0, uint32_t arg1) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_paint_set_color4f_ffi(void * paint, moonbit_bytes_t color, sk_colorspace_t * colorspace) {
-  sk_paint_set_color4f(moonbit_skia_paint_ptr(paint), ((sk_color4f_t *)color), colorspace);
+void moonbit_skia_paint_set_color4f_ffi(void * paint, moonbit_bytes_t color, int32_t color_offset, sk_colorspace_t * colorspace) {
+  sk_paint_set_color4f(moonbit_skia_paint_ptr(paint), ((sk_color4f_t *)(color + color_offset)), colorspace);
 }
 
 MOONBIT_FFI_EXPORT
@@ -237,6 +237,6 @@ void moonbit_skia_paint_set_path_effect(void * cpaint, sk_path_effect_t * effect
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_paint_get_fill_path_ffi(void * cpaint, void * src, sk_pathbuilder_t * dst, moonbit_bytes_t cullRect, moonbit_bytes_t cmatrix) {
-  return sk_paint_get_fill_path(moonbit_skia_paint_ptr(cpaint), moonbit_skia_path_ptr(src), dst, ((const sk_rect_t *)cullRect), ((const sk_matrix_t *)cmatrix));
+int32_t moonbit_skia_paint_get_fill_path_ffi(void * cpaint, void * src, sk_pathbuilder_t * dst, moonbit_bytes_t cullRect, int32_t cullRect_offset, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  return sk_paint_get_fill_path(moonbit_skia_paint_ptr(cpaint), moonbit_skia_path_ptr(src), dst, ((const sk_rect_t *)(cullRect + cullRect_offset)), ((const sk_matrix_t *)(cmatrix + cmatrix_offset)));
 }

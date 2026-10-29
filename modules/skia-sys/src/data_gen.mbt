@@ -8,15 +8,19 @@ pub extern "c" fn data_new_empty() -> Data = "moonbit_skia_data_new_empty"
 pub extern "c" fn data_new_with_copy(src : Bytes, length : UInt64) -> Data = "moonbit_skia_data_new_with_copy"
 
 ///|
+#borrow(src)
 pub extern "c" fn data_new_subset(src : Data, offset : UInt64, length : UInt64) -> Data = "moonbit_skia_data_new_subset"
 
 ///|
+#borrow(arg0)
 pub extern "c" fn data_ref(arg0 : Data) = "moonbit_skia_data_ref"
 
 ///|
+#borrow(arg0)
 pub extern "c" fn data_unref(arg0 : Data) = "moonbit_skia_data_unref"
 
 ///|
+#borrow(arg0)
 pub extern "c" fn data_get_size(arg0 : Data) -> UInt64 = "moonbit_skia_data_get_size"
 
 ///|

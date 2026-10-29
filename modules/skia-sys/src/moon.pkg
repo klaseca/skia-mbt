@@ -12,6 +12,7 @@ formatter(
     "surface_gen.mbt",
     "typeface_gen.mbt",
     "types_gen.mbt",
+    "value_gen.mbt",
   ],
 )
 
@@ -32,6 +33,7 @@ options(
     "surface_stub_gen.c",
     "typeface_stub_gen.c",
     "types_stub_gen.c",
+    "value_stub_gen.c",
     "imageinfo_support.c",
     "png_support.c",
   ],

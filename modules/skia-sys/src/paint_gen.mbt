@@ -29,11 +29,11 @@ pub extern "c" fn paint_get_color(arg0 : Paint) -> UInt32 = "moonbit_skia_paint_
 
 ///|
 #borrow(paint, color)
-extern "c" fn paint_get_color4f_ffi(paint : Paint, color : Bytes) = "moonbit_skia_paint_get_color4f_ffi"
+extern "c" fn paint_get_color4f_ffi(paint : Paint, color : Bytes, color_offset : Int32) = "moonbit_skia_paint_get_color4f_ffi"
 
 ///|
 pub fn paint_get_color4f(paint : Paint, color : Color4f) -> Unit {
-  paint_get_color4f_ffi(paint, color.to_bytes())
+  paint_get_color4f_ffi(paint, color.bytes, color.offset)
 }
 
 ///|
@@ -42,11 +42,11 @@ pub extern "c" fn paint_set_color(arg0 : Paint, arg1 : UInt32) = "moonbit_skia_p
 
 ///|
 #borrow(paint, color)
-extern "c" fn paint_set_color4f_ffi(paint : Paint, color : Bytes, colorspace : Colorspace) = "moonbit_skia_paint_set_color4f_ffi"
+extern "c" fn paint_set_color4f_ffi(paint : Paint, color : Bytes, color_offset : Int32, colorspace : Colorspace) = "moonbit_skia_paint_set_color4f_ffi"
 
 ///|
 pub fn paint_set_color4f(paint : Paint, color : Color4f, colorspace : Colorspace) -> Unit {
-  paint_set_color4f_ffi(paint, color.to_bytes(), colorspace)
+  paint_set_color4f_ffi(paint, color.bytes, color.offset, colorspace)
 }
 
 ///|
@@ -155,9 +155,9 @@ pub extern "c" fn paint_set_path_effect(cpaint : Paint, effect : PathEffect) = "
 
 ///|
 #borrow(cpaint, src, cullRect, cmatrix)
-extern "c" fn paint_get_fill_path_ffi(cpaint : Paint, src : Path, dst : Pathbuilder, cullRect : Bytes, cmatrix : Bytes) -> Bool = "moonbit_skia_paint_get_fill_path_ffi"
+extern "c" fn paint_get_fill_path_ffi(cpaint : Paint, src : Path, dst : Pathbuilder, cullRect : Bytes, cullRect_offset : Int32, cmatrix : Bytes, cmatrix_offset : Int32) -> Bool = "moonbit_skia_paint_get_fill_path_ffi"
 
 ///|
 pub fn paint_get_fill_path(cpaint : Paint, src : Path, dst : Pathbuilder, cullRect : Rect, cmatrix : Matrix) -> Bool {
-  paint_get_fill_path_ffi(cpaint, src, dst, cullRect.to_bytes(), cmatrix.to_bytes())
+  paint_get_fill_path_ffi(cpaint, src, dst, cullRect.bytes, cullRect.offset, cmatrix.bytes, cmatrix.offset)
 }

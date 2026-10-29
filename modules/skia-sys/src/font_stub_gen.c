@@ -202,9 +202,9 @@ float moonbit_skia_font_measure_text(void * font, moonbit_bytes_t text, uint64_t
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_font_measure_text_no_return_ffi(void * font, moonbit_bytes_t text, uint64_t byteLength, sk_text_encoding_t encoding, moonbit_bytes_t bounds, void * paint, float * measuredWidth) {
+void moonbit_skia_font_measure_text_no_return_ffi(void * font, moonbit_bytes_t text, uint64_t byteLength, sk_text_encoding_t encoding, moonbit_bytes_t bounds, int32_t bounds_offset, void * paint, float * measuredWidth) {
   float measuredWidth_value = 0;
-  sk_font_measure_text_no_return(moonbit_skia_font_ptr(font), ((const void *)text), byteLength, encoding, ((sk_rect_t *)bounds), moonbit_skia_paint_ptr(paint), &measuredWidth_value);
+  sk_font_measure_text_no_return(moonbit_skia_font_ptr(font), ((const void *)text), byteLength, encoding, ((sk_rect_t *)(bounds + bounds_offset)), moonbit_skia_paint_ptr(paint), &measuredWidth_value);
   if (measuredWidth != NULL) *measuredWidth = measuredWidth_value;
 }
 
@@ -222,8 +222,8 @@ int32_t moonbit_skia_font_get_path(void * font, uint32_t glyph, void * path) {
 }
 
 MOONBIT_FFI_EXPORT
-float moonbit_skia_font_get_metrics_ffi(void * font, moonbit_bytes_t metrics) {
-  return sk_font_get_metrics(moonbit_skia_font_ptr(font), ((sk_fontmetrics_t *)metrics));
+float moonbit_skia_font_get_metrics_ffi(void * font, moonbit_bytes_t metrics, int32_t metrics_offset) {
+  return sk_font_get_metrics(moonbit_skia_font_ptr(font), ((sk_fontmetrics_t *)(metrics + metrics_offset)));
 }
 
 MOONBIT_FFI_EXPORT

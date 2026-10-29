@@ -59,6 +59,9 @@ int32_t moonbit_skia_typeface_is_null(void *self) {
   return moonbit_skia_typeface_ptr(self) == NULL;
 }
 
+sk_data_t *moonbit_skia_data_ptr(void *self);
+void *moonbit_skia_data_make_owned(sk_data_t *ptr);
+
 MOONBIT_FFI_EXPORT
 sk_fontstyle_t * moonbit_skia_typeface_get_fontstyle(void * typeface) {
   return sk_typeface_get_fontstyle(moonbit_skia_typeface_ptr(typeface));
@@ -115,8 +118,8 @@ uint64_t moonbit_skia_typeface_get_table_data(void * typeface, uint32_t tag, uin
 }
 
 MOONBIT_FFI_EXPORT
-sk_data_t * moonbit_skia_typeface_copy_table_data(void * typeface, uint32_t tag) {
-  return sk_typeface_copy_table_data(moonbit_skia_typeface_ptr(typeface), tag);
+void * moonbit_skia_typeface_copy_table_data(void * typeface, uint32_t tag) {
+  return moonbit_skia_data_make_owned(sk_typeface_copy_table_data(moonbit_skia_typeface_ptr(typeface), tag));
 }
 
 MOONBIT_FFI_EXPORT
@@ -178,8 +181,8 @@ void * moonbit_skia_fontmgr_match_family_style(sk_fontmgr_t * arg0, moonbit_byte
 }
 
 MOONBIT_FFI_EXPORT
-void * moonbit_skia_fontmgr_create_from_data(sk_fontmgr_t * arg0, sk_data_t * data, int32_t index) {
-  return moonbit_skia_typeface_make_owned(sk_fontmgr_create_from_data(arg0, data, index));
+void * moonbit_skia_fontmgr_create_from_data(sk_fontmgr_t * arg0, void * data, int32_t index) {
+  return moonbit_skia_typeface_make_owned(sk_fontmgr_create_from_data(arg0, moonbit_skia_data_ptr(data), index));
 }
 
 MOONBIT_FFI_EXPORT

@@ -30,11 +30,13 @@ pub struct Canvas {
 pub fn Canvas::clear(Self, Color) -> Unit
 pub fn Canvas::clip_rect(Self, Rect, antialias? : Bool) -> Unit
 pub fn Canvas::draw_circle(Self, Float, Float, Float, Paint) -> Unit
+pub fn Canvas::draw_image(Self, @skia-sys.Image, Rect, Rect, Paint) -> Unit
 pub fn Canvas::draw_line(Self, Float, Float, Float, Float, Paint) -> Unit
 pub fn Canvas::draw_path(Self, Path, Paint) -> Unit
 pub fn Canvas::draw_round_rect(Self, Rect, Float, Float, Paint) -> Unit
 pub fn Canvas::draw_text(Self, Bytes, x~ : Float, y~ : Float, Font, Paint) -> Unit
 pub fn Canvas::from_sys(@skia-sys.Canvas) -> Self
+pub fn Canvas::quick_reject(Self, Rect) -> Bool
 pub fn Canvas::restore(Self) -> Unit
 pub fn Canvas::save(Self) -> Int32
 

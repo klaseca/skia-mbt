@@ -73,6 +73,8 @@ int32_t moonbit_skia_surface_is_null(void *self) {
 sk_canvas_t *moonbit_skia_canvas_ptr(void *self);
 void *moonbit_skia_canvas_make_dependent(sk_canvas_t *ptr, void *owner, void (*retain_owner)(void *), void (*release_owner)(void *));
 
+void *moonbit_skia_image_make_owned(sk_image_t *ptr);
+
 sk_paint_t *moonbit_skia_paint_ptr(void *self);
 
 MOONBIT_FFI_EXPORT
@@ -81,8 +83,8 @@ void * moonbit_skia_surface_new_null(int32_t width, int32_t height) {
 }
 
 MOONBIT_FFI_EXPORT
-void * moonbit_skia_surface_new_raster_ffi(moonbit_bytes_t arg0, uint64_t rowBytes, const sk_surfaceprops_t * arg2) {
-  return moonbit_skia_surface_make_owned(sk_surface_new_raster(((const sk_imageinfo_t *)arg0), rowBytes, arg2));
+void * moonbit_skia_surface_new_raster_ffi(moonbit_bytes_t arg0, int32_t arg0_offset, uint64_t rowBytes, const sk_surfaceprops_t * arg2) {
+  return moonbit_skia_surface_make_owned(sk_surface_new_raster(((const sk_imageinfo_t *)(arg0 + arg0_offset)), rowBytes, arg2));
 }
 
 MOONBIT_FFI_EXPORT
@@ -96,8 +98,8 @@ void * moonbit_skia_surface_new_backend_render_target(gr_recording_context_t * c
 }
 
 MOONBIT_FFI_EXPORT
-void * moonbit_skia_surface_new_render_target_ffi(gr_recording_context_t * context, int32_t budgeted, moonbit_bytes_t cinfo, int32_t sampleCount, gr_surfaceorigin_t origin, const sk_surfaceprops_t * props, int32_t shouldCreateWithMips) {
-  return moonbit_skia_surface_make_owned(sk_surface_new_render_target(context, budgeted, ((const sk_imageinfo_t *)cinfo), sampleCount, origin, props, shouldCreateWithMips));
+void * moonbit_skia_surface_new_render_target_ffi(gr_recording_context_t * context, int32_t budgeted, moonbit_bytes_t cinfo, int32_t cinfo_offset, int32_t sampleCount, gr_surfaceorigin_t origin, const sk_surfaceprops_t * props, int32_t shouldCreateWithMips) {
+  return moonbit_skia_surface_make_owned(sk_surface_new_render_target(context, budgeted, ((const sk_imageinfo_t *)(cinfo + cinfo_offset)), sampleCount, origin, props, shouldCreateWithMips));
 }
 
 MOONBIT_FFI_EXPORT
@@ -106,13 +108,13 @@ void * moonbit_skia_surface_get_canvas(void * arg0) {
 }
 
 MOONBIT_FFI_EXPORT
-sk_image_t * moonbit_skia_surface_new_image_snapshot(void * arg0) {
-  return sk_surface_new_image_snapshot(moonbit_skia_surface_ptr(arg0));
+void * moonbit_skia_surface_new_image_snapshot(void * arg0) {
+  return moonbit_skia_image_make_owned(sk_surface_new_image_snapshot(moonbit_skia_surface_ptr(arg0)));
 }
 
 MOONBIT_FFI_EXPORT
-sk_image_t * moonbit_skia_surface_new_image_snapshot_with_crop_ffi(void * surface, moonbit_bytes_t bounds) {
-  return sk_surface_new_image_snapshot_with_crop(moonbit_skia_surface_ptr(surface), ((const sk_irect_t *)bounds));
+void * moonbit_skia_surface_new_image_snapshot_with_crop_ffi(void * surface, moonbit_bytes_t bounds, int32_t bounds_offset) {
+  return moonbit_skia_image_make_owned(sk_surface_new_image_snapshot_with_crop(moonbit_skia_surface_ptr(surface), ((const sk_irect_t *)(bounds + bounds_offset))));
 }
 
 MOONBIT_FFI_EXPORT
@@ -121,13 +123,18 @@ void moonbit_skia_surface_draw(void * surface, void * canvas, float x, float y, 
 }
 
 MOONBIT_FFI_EXPORT
+void moonbit_skia_surface_draw_with_sampling_ffi(void * surface, void * canvas, float x, float y, moonbit_bytes_t sampling, int32_t sampling_offset, void * paint) {
+  sk_surface_draw_with_sampling(moonbit_skia_surface_ptr(surface), moonbit_skia_canvas_ptr(canvas), x, y, ((const sk_sampling_options_t *)(sampling + sampling_offset)), moonbit_skia_paint_ptr(paint));
+}
+
+MOONBIT_FFI_EXPORT
 int32_t moonbit_skia_surface_peek_pixels(void * surface, sk_pixmap_t * pixmap) {
   return sk_surface_peek_pixels(moonbit_skia_surface_ptr(surface), pixmap);
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_surface_read_pixels_ffi(void * surface, moonbit_bytes_t dstInfo, moonbit_bytes_t dstPixels, uint64_t dstRowBytes, int32_t srcX, int32_t srcY) {
-  return sk_surface_read_pixels(moonbit_skia_surface_ptr(surface), ((sk_imageinfo_t *)dstInfo), ((void *)dstPixels), dstRowBytes, srcX, srcY);
+int32_t moonbit_skia_surface_read_pixels_ffi(void * surface, moonbit_bytes_t dstInfo, int32_t dstInfo_offset, moonbit_bytes_t dstPixels, uint64_t dstRowBytes, int32_t srcX, int32_t srcY) {
+  return sk_surface_read_pixels(moonbit_skia_surface_ptr(surface), ((sk_imageinfo_t *)(dstInfo + dstInfo_offset)), ((void *)dstPixels), dstRowBytes, srcX, srcY);
 }
 
 MOONBIT_FFI_EXPORT

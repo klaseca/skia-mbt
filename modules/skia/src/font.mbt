@@ -80,8 +80,8 @@ pub fn Font::metrics(self : Self) -> FontMetrics {
   )
   ignore(@sys.font_get_metrics(self.raw, metrics))
   {
-    ascent: metrics.fAscent(),
-    descent: metrics.fDescent(),
-    leading: metrics.fLeading(),
+    ascent: metrics.f_ascent(),
+    descent: metrics.f_descent(),
+    leading: metrics.f_leading(),
   }
 }

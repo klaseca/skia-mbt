@@ -61,6 +61,14 @@ export const skiaSysConfig = defineConfig({
     },
   ],
   resources: {
+    sk_image_t: {
+      release: 'sk_image_unref',
+      defaultLifetime: 'owned',
+    },
+    sk_data_t: {
+      release: 'sk_data_unref',
+      defaultLifetime: 'owned',
+    },
     sk_font_t: {
       release: 'sk_font_delete',
       defaultLifetime: 'owned',
@@ -87,7 +95,10 @@ export const skiaSysConfig = defineConfig({
       defaultLifetime: 'owned',
     },
   },
+  constantPrefixes: ['LINEAR_SK_FILTER_MODE', 'NONE_SK_MIPMAP_MODE'],
   valueStructs: {
+    sk_cubic_resampler_t: {},
+    sk_sampling_options_t: {},
     sk_color4f_t: {},
     sk_fontmetrics_t: {},
     sk_imageinfo_t: {},

@@ -21,12 +21,13 @@ moonbit_bytes_t moonbit_skia_imageinfo_bgra8888_premul(
 MOONBIT_FFI_EXPORT
 void *moonbit_skia_canvas_new_from_raster_pointer(
     moonbit_bytes_t info,
+    int32_t info_offset,
     void *pixels,
     uint64_t row_bytes,
     const sk_surfaceprops_t *props) {
   return moonbit_skia_canvas_make_owned(
       sk_canvas_new_from_raster(
-          (const sk_imageinfo_t *)info,
+          (const sk_imageinfo_t *)(info + info_offset),
           pixels,
           row_bytes,
           props));

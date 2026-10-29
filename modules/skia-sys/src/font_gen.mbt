@@ -114,11 +114,11 @@ pub extern "c" fn font_measure_text(font : Font, text : Bytes, byteLength : UInt
 
 ///|
 #borrow(font, text, bounds, paint, measuredWidth)
-extern "c" fn font_measure_text_no_return_ffi(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, bounds : Bytes, paint : Paint, measuredWidth : Ref[Float]) = "moonbit_skia_font_measure_text_no_return_ffi"
+extern "c" fn font_measure_text_no_return_ffi(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, bounds : Bytes, bounds_offset : Int32, paint : Paint, measuredWidth : Ref[Float]) = "moonbit_skia_font_measure_text_no_return_ffi"
 
 ///|
 pub fn font_measure_text_no_return(font : Font, text : Bytes, byteLength : UInt64, encoding : Int32, bounds : Rect, paint : Paint, measuredWidth : Ref[Float]) -> Unit {
-  font_measure_text_no_return_ffi(font, text, byteLength, encoding, bounds.to_bytes(), paint, measuredWidth)
+  font_measure_text_no_return_ffi(font, text, byteLength, encoding, bounds.bytes, bounds.offset, paint, measuredWidth)
 }
 
 ///|
@@ -131,11 +131,11 @@ pub extern "c" fn font_get_path(font : Font, glyph : UInt32, path : Path) -> Boo
 
 ///|
 #borrow(font, metrics)
-extern "c" fn font_get_metrics_ffi(font : Font, metrics : Bytes) -> Float = "moonbit_skia_font_get_metrics_ffi"
+extern "c" fn font_get_metrics_ffi(font : Font, metrics : Bytes, metrics_offset : Int32) -> Float = "moonbit_skia_font_get_metrics_ffi"
 
 ///|
 pub fn font_get_metrics(font : Font, metrics : Fontmetrics) -> Float {
-  font_get_metrics_ffi(font, metrics.to_bytes())
+  font_get_metrics_ffi(font, metrics.bytes, metrics.offset)
 }
 
 ///|

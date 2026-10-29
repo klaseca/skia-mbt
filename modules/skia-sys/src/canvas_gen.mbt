@@ -46,38 +46,38 @@ pub extern "c" fn canvas_reset_matrix(ccanvas : Canvas) = "moonbit_skia_canvas_r
 
 ///|
 #borrow(ccanvas, cmatrix)
-extern "c" fn canvas_set_matrix_ffi(ccanvas : Canvas, cmatrix : Bytes) = "moonbit_skia_canvas_set_matrix_ffi"
+extern "c" fn canvas_set_matrix_ffi(ccanvas : Canvas, cmatrix : Bytes, cmatrix_offset : Int32) = "moonbit_skia_canvas_set_matrix_ffi"
 
 ///|
 pub fn canvas_set_matrix(ccanvas : Canvas, cmatrix : Matrix44) -> Unit {
-  canvas_set_matrix_ffi(ccanvas, cmatrix.to_bytes())
+  canvas_set_matrix_ffi(ccanvas, cmatrix.bytes, cmatrix.offset)
 }
 
 ///|
 #borrow(ccanvas, cmatrix)
-extern "c" fn canvas_get_matrix_ffi(ccanvas : Canvas, cmatrix : Bytes) = "moonbit_skia_canvas_get_matrix_ffi"
+extern "c" fn canvas_get_matrix_ffi(ccanvas : Canvas, cmatrix : Bytes, cmatrix_offset : Int32) = "moonbit_skia_canvas_get_matrix_ffi"
 
 ///|
 pub fn canvas_get_matrix(ccanvas : Canvas, cmatrix : Matrix44) -> Unit {
-  canvas_get_matrix_ffi(ccanvas, cmatrix.to_bytes())
+  canvas_get_matrix_ffi(ccanvas, cmatrix.bytes, cmatrix.offset)
 }
 
 ///|
 #borrow(ccanvas, crect, cpaint)
-extern "c" fn canvas_draw_round_rect_ffi(ccanvas : Canvas, crect : Bytes, rx : Float, ry : Float, cpaint : Paint) = "moonbit_skia_canvas_draw_round_rect_ffi"
+extern "c" fn canvas_draw_round_rect_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32, rx : Float, ry : Float, cpaint : Paint) = "moonbit_skia_canvas_draw_round_rect_ffi"
 
 ///|
 pub fn canvas_draw_round_rect(ccanvas : Canvas, crect : Rect, rx : Float, ry : Float, cpaint : Paint) -> Unit {
-  canvas_draw_round_rect_ffi(ccanvas, crect.to_bytes(), rx, ry, cpaint)
+  canvas_draw_round_rect_ffi(ccanvas, crect.bytes, crect.offset, rx, ry, cpaint)
 }
 
 ///|
 #borrow(ccanvas, crect)
-extern "c" fn canvas_clip_rect_with_operation_ffi(ccanvas : Canvas, crect : Bytes, op : Int32, doAA : Bool) = "moonbit_skia_canvas_clip_rect_with_operation_ffi"
+extern "c" fn canvas_clip_rect_with_operation_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32, op : Int32, doAA : Bool) = "moonbit_skia_canvas_clip_rect_with_operation_ffi"
 
 ///|
 pub fn canvas_clip_rect_with_operation(ccanvas : Canvas, crect : Rect, op : Int32, doAA : Bool) -> Unit {
-  canvas_clip_rect_with_operation_ffi(ccanvas, crect.to_bytes(), op, doAA)
+  canvas_clip_rect_with_operation_ffi(ccanvas, crect.bytes, crect.offset, op, doAA)
 }
 
 ///|
@@ -90,20 +90,20 @@ pub extern "c" fn canvas_clip_rrect_with_operation(ccanvas : Canvas, crect : Rre
 
 ///|
 #borrow(ccanvas, cbounds)
-extern "c" fn canvas_get_local_clip_bounds_ffi(ccanvas : Canvas, cbounds : Bytes) -> Bool = "moonbit_skia_canvas_get_local_clip_bounds_ffi"
+extern "c" fn canvas_get_local_clip_bounds_ffi(ccanvas : Canvas, cbounds : Bytes, cbounds_offset : Int32) -> Bool = "moonbit_skia_canvas_get_local_clip_bounds_ffi"
 
 ///|
 pub fn canvas_get_local_clip_bounds(ccanvas : Canvas, cbounds : Rect) -> Bool {
-  canvas_get_local_clip_bounds_ffi(ccanvas, cbounds.to_bytes())
+  canvas_get_local_clip_bounds_ffi(ccanvas, cbounds.bytes, cbounds.offset)
 }
 
 ///|
 #borrow(ccanvas, cbounds)
-extern "c" fn canvas_get_device_clip_bounds_ffi(ccanvas : Canvas, cbounds : Bytes) -> Bool = "moonbit_skia_canvas_get_device_clip_bounds_ffi"
+extern "c" fn canvas_get_device_clip_bounds_ffi(ccanvas : Canvas, cbounds : Bytes, cbounds_offset : Int32) -> Bool = "moonbit_skia_canvas_get_device_clip_bounds_ffi"
 
 ///|
 pub fn canvas_get_device_clip_bounds(ccanvas : Canvas, cbounds : Irect) -> Bool {
-  canvas_get_device_clip_bounds_ffi(ccanvas, cbounds.to_bytes())
+  canvas_get_device_clip_bounds_ffi(ccanvas, cbounds.bytes, cbounds.offset)
 }
 
 ///|
@@ -112,11 +112,11 @@ pub extern "c" fn canvas_save(ccanvas : Canvas) -> Int32 = "moonbit_skia_canvas_
 
 ///|
 #borrow(ccanvas, crect, cpaint)
-extern "c" fn canvas_save_layer_ffi(ccanvas : Canvas, crect : Bytes, cpaint : Paint) -> Int32 = "moonbit_skia_canvas_save_layer_ffi"
+extern "c" fn canvas_save_layer_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32, cpaint : Paint) -> Int32 = "moonbit_skia_canvas_save_layer_ffi"
 
 ///|
 pub fn canvas_save_layer(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Int32 {
-  canvas_save_layer_ffi(ccanvas, crect.to_bytes(), cpaint)
+  canvas_save_layer_ffi(ccanvas, crect.bytes, crect.offset, cpaint)
 }
 
 ///|
@@ -145,20 +145,20 @@ pub extern "c" fn canvas_skew(ccanvas : Canvas, sx : Float, sy : Float) = "moonb
 
 ///|
 #borrow(ccanvas, cmatrix)
-extern "c" fn canvas_concat_ffi(ccanvas : Canvas, cmatrix : Bytes) = "moonbit_skia_canvas_concat_ffi"
+extern "c" fn canvas_concat_ffi(ccanvas : Canvas, cmatrix : Bytes, cmatrix_offset : Int32) = "moonbit_skia_canvas_concat_ffi"
 
 ///|
 pub fn canvas_concat(ccanvas : Canvas, cmatrix : Matrix44) -> Unit {
-  canvas_concat_ffi(ccanvas, cmatrix.to_bytes())
+  canvas_concat_ffi(ccanvas, cmatrix.bytes, cmatrix.offset)
 }
 
 ///|
 #borrow(ccanvas, crect)
-extern "c" fn canvas_quick_reject_ffi(ccanvas : Canvas, crect : Bytes) -> Bool = "moonbit_skia_canvas_quick_reject_ffi"
+extern "c" fn canvas_quick_reject_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32) -> Bool = "moonbit_skia_canvas_quick_reject_ffi"
 
 ///|
 pub fn canvas_quick_reject(ccanvas : Canvas, crect : Rect) -> Bool {
-  canvas_quick_reject_ffi(ccanvas, crect.to_bytes())
+  canvas_quick_reject_ffi(ccanvas, crect.bytes, crect.offset)
 }
 
 ///|
@@ -175,11 +175,11 @@ pub extern "c" fn canvas_draw_region(ccanvas : Canvas, cregion : Region, cpaint 
 
 ///|
 #borrow(ccanvas, crect, cpaint)
-extern "c" fn canvas_draw_rect_ffi(ccanvas : Canvas, crect : Bytes, cpaint : Paint) = "moonbit_skia_canvas_draw_rect_ffi"
+extern "c" fn canvas_draw_rect_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32, cpaint : Paint) = "moonbit_skia_canvas_draw_rect_ffi"
 
 ///|
 pub fn canvas_draw_rect(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Unit {
-  canvas_draw_rect_ffi(ccanvas, crect.to_bytes(), cpaint)
+  canvas_draw_rect_ffi(ccanvas, crect.bytes, crect.offset, cpaint)
 }
 
 ///|
@@ -192,11 +192,11 @@ pub extern "c" fn canvas_draw_circle(ccanvas : Canvas, cx : Float, cy : Float, r
 
 ///|
 #borrow(ccanvas, crect, cpaint)
-extern "c" fn canvas_draw_oval_ffi(ccanvas : Canvas, crect : Bytes, cpaint : Paint) = "moonbit_skia_canvas_draw_oval_ffi"
+extern "c" fn canvas_draw_oval_ffi(ccanvas : Canvas, crect : Bytes, crect_offset : Int32, cpaint : Paint) = "moonbit_skia_canvas_draw_oval_ffi"
 
 ///|
 pub fn canvas_draw_oval(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Unit {
-  canvas_draw_oval_ffi(ccanvas, crect.to_bytes(), cpaint)
+  canvas_draw_oval_ffi(ccanvas, crect.bytes, crect.offset, cpaint)
 }
 
 ///|
@@ -204,21 +204,39 @@ pub fn canvas_draw_oval(ccanvas : Canvas, crect : Rect, cpaint : Paint) -> Unit 
 pub extern "c" fn canvas_draw_path(ccanvas : Canvas, cpath : Path, cpaint : Paint) = "moonbit_skia_canvas_draw_path"
 
 ///|
+#borrow(ccanvas, cimage, sampling, cpaint)
+extern "c" fn canvas_draw_image_ffi(ccanvas : Canvas, cimage : Image, x : Float, y : Float, sampling : Bytes, sampling_offset : Int32, cpaint : Paint) = "moonbit_skia_canvas_draw_image_ffi"
+
+///|
+pub fn canvas_draw_image(ccanvas : Canvas, cimage : Image, x : Float, y : Float, sampling : SamplingOptions, cpaint : Paint) -> Unit {
+  canvas_draw_image_ffi(ccanvas, cimage, x, y, sampling.bytes, sampling.offset, cpaint)
+}
+
+///|
+#borrow(ccanvas, cimage, csrcR, cdstR, sampling, cpaint)
+extern "c" fn canvas_draw_image_rect_ffi(ccanvas : Canvas, cimage : Image, csrcR : Bytes, csrcR_offset : Int32, cdstR : Bytes, cdstR_offset : Int32, sampling : Bytes, sampling_offset : Int32, cpaint : Paint) = "moonbit_skia_canvas_draw_image_rect_ffi"
+
+///|
+pub fn canvas_draw_image_rect(ccanvas : Canvas, cimage : Image, csrcR : Rect, cdstR : Rect, sampling : SamplingOptions, cpaint : Paint) -> Unit {
+  canvas_draw_image_rect_ffi(ccanvas, cimage, csrcR.bytes, csrcR.offset, cdstR.bytes, cdstR.offset, sampling.bytes, sampling.offset, cpaint)
+}
+
+///|
 #borrow(ccanvas, cmatrix, cpaint)
-extern "c" fn canvas_draw_picture_ffi(ccanvas : Canvas, cpicture : Picture, cmatrix : Bytes, cpaint : Paint) = "moonbit_skia_canvas_draw_picture_ffi"
+extern "c" fn canvas_draw_picture_ffi(ccanvas : Canvas, cpicture : Picture, cmatrix : Bytes, cmatrix_offset : Int32, cpaint : Paint) = "moonbit_skia_canvas_draw_picture_ffi"
 
 ///|
 pub fn canvas_draw_picture(ccanvas : Canvas, cpicture : Picture, cmatrix : Matrix, cpaint : Paint) -> Unit {
-  canvas_draw_picture_ffi(ccanvas, cpicture, cmatrix.to_bytes(), cpaint)
+  canvas_draw_picture_ffi(ccanvas, cpicture, cmatrix.bytes, cmatrix.offset, cpaint)
 }
 
 ///|
 #borrow(ccanvas, cmatrix)
-extern "c" fn canvas_draw_drawable_ffi(ccanvas : Canvas, cdrawable : Drawable, cmatrix : Bytes) = "moonbit_skia_canvas_draw_drawable_ffi"
+extern "c" fn canvas_draw_drawable_ffi(ccanvas : Canvas, cdrawable : Drawable, cmatrix : Bytes, cmatrix_offset : Int32) = "moonbit_skia_canvas_draw_drawable_ffi"
 
 ///|
 pub fn canvas_draw_drawable(ccanvas : Canvas, cdrawable : Drawable, cmatrix : Matrix) -> Unit {
-  canvas_draw_drawable_ffi(ccanvas, cdrawable, cmatrix.to_bytes())
+  canvas_draw_drawable_ffi(ccanvas, cdrawable, cmatrix.bytes, cmatrix.offset)
 }
 
 ///|
@@ -226,56 +244,56 @@ pub extern "c" fn canvas_new_from_bitmap(bitmap : Bitmap) -> Canvas = "moonbit_s
 
 ///|
 #borrow(cinfo, pixels)
-extern "c" fn canvas_new_from_raster_ffi(cinfo : Bytes, pixels : Bytes, rowBytes : UInt64, props : Surfaceprops) -> Canvas = "moonbit_skia_canvas_new_from_raster_ffi"
+extern "c" fn canvas_new_from_raster_ffi(cinfo : Bytes, cinfo_offset : Int32, pixels : Bytes, rowBytes : UInt64, props : Surfaceprops) -> Canvas = "moonbit_skia_canvas_new_from_raster_ffi"
 
 ///|
 pub fn canvas_new_from_raster(cinfo : Imageinfo, pixels : Bytes, rowBytes : UInt64, props : Surfaceprops) -> Canvas {
-  canvas_new_from_raster_ffi(cinfo.to_bytes(), pixels, rowBytes, props)
+  canvas_new_from_raster_ffi(cinfo.bytes, cinfo.offset, pixels, rowBytes, props)
 }
 
 ///|
-#borrow(t, rect, key)
-extern "c" fn canvas_draw_annotation_ffi(t : Canvas, rect : Bytes, key : Bytes, value : Data) = "moonbit_skia_canvas_draw_annotation_ffi"
+#borrow(t, rect, key, value)
+extern "c" fn canvas_draw_annotation_ffi(t : Canvas, rect : Bytes, rect_offset : Int32, key : Bytes, value : Data) = "moonbit_skia_canvas_draw_annotation_ffi"
 
 ///|
 pub fn canvas_draw_annotation(t : Canvas, rect : Rect, key : Bytes, value : Data) -> Unit {
-  canvas_draw_annotation_ffi(t, rect.to_bytes(), key, value)
+  canvas_draw_annotation_ffi(t, rect.bytes, rect.offset, key, value)
 }
 
 ///|
-#borrow(t, rect)
-extern "c" fn canvas_draw_url_annotation_ffi(t : Canvas, rect : Bytes, value : Data) = "moonbit_skia_canvas_draw_url_annotation_ffi"
+#borrow(t, rect, value)
+extern "c" fn canvas_draw_url_annotation_ffi(t : Canvas, rect : Bytes, rect_offset : Int32, value : Data) = "moonbit_skia_canvas_draw_url_annotation_ffi"
 
 ///|
 pub fn canvas_draw_url_annotation(t : Canvas, rect : Rect, value : Data) -> Unit {
-  canvas_draw_url_annotation_ffi(t, rect.to_bytes(), value)
+  canvas_draw_url_annotation_ffi(t, rect.bytes, rect.offset, value)
 }
 
 ///|
-#borrow(t, point)
-extern "c" fn canvas_draw_named_destination_annotation_ffi(t : Canvas, point : Bytes, value : Data) = "moonbit_skia_canvas_draw_named_destination_annotation_ffi"
+#borrow(t, point, value)
+extern "c" fn canvas_draw_named_destination_annotation_ffi(t : Canvas, point : Bytes, point_offset : Int32, value : Data) = "moonbit_skia_canvas_draw_named_destination_annotation_ffi"
 
 ///|
 pub fn canvas_draw_named_destination_annotation(t : Canvas, point : Point, value : Data) -> Unit {
-  canvas_draw_named_destination_annotation_ffi(t, point.to_bytes(), value)
+  canvas_draw_named_destination_annotation_ffi(t, point.bytes, point.offset, value)
 }
 
 ///|
-#borrow(t, rect)
-extern "c" fn canvas_draw_link_destination_annotation_ffi(t : Canvas, rect : Bytes, value : Data) = "moonbit_skia_canvas_draw_link_destination_annotation_ffi"
+#borrow(t, rect, value)
+extern "c" fn canvas_draw_link_destination_annotation_ffi(t : Canvas, rect : Bytes, rect_offset : Int32, value : Data) = "moonbit_skia_canvas_draw_link_destination_annotation_ffi"
 
 ///|
 pub fn canvas_draw_link_destination_annotation(t : Canvas, rect : Rect, value : Data) -> Unit {
-  canvas_draw_link_destination_annotation_ffi(t, rect.to_bytes(), value)
+  canvas_draw_link_destination_annotation_ffi(t, rect.bytes, rect.offset, value)
 }
 
 ///|
-#borrow(ccanvas, center, dst, paint)
-extern "c" fn canvas_draw_image_nine_ffi(ccanvas : Canvas, image : Image, center : Bytes, dst : Bytes, mode : Int32, paint : Paint) = "moonbit_skia_canvas_draw_image_nine_ffi"
+#borrow(ccanvas, image, center, dst, paint)
+extern "c" fn canvas_draw_image_nine_ffi(ccanvas : Canvas, image : Image, center : Bytes, center_offset : Int32, dst : Bytes, dst_offset : Int32, mode : Int32, paint : Paint) = "moonbit_skia_canvas_draw_image_nine_ffi"
 
 ///|
 pub fn canvas_draw_image_nine(ccanvas : Canvas, image : Image, center : Irect, dst : Rect, mode : Int32, paint : Paint) -> Unit {
-  canvas_draw_image_nine_ffi(ccanvas, image, center.to_bytes(), dst.to_bytes(), mode, paint)
+  canvas_draw_image_nine_ffi(ccanvas, image, center.bytes, center.offset, dst.bytes, dst.offset, mode, paint)
 }
 
 ///|
@@ -284,11 +302,11 @@ pub extern "c" fn canvas_draw_vertices(ccanvas : Canvas, vertices : Vertices, mo
 
 ///|
 #borrow(ccanvas, oval, paint)
-extern "c" fn canvas_draw_arc_ffi(ccanvas : Canvas, oval : Bytes, startAngle : Float, sweepAngle : Float, useCenter : Bool, paint : Paint) = "moonbit_skia_canvas_draw_arc_ffi"
+extern "c" fn canvas_draw_arc_ffi(ccanvas : Canvas, oval : Bytes, oval_offset : Int32, startAngle : Float, sweepAngle : Float, useCenter : Bool, paint : Paint) = "moonbit_skia_canvas_draw_arc_ffi"
 
 ///|
 pub fn canvas_draw_arc(ccanvas : Canvas, oval : Rect, startAngle : Float, sweepAngle : Float, useCenter : Bool, paint : Paint) -> Unit {
-  canvas_draw_arc_ffi(ccanvas, oval.to_bytes(), startAngle, sweepAngle, useCenter, paint)
+  canvas_draw_arc_ffi(ccanvas, oval.bytes, oval.offset, startAngle, sweepAngle, useCenter, paint)
 }
 
 ///|

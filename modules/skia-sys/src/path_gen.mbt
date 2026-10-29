@@ -13,20 +13,20 @@ pub extern "c" fn path_clone(cpath : Path) -> Path = "moonbit_skia_path_clone"
 
 ///|
 #borrow(arg0, arg1)
-extern "c" fn path_get_bounds_ffi(arg0 : Path, arg1 : Bytes) = "moonbit_skia_path_get_bounds_ffi"
+extern "c" fn path_get_bounds_ffi(arg0 : Path, arg1 : Bytes, arg1_offset : Int32) = "moonbit_skia_path_get_bounds_ffi"
 
 ///|
 pub fn path_get_bounds(arg0 : Path, arg1 : Rect) -> Unit {
-  path_get_bounds_ffi(arg0, arg1.to_bytes())
+  path_get_bounds_ffi(arg0, arg1.bytes, arg1.offset)
 }
 
 ///|
 #borrow(arg0, arg1)
-extern "c" fn path_compute_tight_bounds_ffi(arg0 : Path, arg1 : Bytes) = "moonbit_skia_path_compute_tight_bounds_ffi"
+extern "c" fn path_compute_tight_bounds_ffi(arg0 : Path, arg1 : Bytes, arg1_offset : Int32) = "moonbit_skia_path_compute_tight_bounds_ffi"
 
 ///|
 pub fn path_compute_tight_bounds(arg0 : Path, arg1 : Rect) -> Unit {
-  path_compute_tight_bounds_ffi(arg0, arg1.to_bytes())
+  path_compute_tight_bounds_ffi(arg0, arg1.bytes, arg1.offset)
 }
 
 ///|
@@ -39,20 +39,20 @@ pub extern "c" fn path_set_filltype(arg0 : Path, arg1 : Int32) = "moonbit_skia_p
 
 ///|
 #borrow(cpath, cmatrix)
-extern "c" fn path_transform_ffi(cpath : Path, cmatrix : Bytes) = "moonbit_skia_path_transform_ffi"
+extern "c" fn path_transform_ffi(cpath : Path, cmatrix : Bytes, cmatrix_offset : Int32) = "moonbit_skia_path_transform_ffi"
 
 ///|
 pub fn path_transform(cpath : Path, cmatrix : Matrix) -> Unit {
-  path_transform_ffi(cpath, cmatrix.to_bytes())
+  path_transform_ffi(cpath, cmatrix.bytes, cmatrix.offset)
 }
 
 ///|
 #borrow(cpath, cmatrix, destination)
-extern "c" fn path_transform_to_dest_ffi(cpath : Path, cmatrix : Bytes, destination : Path) = "moonbit_skia_path_transform_to_dest_ffi"
+extern "c" fn path_transform_to_dest_ffi(cpath : Path, cmatrix : Bytes, cmatrix_offset : Int32, destination : Path) = "moonbit_skia_path_transform_to_dest_ffi"
 
 ///|
 pub fn path_transform_to_dest(cpath : Path, cmatrix : Matrix, destination : Path) -> Unit {
-  path_transform_to_dest_ffi(cpath, cmatrix.to_bytes(), destination)
+  path_transform_to_dest_ffi(cpath, cmatrix.bytes, cmatrix.offset, destination)
 }
 
 ///|
@@ -73,20 +73,20 @@ pub extern "c" fn path_count_verbs(cpath : Path) -> Int32 = "moonbit_skia_path_c
 
 ///|
 #borrow(cpath, point)
-extern "c" fn path_get_point_ffi(cpath : Path, index : Int32, point : Bytes) = "moonbit_skia_path_get_point_ffi"
+extern "c" fn path_get_point_ffi(cpath : Path, index : Int32, point : Bytes, point_offset : Int32) = "moonbit_skia_path_get_point_ffi"
 
 ///|
 pub fn path_get_point(cpath : Path, index : Int32, point : Point) -> Unit {
-  path_get_point_ffi(cpath, index, point.to_bytes())
+  path_get_point_ffi(cpath, index, point.bytes, point.offset)
 }
 
 ///|
 #borrow(cpath, points)
-extern "c" fn path_get_points_ffi(cpath : Path, points : Bytes, max : Int32) -> Int32 = "moonbit_skia_path_get_points_ffi"
+extern "c" fn path_get_points_ffi(cpath : Path, points : Bytes, points_offset : Int32, max : Int32) -> Int32 = "moonbit_skia_path_get_points_ffi"
 
 ///|
 pub fn path_get_points(cpath : Path, points : Point, max : Int32) -> Int32 {
-  path_get_points_ffi(cpath, points.to_bytes(), max)
+  path_get_points_ffi(cpath, points.bytes, points.offset, max)
 }
 
 ///|
@@ -103,20 +103,20 @@ pub extern "c" fn path_to_svg_string(cpath : Path, str : StringLib) = "moonbit_s
 
 ///|
 #borrow(cpath, point)
-extern "c" fn path_get_last_point_ffi(cpath : Path, point : Bytes) -> Bool = "moonbit_skia_path_get_last_point_ffi"
+extern "c" fn path_get_last_point_ffi(cpath : Path, point : Bytes, point_offset : Int32) -> Bool = "moonbit_skia_path_get_last_point_ffi"
 
 ///|
 pub fn path_get_last_point(cpath : Path, point : Point) -> Bool {
-  path_get_last_point_ffi(cpath, point.to_bytes())
+  path_get_last_point_ffi(cpath, point.bytes, point.offset)
 }
 
 ///|
 #borrow(p0, p1, p2, pts)
-extern "c" fn path_convert_conic_to_quads_ffi(p0 : Bytes, p1 : Bytes, p2 : Bytes, w : Float, pts : Bytes, pow2 : Int32) -> Int32 = "moonbit_skia_path_convert_conic_to_quads_ffi"
+extern "c" fn path_convert_conic_to_quads_ffi(p0 : Bytes, p0_offset : Int32, p1 : Bytes, p1_offset : Int32, p2 : Bytes, p2_offset : Int32, w : Float, pts : Bytes, pts_offset : Int32, pow2 : Int32) -> Int32 = "moonbit_skia_path_convert_conic_to_quads_ffi"
 
 ///|
 pub fn path_convert_conic_to_quads(p0 : Point, p1 : Point, p2 : Point, w : Float, pts : Point, pow2 : Int32) -> Int32 {
-  path_convert_conic_to_quads_ffi(p0.to_bytes(), p1.to_bytes(), p2.to_bytes(), w, pts.to_bytes(), pow2)
+  path_convert_conic_to_quads_ffi(p0.bytes, p0.offset, p1.bytes, p1.offset, p2.bytes, p2.offset, w, pts.bytes, pts.offset, pow2)
 }
 
 ///|
@@ -125,11 +125,11 @@ pub extern "c" fn path_get_segment_masks(cpath : Path) -> UInt32 = "moonbit_skia
 
 ///|
 #borrow(cpath, bounds)
-extern "c" fn path_is_oval_ffi(cpath : Path, bounds : Bytes) -> Bool = "moonbit_skia_path_is_oval_ffi"
+extern "c" fn path_is_oval_ffi(cpath : Path, bounds : Bytes, bounds_offset : Int32) -> Bool = "moonbit_skia_path_is_oval_ffi"
 
 ///|
 pub fn path_is_oval(cpath : Path, bounds : Rect) -> Bool {
-  path_is_oval_ffi(cpath, bounds.to_bytes())
+  path_is_oval_ffi(cpath, bounds.bytes, bounds.offset)
 }
 
 ///|
@@ -138,11 +138,11 @@ pub extern "c" fn path_is_rrect(cpath : Path, bounds : Rrect) -> Bool = "moonbit
 
 ///|
 #borrow(cpath, rect, isClosed, direction)
-extern "c" fn path_is_rect_ffi(cpath : Path, rect : Bytes, isClosed : Ref[Bool], direction : Ref[Int32]) -> Bool = "moonbit_skia_path_is_rect_ffi"
+extern "c" fn path_is_rect_ffi(cpath : Path, rect : Bytes, rect_offset : Int32, isClosed : Ref[Bool], direction : Ref[Int32]) -> Bool = "moonbit_skia_path_is_rect_ffi"
 
 ///|
 pub fn path_is_rect(cpath : Path, rect : Rect, isClosed : Ref[Bool], direction : Ref[Int32]) -> Bool {
-  path_is_rect_ffi(cpath, rect.to_bytes(), isClosed, direction)
+  path_is_rect_ffi(cpath, rect.bytes, rect.offset, isClosed, direction)
 }
 
 ///|
@@ -188,11 +188,11 @@ pub extern "c" fn pathop_simplify(path : Path, result : Path) -> Bool = "moonbit
 
 ///|
 #borrow(path, result)
-extern "c" fn pathop_tight_bounds_ffi(path : Path, result : Bytes) -> Bool = "moonbit_skia_pathop_tight_bounds_ffi"
+extern "c" fn pathop_tight_bounds_ffi(path : Path, result : Bytes, result_offset : Int32) -> Bool = "moonbit_skia_pathop_tight_bounds_ffi"
 
 ///|
 pub fn pathop_tight_bounds(path : Path, result : Rect) -> Bool {
-  pathop_tight_bounds_ffi(path, result.to_bytes())
+  pathop_tight_bounds_ffi(path, result.bytes, result.offset)
 }
 
 ///|
@@ -231,12 +231,21 @@ pub extern "c" fn pathmeasure_set_path(pathMeasure : Pathmeasure, path : Path, f
 pub extern "c" fn pathmeasure_get_length(pathMeasure : Pathmeasure) -> Float = "moonbit_skia_pathmeasure_get_length"
 
 ///|
+#borrow(position, tangent)
+extern "c" fn pathmeasure_get_pos_tan_ffi(pathMeasure : Pathmeasure, distance : Float, position : Bytes, position_offset : Int32, tangent : Bytes, tangent_offset : Int32) -> Bool = "moonbit_skia_pathmeasure_get_pos_tan_ffi"
+
+///|
+pub fn pathmeasure_get_pos_tan(pathMeasure : Pathmeasure, distance : Float, position : Point, tangent : Point) -> Bool {
+  pathmeasure_get_pos_tan_ffi(pathMeasure, distance, position.bytes, position.offset, tangent.bytes, tangent.offset)
+}
+
+///|
 #borrow(matrix)
-extern "c" fn pathmeasure_get_matrix_ffi(pathMeasure : Pathmeasure, distance : Float, matrix : Bytes, flags : Int32) -> Bool = "moonbit_skia_pathmeasure_get_matrix_ffi"
+extern "c" fn pathmeasure_get_matrix_ffi(pathMeasure : Pathmeasure, distance : Float, matrix : Bytes, matrix_offset : Int32, flags : Int32) -> Bool = "moonbit_skia_pathmeasure_get_matrix_ffi"
 
 ///|
 pub fn pathmeasure_get_matrix(pathMeasure : Pathmeasure, distance : Float, matrix : Matrix, flags : Int32) -> Bool {
-  pathmeasure_get_matrix_ffi(pathMeasure, distance, matrix.to_bytes(), flags)
+  pathmeasure_get_matrix_ffi(pathMeasure, distance, matrix.bytes, matrix.offset, flags)
 }
 
 ///|

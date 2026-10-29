@@ -18,6 +18,7 @@ const source = createSourceCRegex({
   prepareFunctionSource: (source) => source.replace(/^\s*#.*$/gm, ' '),
   headerOutputBase: (file) => basename(file, '.h').replace(/^sk_/, '').toLowerCase(),
   headerInclude: (file) => `<include/c/${file}>`,
+  constantType: () => 'Int32',
   functionPattern: /SK_C_API\s+(.*?)\s+([A-Za-z_]\w*)\s*\((.*?)\)\s*;/g,
 })
 

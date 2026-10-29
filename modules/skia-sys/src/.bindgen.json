@@ -24,6 +24,8 @@
     "typeface_gen.mbt",
     "typeface_stub_gen.c",
     "types_gen.mbt",
-    "types_stub_gen.c"
+    "types_stub_gen.c",
+    "value_gen.mbt",
+    "value_stub_gen.c"
   ]
 }

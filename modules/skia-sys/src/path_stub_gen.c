@@ -70,13 +70,13 @@ void * moonbit_skia_path_clone(void * cpath) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_path_get_bounds_ffi(void * arg0, moonbit_bytes_t arg1) {
-  sk_path_get_bounds(moonbit_skia_path_ptr(arg0), ((sk_rect_t *)arg1));
+void moonbit_skia_path_get_bounds_ffi(void * arg0, moonbit_bytes_t arg1, int32_t arg1_offset) {
+  sk_path_get_bounds(moonbit_skia_path_ptr(arg0), ((sk_rect_t *)(arg1 + arg1_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_path_compute_tight_bounds_ffi(void * arg0, moonbit_bytes_t arg1) {
-  sk_path_compute_tight_bounds(moonbit_skia_path_ptr(arg0), ((sk_rect_t *)arg1));
+void moonbit_skia_path_compute_tight_bounds_ffi(void * arg0, moonbit_bytes_t arg1, int32_t arg1_offset) {
+  sk_path_compute_tight_bounds(moonbit_skia_path_ptr(arg0), ((sk_rect_t *)(arg1 + arg1_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -90,13 +90,13 @@ void moonbit_skia_path_set_filltype(void * arg0, sk_path_filltype_t arg1) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_path_transform_ffi(void * cpath, moonbit_bytes_t cmatrix) {
-  sk_path_transform(moonbit_skia_path_ptr(cpath), ((const sk_matrix_t *)cmatrix));
+void moonbit_skia_path_transform_ffi(void * cpath, moonbit_bytes_t cmatrix, int32_t cmatrix_offset) {
+  sk_path_transform(moonbit_skia_path_ptr(cpath), ((const sk_matrix_t *)(cmatrix + cmatrix_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_path_transform_to_dest_ffi(void * cpath, moonbit_bytes_t cmatrix, void * destination) {
-  sk_path_transform_to_dest(moonbit_skia_path_ptr(cpath), ((const sk_matrix_t *)cmatrix), moonbit_skia_path_ptr(destination));
+void moonbit_skia_path_transform_to_dest_ffi(void * cpath, moonbit_bytes_t cmatrix, int32_t cmatrix_offset, void * destination) {
+  sk_path_transform_to_dest(moonbit_skia_path_ptr(cpath), ((const sk_matrix_t *)(cmatrix + cmatrix_offset)), moonbit_skia_path_ptr(destination));
 }
 
 MOONBIT_FFI_EXPORT
@@ -120,13 +120,13 @@ int32_t moonbit_skia_path_count_verbs(void * cpath) {
 }
 
 MOONBIT_FFI_EXPORT
-void moonbit_skia_path_get_point_ffi(void * cpath, int32_t index, moonbit_bytes_t point) {
-  sk_path_get_point(moonbit_skia_path_ptr(cpath), index, ((sk_point_t *)point));
+void moonbit_skia_path_get_point_ffi(void * cpath, int32_t index, moonbit_bytes_t point, int32_t point_offset) {
+  sk_path_get_point(moonbit_skia_path_ptr(cpath), index, ((sk_point_t *)(point + point_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_path_get_points_ffi(void * cpath, moonbit_bytes_t points, int32_t max) {
-  return sk_path_get_points(moonbit_skia_path_ptr(cpath), ((sk_point_t *)points), max);
+int32_t moonbit_skia_path_get_points_ffi(void * cpath, moonbit_bytes_t points, int32_t points_offset, int32_t max) {
+  return sk_path_get_points(moonbit_skia_path_ptr(cpath), ((sk_point_t *)(points + points_offset)), max);
 }
 
 MOONBIT_FFI_EXPORT
@@ -145,13 +145,13 @@ void moonbit_skia_path_to_svg_string(void * cpath, sk_string_t * str) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_path_get_last_point_ffi(void * cpath, moonbit_bytes_t point) {
-  return sk_path_get_last_point(moonbit_skia_path_ptr(cpath), ((sk_point_t *)point));
+int32_t moonbit_skia_path_get_last_point_ffi(void * cpath, moonbit_bytes_t point, int32_t point_offset) {
+  return sk_path_get_last_point(moonbit_skia_path_ptr(cpath), ((sk_point_t *)(point + point_offset)));
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_path_convert_conic_to_quads_ffi(moonbit_bytes_t p0, moonbit_bytes_t p1, moonbit_bytes_t p2, float w, moonbit_bytes_t pts, int32_t pow2) {
-  return sk_path_convert_conic_to_quads(((const sk_point_t *)p0), ((const sk_point_t *)p1), ((const sk_point_t *)p2), w, ((sk_point_t *)pts), pow2);
+int32_t moonbit_skia_path_convert_conic_to_quads_ffi(moonbit_bytes_t p0, int32_t p0_offset, moonbit_bytes_t p1, int32_t p1_offset, moonbit_bytes_t p2, int32_t p2_offset, float w, moonbit_bytes_t pts, int32_t pts_offset, int32_t pow2) {
+  return sk_path_convert_conic_to_quads(((const sk_point_t *)(p0 + p0_offset)), ((const sk_point_t *)(p1 + p1_offset)), ((const sk_point_t *)(p2 + p2_offset)), w, ((sk_point_t *)(pts + pts_offset)), pow2);
 }
 
 MOONBIT_FFI_EXPORT
@@ -160,8 +160,8 @@ uint32_t moonbit_skia_path_get_segment_masks(void * cpath) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_path_is_oval_ffi(void * cpath, moonbit_bytes_t bounds) {
-  return sk_path_is_oval(moonbit_skia_path_ptr(cpath), ((sk_rect_t *)bounds));
+int32_t moonbit_skia_path_is_oval_ffi(void * cpath, moonbit_bytes_t bounds, int32_t bounds_offset) {
+  return sk_path_is_oval(moonbit_skia_path_ptr(cpath), ((sk_rect_t *)(bounds + bounds_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -170,10 +170,10 @@ int32_t moonbit_skia_path_is_rrect(void * cpath, sk_rrect_t * bounds) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_path_is_rect_ffi(void * cpath, moonbit_bytes_t rect, int32_t * isClosed, sk_path_direction_t * direction) {
+int32_t moonbit_skia_path_is_rect_ffi(void * cpath, moonbit_bytes_t rect, int32_t rect_offset, int32_t * isClosed, sk_path_direction_t * direction) {
   bool isClosed_value = 0;
   sk_path_direction_t direction_value = 0;
-  int32_t result = sk_path_is_rect(moonbit_skia_path_ptr(cpath), ((sk_rect_t *)rect), &isClosed_value, &direction_value);
+  int32_t result = sk_path_is_rect(moonbit_skia_path_ptr(cpath), ((sk_rect_t *)(rect + rect_offset)), &isClosed_value, &direction_value);
   if (isClosed != NULL) *isClosed = isClosed_value;
   if (direction != NULL) *direction = direction_value;
   return result;
@@ -240,8 +240,8 @@ int32_t moonbit_skia_pathop_simplify(void * path, void * result) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_pathop_tight_bounds_ffi(void * path, moonbit_bytes_t result) {
-  return sk_pathop_tight_bounds(moonbit_skia_path_ptr(path), ((sk_rect_t *)result));
+int32_t moonbit_skia_pathop_tight_bounds_ffi(void * path, moonbit_bytes_t result, int32_t result_offset) {
+  return sk_pathop_tight_bounds(moonbit_skia_path_ptr(path), ((sk_rect_t *)(result + result_offset)));
 }
 
 MOONBIT_FFI_EXPORT
@@ -295,8 +295,13 @@ float moonbit_skia_pathmeasure_get_length(sk_pathmeasure_t * pathMeasure) {
 }
 
 MOONBIT_FFI_EXPORT
-int32_t moonbit_skia_pathmeasure_get_matrix_ffi(sk_pathmeasure_t * pathMeasure, float distance, moonbit_bytes_t matrix, sk_pathmeasure_matrixflags_t flags) {
-  return sk_pathmeasure_get_matrix(pathMeasure, distance, ((sk_matrix_t *)matrix), flags);
+int32_t moonbit_skia_pathmeasure_get_pos_tan_ffi(sk_pathmeasure_t * pathMeasure, float distance, moonbit_bytes_t position, int32_t position_offset, moonbit_bytes_t tangent, int32_t tangent_offset) {
+  return sk_pathmeasure_get_pos_tan(pathMeasure, distance, ((sk_point_t *)(position + position_offset)), ((sk_vector_t *)(tangent + tangent_offset)));
+}
+
+MOONBIT_FFI_EXPORT
+int32_t moonbit_skia_pathmeasure_get_matrix_ffi(sk_pathmeasure_t * pathMeasure, float distance, moonbit_bytes_t matrix, int32_t matrix_offset, sk_pathmeasure_matrixflags_t flags) {
+  return sk_pathmeasure_get_matrix(pathMeasure, distance, ((sk_matrix_t *)(matrix + matrix_offset)), flags);
 }
 
 MOONBIT_FFI_EXPORT
