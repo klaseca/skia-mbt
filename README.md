@@ -11,6 +11,8 @@ modules:
 
 Both modules target the native backend.
 
+Use the MoonBit compiler version recorded in [`.moonbit-version`](.moonbit-version).
+
 ## Installation
 
 Add the high-level module to an application:

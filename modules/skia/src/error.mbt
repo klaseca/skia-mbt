@@ -1,4 +1,5 @@
 ///|
+#derive(Debug, Eq)
 pub(all) suberror SkiaError {
   InvalidPixelBufferSize(width~ : Int32, height~ : Int32)
   InvalidSurfaceSize(width~ : Int32, height~ : Int32)
@@ -8,7 +9,7 @@ pub(all) suberror SkiaError {
   SurfaceReadPixelsFailed
   SurfaceCreateFailed(width~ : Int32, height~ : Int32)
   WritePngFailed(status~ : Int32)
-} derive(Debug, Eq)
+}
 
 ///|
 pub extend SkiaError with Debug::{to_repr}
