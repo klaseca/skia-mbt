@@ -21,7 +21,7 @@ pub fn PixelBuffer::PixelBuffer(
   if height > 0x7fff_ffff / row_bytes {
     raise InvalidPixelBufferSize(width~, height~)
   }
-  { data: Bytes::new(row_bytes * height), width, height, row_bytes, }
+  { data: Bytes::make(row_bytes * height, b'\x00'), width, height, row_bytes, }
 }
 
 ///|
