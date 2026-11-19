@@ -17,8 +17,11 @@ All platforms require:
 Platform toolchains:
 
 - Windows: Visual Studio 2022 with the Desktop development with C++ workload.
-  The build command initializes the Visual Studio environment through
-  `vswhere`; running it from an existing Developer shell also works.
+  LLVM with `clang-cl` and `lld-link` is strongly recommended. The build command
+  initializes the Visual Studio environment through `vswhere` and automatically
+  selects LLVM when found on `PATH` or in the Visual Studio LLVM installation.
+  Without LLVM it uses MSVC and prints a performance advisory. Running it from
+  an existing Developer shell also works.
 - Linux: Clang, a C++20 standard library, and development headers for
   Fontconfig, OpenGL, and X11.
 - macOS: Xcode command-line tools.
@@ -49,6 +52,17 @@ The script has no dependency on the MoonBit project layout. When it is placed
 outside this repository, pass the checkout explicitly with `--skia-dir`; an
 external depot_tools checkout can be selected with `--depot-tools-dir` or the
 `DEPOT_TOOLS` environment variable.
+
+On Windows, set `CLANG_WIN` to explicitly select an LLVM installation directory.
+It must contain `bin/clang-cl.exe` and `bin/lld-link.exe`; an invalid explicit
+path is reported as an error. Leave `CLANG_WIN` unset for automatic discovery
+with an MSVC fallback. Rebuilding an existing MSVC build after LLVM is installed
+switches it to Clang automatically.
+
+Skia uses Clang's vector extensions for CPU rendering. Its
+[build documentation](https://skia.org/docs/user/build/#highly-recommended-build-with-clang-cl)
+strongly recommends `clang-cl` on Windows: MSVC builds can render translucent
+fills and other CPU operations substantially more slowly.
 
 The generated release library is stored under:
 

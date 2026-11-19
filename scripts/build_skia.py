@@ -178,7 +178,37 @@ def gn_string(value: str) -> str:
     return f'"{escaped}"'
 
 
-def create_gn_args(host: Host, target_cpu: str) -> str:
+def find_windows_clang(env: dict[str, str]) -> Path | None:
+    configured = env.get("CLANG_WIN")
+    candidates = []
+    if configured:
+        candidates.append(Path(configured).expanduser())
+    else:
+        compiler = shutil.which("clang-cl.exe", path=env.get("PATH", ""))
+        if compiler:
+            candidates.append(Path(compiler).resolve().parent.parent)
+        vc_dir = env.get("VCINSTALLDIR")
+        if vc_dir:
+            candidates.extend(
+                [
+                    Path(vc_dir) / "Tools" / "Llvm" / "x64",
+                    Path(vc_dir) / "Tools" / "Llvm",
+                ]
+            )
+
+    tools = ("clang-cl.exe", "lld-link.exe")
+    for candidate in candidates:
+        if all((candidate / "bin" / tool).is_file() for tool in tools):
+            return candidate.resolve()
+
+    if configured:
+        fail(
+            f"CLANG_WIN does not contain bin/clang-cl.exe and bin/lld-link.exe: {configured}"
+        )
+    return None
+
+
+def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
     args = [
         f"target_os = {gn_string(host.gn_os)}",
         f"target_cpu = {gn_string(target_cpu)}",
@@ -207,6 +237,17 @@ def create_gn_args(host: Host, target_cpu: str) -> str:
     ]
 
     if sys.platform == "win32":
+        # Skia's vector operations use Clang extensions. The MSVC fallback can
+        # make CPU alpha blending much slower even in an optimized build.
+        clang = find_windows_clang(env)
+        if clang:
+            args.append(f"clang_win = {gn_string(clang.as_posix())}")
+        else:
+            print(
+                "Skia build: LLVM was not found; using MSVC. CPU rendering can be "
+                "substantially slower; clang-cl with lld-link is recommended.",
+                file=sys.stderr,
+            )
         args.extend(
             [
                 "skia_enable_fontmgr_win_gdi = false",
@@ -218,8 +259,8 @@ def create_gn_args(host: Host, target_cpu: str) -> str:
     else:
         args.extend(
             [
-                f"cc = {gn_string(os.environ.get('CC', 'clang'))}",
-                f"cxx = {gn_string(os.environ.get('CXX', 'clang++'))}",
+                f"cc = {gn_string(env.get('CC', 'clang'))}",
+                f"cxx = {gn_string(env.get('CXX', 'clang++'))}",
                 'extra_cflags = [ "-DSKIA_C_DLL" ]',
             ]
         )
@@ -264,6 +305,7 @@ def main() -> None:
     out_dir = (out_root / host.name / target_cpu / "release").resolve()
 
     env = windows_build_environment(target_cpu)
+    gn_args = create_gn_args(host, target_cpu, env)
     if depot_tools_dir:
         env["PATH"] = f"{depot_tools_dir}{os.pathsep}{env.get('PATH', '')}"
     env["GIT_SYNC_DEPS_SKIP_EMSDK"] = "1"
@@ -288,7 +330,7 @@ def main() -> None:
 
     out_dir.mkdir(parents=True, exist_ok=True)
     gn_args_file = out_dir / "args.gn"
-    gn_args_file.write_text(create_gn_args(host, target_cpu), encoding="utf-8")
+    gn_args_file.write_text(gn_args, encoding="utf-8")
 
     run([str(gn), "format", str(gn_args_file)], skia_dir, env)
     run(
