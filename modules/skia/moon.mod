@@ -13,7 +13,7 @@ keywords = [ "skia", "graphics", "ffi" ]
 description = "MoonBit bindings for Skia"
 
 import {
-  "klaseca/skia-sys@0.2.1",
+  "klaseca/skia-sys@0.3.0",
 }
 
 preferred_target = "native"
