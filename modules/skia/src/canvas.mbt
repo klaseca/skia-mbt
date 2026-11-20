@@ -18,6 +18,11 @@ pub fn Canvas::restore(self : Self) -> Unit {
 }
 
 ///|
+pub fn Canvas::scale(self : Self, x : Float, y : Float) -> Unit {
+  @sys.canvas_scale(self.raw, x, y)
+}
+
+///|
 pub fn Canvas::clip_rect(
   self : Self,
   rect : Rect,

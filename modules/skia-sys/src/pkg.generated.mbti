@@ -6,9 +6,17 @@ import {
 }
 
 // Values
-pub const LINEAR_SK_FILTER_MODE : Int32 = 0
+pub const BGRA_8888_SK_COLORTYPE : Int32 = 6
+
+pub const BOTTOM_LEFT_GR_SURFACE_ORIGIN : Int32 = 1
+
+pub const LINEAR_SK_FILTER_MODE : Int32 = 1
 
 pub const NONE_SK_MIPMAP_MODE : Int32 = 0
+
+pub const RGBA_8888_SK_COLORTYPE : Int32 = 4
+
+pub const TOP_LEFT_GR_SURFACE_ORIGIN : Int32 = 0
 
 pub fn canvas_clear(Canvas, UInt32) -> Unit
 
@@ -249,6 +257,102 @@ pub fn fontstyleset_unref(Fontstyleset) -> Unit
 pub fn get_recording_context(Canvas) -> GrRecordingContext
 
 pub fn get_surface(Canvas) -> Surface
+
+pub fn gr_backendrendertarget_delete(GrBackendrendertarget) -> Unit
+
+pub fn gr_backendrendertarget_get_backend(GrBackendrendertarget) -> Int32
+
+pub fn gr_backendrendertarget_get_gl_framebufferinfo(GrBackendrendertarget, GrGlFramebufferinfo) -> Bool
+
+pub fn gr_backendrendertarget_get_height(GrBackendrendertarget) -> Int32
+
+pub fn gr_backendrendertarget_get_samples(GrBackendrendertarget) -> Int32
+
+pub fn gr_backendrendertarget_get_stencils(GrBackendrendertarget) -> Int32
+
+pub fn gr_backendrendertarget_get_width(GrBackendrendertarget) -> Int32
+
+pub fn gr_backendrendertarget_is_valid(GrBackendrendertarget) -> Bool
+
+pub fn gr_backendrendertarget_new_gl(Int32, Int32, Int32, Int32, GrGlFramebufferinfo) -> GrBackendrendertarget
+
+pub fn gr_backendtexture_delete(GrBackendtexture) -> Unit
+
+pub fn gr_backendtexture_get_backend(GrBackendtexture) -> Int32
+
+pub fn gr_backendtexture_get_height(GrBackendtexture) -> Int32
+
+pub fn gr_backendtexture_get_width(GrBackendtexture) -> Int32
+
+pub fn gr_backendtexture_has_mipmaps(GrBackendtexture) -> Bool
+
+pub fn gr_backendtexture_is_valid(GrBackendtexture) -> Bool
+
+pub fn gr_direct_context_abandon_context(GrDirectContext) -> Unit
+
+pub fn gr_direct_context_dump_memory_statistics(GrDirectContext, Tracememorydump) -> Unit
+
+pub fn gr_direct_context_flush(GrDirectContext) -> Unit
+
+pub fn gr_direct_context_flush_and_submit(GrDirectContext, Bool) -> Unit
+
+pub fn gr_direct_context_flush_image(GrDirectContext, Image) -> Unit
+
+pub fn gr_direct_context_flush_surface(GrDirectContext, Surface) -> Unit
+
+pub fn gr_direct_context_free_gpu_resources(GrDirectContext) -> Unit
+
+pub fn gr_direct_context_get_resource_cache_limit(GrDirectContext) -> UInt64
+
+pub fn gr_direct_context_get_resource_cache_usage(GrDirectContext, @ref.Ref[Int32], @ref.Ref[UInt64]) -> Unit
+
+pub fn gr_direct_context_is_abandoned(GrDirectContext) -> Bool
+
+pub fn gr_direct_context_make_gl(GrGlinterface) -> GrDirectContext
+
+pub fn gr_direct_context_make_metal(Pointer, Pointer) -> GrDirectContext
+
+pub fn gr_direct_context_perform_deferred_cleanup(GrDirectContext, Int64) -> Unit
+
+pub fn gr_direct_context_purge_unlocked_resources(GrDirectContext, Bool) -> Unit
+
+pub fn gr_direct_context_purge_unlocked_resources_bytes(GrDirectContext, UInt64, Bool) -> Unit
+
+pub fn gr_direct_context_release_resources_and_abandon_context(GrDirectContext) -> Unit
+
+pub fn gr_direct_context_reset_context(GrDirectContext, UInt32) -> Unit
+
+pub fn gr_direct_context_set_resource_cache_limit(GrDirectContext, UInt64) -> Unit
+
+pub fn gr_direct_context_submit(GrDirectContext, Bool) -> Bool
+
+pub fn gr_glinterface_create_native_interface() -> GrGlinterface
+
+pub fn gr_glinterface_has_extension(GrGlinterface, Bytes) -> Bool
+
+pub fn gr_glinterface_unref(GrGlinterface) -> Unit
+
+pub fn gr_glinterface_validate(GrGlinterface) -> Bool
+
+pub fn gr_recording_context_get_backend(GrRecordingContext) -> Int32
+
+pub fn gr_recording_context_get_direct_context(GrRecordingContext) -> GrDirectContext
+
+pub fn gr_recording_context_get_max_surface_sample_count_for_color_type(GrRecordingContext, Int32) -> Int32
+
+pub fn gr_recording_context_is_abandoned(GrRecordingContext) -> Bool
+
+pub fn gr_recording_context_max_render_target_size(GrRecordingContext) -> Int32
+
+pub fn gr_recording_context_max_texture_size(GrRecordingContext) -> Int32
+
+pub fn gr_recording_context_unref(GrRecordingContext) -> Unit
+
+pub fn gr_vk_extensions_delete(GrVkExtensions) -> Unit
+
+pub fn gr_vk_extensions_has_extension(GrVkExtensions, Bytes, UInt32) -> Bool
+
+pub fn gr_vk_extensions_new() -> GrVkExtensions
 
 pub fn graphics_dump_memory_statistics(Tracememorydump) -> Unit
 
@@ -783,10 +887,8 @@ pub type Fontstyleset
 pub fn Fontstyleset::is_null(Self) -> Bool
 pub fn Fontstyleset::to_pointer(Self) -> Pointer
 
-#external
 pub type GrBackendrendertarget
 pub fn GrBackendrendertarget::is_null(Self) -> Bool
-pub fn GrBackendrendertarget::to_pointer(Self) -> Pointer
 
 #external
 pub type GrBackendtexture
@@ -800,13 +902,20 @@ pub fn GrD3dMemoryAllocator::to_pointer(Self) -> Pointer
 
 #external
 pub type GrDirectContext
+pub fn GrDirectContext::as_recording_context(Self) -> GrRecordingContext
 pub fn GrDirectContext::is_null(Self) -> Bool
 pub fn GrDirectContext::to_pointer(Self) -> Pointer
 
-#external
+type GrGlFramebufferinfo
+pub fn GrGlFramebufferinfo::GrGlFramebufferinfo(UInt32, UInt32, Bool) -> Self
+pub fn GrGlFramebufferinfo::as_bytes(Self) -> BytesView
+pub fn GrGlFramebufferinfo::copy(Self) -> Self
+pub fn GrGlFramebufferinfo::f_fboid(Self) -> UInt32
+pub fn GrGlFramebufferinfo::f_format(Self) -> UInt32
+pub fn GrGlFramebufferinfo::f_protected(Self) -> Bool
+
 pub type GrGlinterface
 pub fn GrGlinterface::is_null(Self) -> Bool
-pub fn GrGlinterface::to_pointer(Self) -> Pointer
 
 #external
 pub type GrRecordingContext

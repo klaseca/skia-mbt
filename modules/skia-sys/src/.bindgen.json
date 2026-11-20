@@ -9,6 +9,8 @@
     "font_stub_gen.c",
     "general_gen.mbt",
     "general_stub_gen.c",
+    "gr_context_gen.mbt",
+    "gr_context_stub_gen.c",
     "graphics_gen.mbt",
     "graphics_stub_gen.c",
     "image_gen.mbt",

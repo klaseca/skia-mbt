@@ -59,7 +59,20 @@ that was checked.
 
 ## Using the high-level API
 
-Owned Skia resources are backed by MoonBit finalizers. Use `dispose()` when
+`GlContext` wraps Skia Ganesh for a native OpenGL context created by the host
+(for example, SDL). `context.surface(width~, height~)` wraps the current window
+framebuffer, using physical pixel dimensions; `context.flush()` submits work
+before the host swaps buffers. Native Skia must be built with Ganesh/OpenGL
+support, as enabled by this repository's build script.
+
+GPU contexts require explicit `dispose()` while their native OpenGL context is
+current on the creating thread. Dispose GPU surfaces before the Skia context,
+then destroy the native context and window. A framebuffer resize requires a new
+surface. `GlSurface.read_pixels()` is available for screenshots and validation;
+ordinary GPU presentation needs no readback.
+
+Raster surfaces, paints, fonts and other owned handles have MoonBit finalizers.
+Use `dispose()` when
 deterministic native resource release matters:
 
 ```mbt nocheck

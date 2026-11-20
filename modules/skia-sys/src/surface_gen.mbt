@@ -16,6 +16,7 @@ pub fn surface_new_raster(arg0 : Imageinfo, rowBytes : UInt64, arg2 : Surfacepro
 pub extern "c" fn surface_new_backend_texture(context : GrRecordingContext, texture : GrBackendtexture, origin : Int32, samples : Int32, colorType : Int32, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_texture"
 
 ///|
+#borrow(target)
 pub extern "c" fn surface_new_backend_render_target(context : GrRecordingContext, target : GrBackendrendertarget, origin : Int32, colorType : Int32, colorspace : Colorspace, props : Surfaceprops) -> Surface = "moonbit_skia_surface_new_backend_render_target"
 
 ///|

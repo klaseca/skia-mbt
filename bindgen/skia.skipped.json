@@ -1,6 +1,6 @@
 {
-  "generated": 314,
-  "skipped": 32,
+  "generated": 362,
+  "skipped": 51,
   "functions": [
     {
       "header": "sk_data.h",
@@ -161,6 +161,101 @@
       "header": "sk_image.h",
       "name": "sk_image_new_from_texture",
       "reason": "parameter releaseProc has unsupported type const sk_image_texture_release_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_gl_with_options",
+      "reason": "parameter options has unsupported type const gr_context_options_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_vulkan",
+      "reason": "parameter vkBackendContext has unsupported type const gr_vk_backendcontext_t"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_vulkan_with_options",
+      "reason": "parameter vkBackendContext has unsupported type const gr_vk_backendcontext_t"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_metal_with_options",
+      "reason": "parameter options has unsupported type const gr_context_options_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_direct3d",
+      "reason": "parameter d3dBackendContext has unsupported type const gr_d3d_backendcontext_t"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_direct_context_make_direct3d_with_options",
+      "reason": "parameter d3dBackendContext has unsupported type const gr_d3d_backendcontext_t"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_glinterface_assemble_interface",
+      "reason": "parameter get has unsupported type gr_gl_get_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_glinterface_assemble_gl_interface",
+      "reason": "parameter get has unsupported type gr_gl_get_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_glinterface_assemble_gles_interface",
+      "reason": "parameter get has unsupported type gr_gl_get_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_glinterface_assemble_webgl_interface",
+      "reason": "parameter get has unsupported type gr_gl_get_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_vk_extensions_init",
+      "reason": "parameter getProc has unsupported type gr_vk_get_proc"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendtexture_new_gl",
+      "reason": "parameter glInfo has unsupported type const gr_gl_textureinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendtexture_new_vulkan",
+      "reason": "parameter vkInfo has unsupported type const gr_vk_imageinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendtexture_new_metal",
+      "reason": "parameter mtlInfo has unsupported type const gr_mtl_textureinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendtexture_new_direct3d",
+      "reason": "parameter d3dInfo has unsupported type const gr_d3d_textureresourceinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendtexture_get_gl_textureinfo",
+      "reason": "parameter glInfo has unsupported type gr_gl_textureinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendrendertarget_new_vulkan",
+      "reason": "parameter vkImageInfo has unsupported type const gr_vk_imageinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendrendertarget_new_metal",
+      "reason": "parameter mtlInfo has unsupported type const gr_mtl_textureinfo_t *"
+    },
+    {
+      "header": "gr_context.h",
+      "name": "gr_backendrendertarget_new_direct3d",
+      "reason": "parameter d3dInfo has unsupported type const gr_d3d_textureresourceinfo_t *"
     }
   ]
 }

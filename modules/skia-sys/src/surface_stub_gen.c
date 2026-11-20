@@ -70,6 +70,8 @@ int32_t moonbit_skia_surface_is_null(void *self) {
   return moonbit_skia_surface_ptr(self) == NULL;
 }
 
+gr_backendrendertarget_t *moonbit_skia_grbackendrendertarget_ptr(void *self);
+
 sk_canvas_t *moonbit_skia_canvas_ptr(void *self);
 void *moonbit_skia_canvas_make_dependent(sk_canvas_t *ptr, void *owner, void (*retain_owner)(void *), void (*release_owner)(void *));
 
@@ -93,8 +95,8 @@ void * moonbit_skia_surface_new_backend_texture(gr_recording_context_t * context
 }
 
 MOONBIT_FFI_EXPORT
-void * moonbit_skia_surface_new_backend_render_target(gr_recording_context_t * context, const gr_backendrendertarget_t * target, gr_surfaceorigin_t origin, sk_colortype_t colorType, sk_colorspace_t * colorspace, const sk_surfaceprops_t * props) {
-  return moonbit_skia_surface_make_owned(sk_surface_new_backend_render_target(context, target, origin, colorType, colorspace, props));
+void * moonbit_skia_surface_new_backend_render_target(gr_recording_context_t * context, void * target, gr_surfaceorigin_t origin, sk_colortype_t colorType, sk_colorspace_t * colorspace, const sk_surfaceprops_t * props) {
+  return moonbit_skia_surface_make_owned(sk_surface_new_backend_render_target(context, moonbit_skia_grbackendrendertarget_ptr(target), origin, colorType, colorspace, props));
 }
 
 MOONBIT_FFI_EXPORT

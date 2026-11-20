@@ -461,6 +461,36 @@ int32_t *moonbit_skia_fontmetrics_layout(void) {
 }
 
 MOONBIT_FFI_EXPORT
+moonbit_bytes_t moonbit_skia_grglframebufferinfo_make(uint32_t arg_f_fboid, uint32_t arg_f_format, int32_t arg_f_protected) {
+  gr_gl_framebufferinfo_t value = { 0 };
+  value.fFBOID = arg_f_fboid;
+  value.fFormat = arg_f_format;
+  value.fProtected = arg_f_protected;
+  moonbit_bytes_t bytes = moonbit_make_bytes(sizeof(gr_gl_framebufferinfo_t), 0);
+  memcpy(bytes, &value, sizeof(gr_gl_framebufferinfo_t));
+  return bytes;
+}
+
+MOONBIT_FFI_EXPORT
+int32_t *moonbit_skia_grglframebufferinfo_layout(void) {
+  static const int32_t layout[] = {
+    (int32_t)sizeof(gr_gl_framebufferinfo_t),
+    (int32_t)offsetof(gr_gl_framebufferinfo_t, fFBOID),
+    (int32_t)sizeof(((gr_gl_framebufferinfo_t *)0)->fFBOID),
+    ((unsigned int)-1 < (unsigned int)0),
+    (int32_t)offsetof(gr_gl_framebufferinfo_t, fFormat),
+    (int32_t)sizeof(((gr_gl_framebufferinfo_t *)0)->fFormat),
+    ((unsigned int)-1 < (unsigned int)0),
+    (int32_t)offsetof(gr_gl_framebufferinfo_t, fProtected),
+    (int32_t)sizeof(((gr_gl_framebufferinfo_t *)0)->fProtected),
+    0,
+  };
+  int32_t *result = moonbit_make_int32_array(10, 0);
+  memcpy(result, layout, sizeof(layout));
+  return result;
+}
+
+MOONBIT_FFI_EXPORT
 moonbit_bytes_t moonbit_skia_imageinfo_make(sk_colorspace_t * arg_colorspace, int32_t arg_width, int32_t arg_height, sk_colortype_t arg_color_type, sk_alphatype_t arg_alpha_type) {
   sk_imageinfo_t value = { 0 };
   value.colorspace = arg_colorspace;

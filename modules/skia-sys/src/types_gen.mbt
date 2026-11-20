@@ -616,15 +616,15 @@ pub fn PixelrefFactory::is_null(self : Self) -> Bool {
 }
 
 ///|
-#external
 pub type GrBackendrendertarget
 
 ///|
-pub fn GrBackendrendertarget::to_pointer(self : Self) -> Pointer = "%identity"
+#borrow(resource)
+extern "c" fn gr_backendrendertarget_is_null(resource : GrBackendrendertarget) -> Bool = "moonbit_skia_gr_backendrendertarget_is_null"
 
 ///|
 pub fn GrBackendrendertarget::is_null(self : Self) -> Bool {
-  self.to_pointer().is_null()
+  gr_backendrendertarget_is_null(self)
 }
 
 ///|
@@ -664,15 +664,15 @@ pub fn GrRecordingContext::is_null(self : Self) -> Bool {
 }
 
 ///|
-#external
 pub type GrGlinterface
 
 ///|
-pub fn GrGlinterface::to_pointer(self : Self) -> Pointer = "%identity"
+#borrow(resource)
+extern "c" fn gr_glinterface_is_null(resource : GrGlinterface) -> Bool = "moonbit_skia_gr_glinterface_is_null"
 
 ///|
 pub fn GrGlinterface::is_null(self : Self) -> Bool {
-  self.to_pointer().is_null()
+  gr_glinterface_is_null(self)
 }
 
 ///|
@@ -1780,6 +1780,53 @@ pub fn Fontmetrics::f_strikeout_position(self : Self) -> Float {
 }
 
 ///|
+struct GrGlFramebufferinfo {
+  bytes : Bytes
+  offset : Int32
+}
+
+///|
+extern "c" fn grglframebufferinfo_make(f_fboid : UInt32, f_format : UInt32, f_protected : Bool) -> Bytes = "moonbit_skia_grglframebufferinfo_make"
+
+///|
+pub fn GrGlFramebufferinfo::GrGlFramebufferinfo(f_fboid : UInt32, f_format : UInt32, f_protected : Bool) -> GrGlFramebufferinfo {
+  { bytes: grglframebufferinfo_make(f_fboid, f_format, f_protected), offset: 0 }
+}
+
+///|
+extern "c" fn grglframebufferinfo_layout_ffi() -> FixedArray[Int32] = "moonbit_skia_grglframebufferinfo_layout"
+
+///|
+let grglframebufferinfo_layout : FixedArray[Int32] = grglframebufferinfo_layout_ffi()
+
+///|
+/// View exactly the structure bytes without copying; writes and native buffer reuse are shared.
+pub fn GrGlFramebufferinfo::as_bytes(self : Self) -> BytesView {
+  self.bytes.exact_view(start=self.offset, end=self.offset + grglframebufferinfo_layout[0])
+}
+
+///|
+/// Copy the structure bytes into independent storage. Native pointers remain shallow copies.
+pub fn GrGlFramebufferinfo::copy(self : Self) -> Self {
+  { bytes: value_copy_bytes(self.bytes, self.offset, grglframebufferinfo_layout[0]), offset: 0 }
+}
+
+///|
+pub fn GrGlFramebufferinfo::f_fboid(self : Self) -> UInt32 {
+  read_integer(self.bytes, self.offset + grglframebufferinfo_layout[1], grglframebufferinfo_layout[2], grglframebufferinfo_layout[3] != 0, value_little_endian)
+}
+
+///|
+pub fn GrGlFramebufferinfo::f_format(self : Self) -> UInt32 {
+  read_integer(self.bytes, self.offset + grglframebufferinfo_layout[4], grglframebufferinfo_layout[5], grglframebufferinfo_layout[6] != 0, value_little_endian)
+}
+
+///|
+pub fn GrGlFramebufferinfo::f_protected(self : Self) -> Bool {
+  value_read_bool(self.bytes, self.offset + grglframebufferinfo_layout[7], grglframebufferinfo_layout[8])
+}
+
+///|
 struct Imageinfo {
   bytes : Bytes
   offset : Int32
@@ -1990,7 +2037,19 @@ pub fn SamplingOptions::f_mipmap(self : Self) -> Int32 {
 }
 
 ///|
-pub const LINEAR_SK_FILTER_MODE : Int32 = 0
+pub const RGBA_8888_SK_COLORTYPE : Int32 = 4
+
+///|
+pub const BGRA_8888_SK_COLORTYPE : Int32 = 6
+
+///|
+pub const TOP_LEFT_GR_SURFACE_ORIGIN : Int32 = 0
+
+///|
+pub const BOTTOM_LEFT_GR_SURFACE_ORIGIN : Int32 = 1
+
+///|
+pub const LINEAR_SK_FILTER_MODE : Int32 = 1
 
 ///|
 pub const NONE_SK_MIPMAP_MODE : Int32 = 0

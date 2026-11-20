@@ -5,6 +5,10 @@ pub(all) suberror SkiaError {
   InvalidSurfaceSize(width~ : Int32, height~ : Int32)
   TypefaceCreateFailed
   FontCreateFailed
+  GlInterfaceCreateFailed
+  GlContextCreateFailed
+  GlContextAbandoned
+  GlSubmitFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
   SurfaceCreateFailed(width~ : Int32, height~ : Int32)

@@ -15,6 +15,7 @@ export const skiaSysConfig = defineConfig({
     'sk_paint.h',
     'sk_path.h',
     'sk_image.h',
+    'gr_context.h',
   ],
   outputDir: 'modules/skia-sys/src',
   functionMode: 'discover',
@@ -25,6 +26,13 @@ export const skiaSysConfig = defineConfig({
     },
   },
   functions: [
+    {
+      name: 'gr_direct_context_make_metal',
+      params: {
+        device: { passing: 'pointer' },
+        queue: { passing: 'pointer' },
+      },
+    },
     {
       name: 'sk_font_measure_text',
       params: {
@@ -61,6 +69,14 @@ export const skiaSysConfig = defineConfig({
     },
   ],
   resources: {
+    gr_glinterface_t: {
+      release: 'gr_glinterface_unref',
+      defaultLifetime: 'owned',
+    },
+    gr_backendrendertarget_t: {
+      release: 'gr_backendrendertarget_delete',
+      defaultLifetime: 'owned',
+    },
     sk_image_t: {
       release: 'sk_image_unref',
       defaultLifetime: 'owned',
@@ -95,7 +111,14 @@ export const skiaSysConfig = defineConfig({
       defaultLifetime: 'owned',
     },
   },
-  constantPrefixes: ['LINEAR_SK_FILTER_MODE', 'NONE_SK_MIPMAP_MODE'],
+  constantPrefixes: [
+    'LINEAR_SK_FILTER_MODE',
+    'NONE_SK_MIPMAP_MODE',
+    'RGBA_8888_SK_COLORTYPE',
+    'BGRA_8888_SK_COLORTYPE',
+    'TOP_LEFT_GR_SURFACE_ORIGIN',
+    'BOTTOM_LEFT_GR_SURFACE_ORIGIN',
+  ],
   valueStructs: {
     sk_cubic_resampler_t: {},
     sk_sampling_options_t: {},
@@ -112,5 +135,6 @@ export const skiaSysConfig = defineConfig({
     sk_rect_t: {},
     sk_rsxform_t: {},
     sk_size_t: {},
+    gr_gl_framebufferinfo_t: {},
   },
 })

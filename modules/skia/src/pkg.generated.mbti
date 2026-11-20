@@ -15,6 +15,10 @@ pub(all) suberror SkiaError {
   InvalidSurfaceSize(width~ : Int32, height~ : Int32)
   TypefaceCreateFailed
   FontCreateFailed
+  GlInterfaceCreateFailed
+  GlContextCreateFailed
+  GlContextAbandoned
+  GlSubmitFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
   SurfaceCreateFailed(width~ : Int32, height~ : Int32)
@@ -40,6 +44,7 @@ pub fn Canvas::from_sys(@skia-sys.Canvas) -> Self
 pub fn Canvas::quick_reject(Self, Rect) -> Bool
 pub fn Canvas::restore(Self) -> Unit
 pub fn Canvas::save(Self) -> Int32
+pub fn Canvas::scale(Self, Float, Float) -> Unit
 
 pub struct Color {
   a : Byte
@@ -63,6 +68,22 @@ pub(all) struct FontMetrics {
   descent : Float
   leading : Float
 }
+
+pub struct GlContext {
+  // private fields
+}
+pub fn GlContext::GlContext() -> Self raise SkiaError
+pub fn GlContext::abandon(Self) -> Unit
+pub fn GlContext::dispose(Self) -> Unit
+pub fn GlContext::flush(Self) -> Unit raise SkiaError
+pub fn GlContext::surface(Self, width~ : Int32, height~ : Int32, framebuffer? : UInt32, samples? : Int32, stencil_bits? : Int32) -> GlSurface raise SkiaError
+
+pub struct GlSurface {
+  // private fields
+}
+pub fn GlSurface::canvas(Self) -> Canvas
+pub fn GlSurface::dispose(Self) -> Unit
+pub fn GlSurface::read_pixels(Self) -> PixelBuffer raise SkiaError
 
 pub struct Paint {
   // private fields

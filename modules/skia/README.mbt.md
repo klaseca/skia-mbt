@@ -25,7 +25,27 @@ native build hook.
 
 ## Usage
 
-Owned resources have native finalizers. Call `dispose()` when deterministic
+For GPU rendering, first create and make current a native OpenGL context in the
+window host. The native Skia build must include Ganesh/OpenGL support.
+
+```mbt nocheck
+let context = try! @skia.GlContext()
+defer context.dispose()
+let surface = try! context.surface(width=640, height=360)
+defer surface.dispose()
+surface.canvas().clear(@skia.Color(a=255, r=255, g=255, b=255))
+try! context.flush()
+// The host now swaps its native window buffers.
+```
+
+Surface dimensions are physical pixels and must match the native framebuffer.
+Recreate the surface after resize. GPU surface/context disposal must happen
+explicitly, with the native OpenGL context current on the creating thread;
+dispose surfaces before the Skia context, then destroy the native context.
+`GlSurface.read_pixels()` is for screenshots and validation, not presentation.
+
+Raster surfaces, paints, fonts and other owned handles have native finalizers.
+Call `dispose()` when deterministic
 release matters and do not use a resource after disposing it.
 
 ```mbt nocheck
