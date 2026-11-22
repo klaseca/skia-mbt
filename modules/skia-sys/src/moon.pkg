@@ -38,5 +38,6 @@ options(
     "value_stub_gen.c",
     "imageinfo_support.c",
     "png_support.c",
+    "d3d12_support.c",
   ],
 )

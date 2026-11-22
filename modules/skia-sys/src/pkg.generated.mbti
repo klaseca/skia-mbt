@@ -128,6 +128,14 @@ pub fn canvas_translate(Canvas, Float, Float) -> Unit
 
 pub fn colortype_get_default_8888() -> Int32
 
+pub fn d3d12_available() -> Bool
+
+pub fn d3d12_flush_for_present(GrDirectContext, Surface) -> Bool
+
+pub fn d3d12_make_context(Pointer, Pointer, Pointer) -> GrDirectContext
+
+pub fn d3d12_wrap_back_buffer(GrRecordingContext, Pointer, Int32, Int32) -> Surface
+
 pub fn data_get_size(Data) -> UInt64
 
 pub fn data_new_empty() -> Data

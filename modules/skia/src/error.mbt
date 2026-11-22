@@ -9,6 +9,10 @@ pub(all) suberror SkiaError {
   GlContextCreateFailed
   GlContextAbandoned
   GlSubmitFailed
+  D3d12Unavailable
+  D3d12ContextCreateFailed
+  D3d12ContextAbandoned
+  D3d12SubmitFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
   SurfaceCreateFailed(width~ : Int32, height~ : Int32)

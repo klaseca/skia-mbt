@@ -42,6 +42,15 @@ Skia's source dependencies again:
 python scripts/build_skia.py --skip-deps
 ```
 
+On Windows, add `--d3d12` to enable Direct3D 12 alongside OpenGL:
+
+```powershell
+python scripts/build_skia.py --skip-deps --d3d12
+```
+
+This build includes the C++ bridge that submits the Skia frame with its back
+buffer in the state expected by DXGI presentation.
+
 To remove the current host's output directory before building:
 
 ```sh

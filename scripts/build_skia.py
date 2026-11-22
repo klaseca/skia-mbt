@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import platform
 import shlex
@@ -208,7 +209,10 @@ def find_windows_clang(env: dict[str, str]) -> Path | None:
     return None
 
 
-def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
+def create_gn_args(
+    host: Host, target_cpu: str, clang: Path | None, bridge: Path | None,
+    env: dict[str, str],
+) -> str:
     args = [
         f"target_os = {gn_string(host.gn_os)}",
         f"target_cpu = {gn_string(target_cpu)}",
@@ -219,7 +223,7 @@ def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
         "skia_enable_graphite = false",
         "skia_enable_skottie = true",
         "skia_use_dawn = false",
-        "skia_use_direct3d = false",
+        f"skia_use_direct3d = {'true' if bridge else 'false'}",
         "skia_use_egl = false",
         "skia_use_gl = true",
         "skia_use_harfbuzz = false",
@@ -239,7 +243,6 @@ def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
     if sys.platform == "win32":
         # Skia's vector operations use Clang extensions. The MSVC fallback can
         # make CPU alpha blending much slower even in an optimized build.
-        clang = find_windows_clang(env)
         if clang:
             args.append(f"clang_win = {gn_string(clang.as_posix())}")
         else:
@@ -256,6 +259,8 @@ def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
                 'extra_ldflags = [ "/DEBUG:FULL", "/DEBUGTYPE:CV,FIXUP" ]',
             ]
         )
+        if bridge:
+            args.append(f"extra_ldflags += [ {gn_string(bridge.as_posix())} ]")
     else:
         args.extend(
             [
@@ -271,12 +276,38 @@ def create_gn_args(host: Host, target_cpu: str, env: dict[str, str]) -> str:
     return "\n".join(args) + "\n"
 
 
+def build_d3d12_bridge(
+    source: Path, skia_dir: Path, out_dir: Path, clang: Path | None,
+    env: dict[str, str],
+) -> Path:
+    compiler = str(clang / "bin" / "clang-cl.exe") if clang else "cl.exe"
+    obj = out_dir / "skia_d3d12.obj"
+    run(
+        [compiler, "/nologo", "/c", "/O2", "/MT", "/EHsc", "/std:c++20",
+         "/DSK_GANESH", "/DSK_DIRECT3D", "/Brepro",
+         f"/I{skia_dir}", f"/Fo{obj}", str(source)],
+        skia_dir,
+        env,
+    )
+    # GN passes this object as a linker flag. Give changes a new path so Ninja
+    # can detect the update from the link command without patching Skia's GN files.
+    contents = obj.read_bytes()
+    stamp = hashlib.sha256(contents).hexdigest()[:16]
+    bridge = out_dir / f"skia_d3d12_{stamp}.obj"
+    if not bridge.is_file():
+        bridge.write_bytes(contents)
+    return bridge
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build the SkiaSharp native library for this host"
     )
     parser.add_argument("--skia-dir", help="path to the mono/skia checkout")
     parser.add_argument("--depot-tools-dir", help="optional path to depot_tools")
+    parser.add_argument(
+        "--d3d12", action="store_true", help="enable Direct3D 12 on Windows",
+    )
     parser.add_argument(
         "--clean",
         action="store_true",
@@ -297,6 +328,8 @@ def main() -> None:
     target_cpu = host.architectures.get(machine) if host else None
     if not host or not target_cpu:
         fail(f"unsupported host {sys.platform}/{machine}")
+    if args.d3d12 and sys.platform != "win32":
+        fail("--d3d12 requires Windows")
 
     script = Path(__file__).resolve()
     skia_dir = find_skia_dir(script, args.skia_dir)
@@ -305,7 +338,7 @@ def main() -> None:
     out_dir = (out_root / host.name / target_cpu / "release").resolve()
 
     env = windows_build_environment(target_cpu)
-    gn_args = create_gn_args(host, target_cpu, env)
+    clang = find_windows_clang(env) if sys.platform == "win32" else None
     if depot_tools_dir:
         env["PATH"] = f"{depot_tools_dir}{os.pathsep}{env.get('PATH', '')}"
     env["GIT_SYNC_DEPS_SKIP_EMSDK"] = "1"
@@ -329,6 +362,12 @@ def main() -> None:
         run([sys.executable, "bin/fetch-ninja"], skia_dir, env)
 
     out_dir.mkdir(parents=True, exist_ok=True)
+    bridge = None
+    if args.d3d12:
+        bridge = build_d3d12_bridge(
+            script.with_name("skia_d3d12.cpp"), skia_dir, out_dir, clang, env,
+        )
+    gn_args = create_gn_args(host, target_cpu, clang, bridge, env)
     gn_args_file = out_dir / "args.gn"
     gn_args_file.write_text(gn_args, encoding="utf-8")
 

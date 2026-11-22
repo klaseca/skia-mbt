@@ -19,6 +19,10 @@ pub(all) suberror SkiaError {
   GlContextCreateFailed
   GlContextAbandoned
   GlSubmitFailed
+  D3d12Unavailable
+  D3d12ContextCreateFailed
+  D3d12ContextAbandoned
+  D3d12SubmitFailed
   PathParseSvgFailed
   SurfaceReadPixelsFailed
   SurfaceCreateFailed(width~ : Int32, height~ : Int32)
@@ -53,6 +57,15 @@ pub struct Color {
   b : Byte
 }
 pub fn Color::Color(a~ : Byte, r~ : Byte, g~ : Byte, b~ : Byte) -> Self
+
+pub struct D3d12Context {
+  // private fields
+}
+pub fn D3d12Context::D3d12Context(adapter~ : @skia-sys.Pointer, device~ : @skia-sys.Pointer, queue~ : @skia-sys.Pointer) -> Self raise SkiaError
+pub fn D3d12Context::dispose(Self) -> Unit
+pub fn D3d12Context::flush_for_present(Self, Surface) -> Unit raise SkiaError
+pub fn D3d12Context::surface(Self, @skia-sys.Pointer, width~ : Int32, height~ : Int32) -> Surface raise SkiaError
+pub fn D3d12Context::sync(Self) -> Unit raise SkiaError
 
 pub struct Font {
   // private fields
