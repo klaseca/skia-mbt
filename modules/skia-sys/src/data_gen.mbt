@@ -24,6 +24,10 @@ pub extern "c" fn data_unref(arg0 : Data) = "moonbit_skia_data_unref"
 pub extern "c" fn data_get_size(arg0 : Data) -> UInt64 = "moonbit_skia_data_get_size"
 
 ///|
+#borrow(arg0)
+pub extern "c" fn data_get_data(arg0 : Data) -> Pointer = "moonbit_skia_data_get_data"
+
+///|
 #borrow(path)
 pub extern "c" fn data_new_from_file(path : Bytes) -> Data = "moonbit_skia_data_new_from_file"
 

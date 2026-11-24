@@ -65,6 +65,10 @@ framebuffer, using physical pixel dimensions; `context.flush()` submits work
 before the host swaps buffers. Native Skia must be built with Ganesh/OpenGL
 support, as enabled by this repository's build script.
 
+Hosts can pass their native GL procedure loader to `GlContext(loader=...)`
+while the context is current. This lets Skia use the host's context API,
+including EGL contexts on Wayland.
+
 GPU contexts require explicit `dispose()` while their native OpenGL context is
 current on the creating thread. Dispose GPU surfaces before the Skia context,
 then destroy the native context and window. A framebuffer resize requires a new

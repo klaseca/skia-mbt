@@ -85,6 +85,11 @@ uint64_t moonbit_skia_data_get_size(void * arg0) {
 }
 
 MOONBIT_FFI_EXPORT
+const void * moonbit_skia_data_get_data(void * arg0) {
+  return sk_data_get_data(moonbit_skia_data_ptr(arg0));
+}
+
+MOONBIT_FFI_EXPORT
 void * moonbit_skia_data_new_from_file(moonbit_bytes_t path) {
   return moonbit_skia_data_make_owned(sk_data_new_from_file((const char *)path));
 }

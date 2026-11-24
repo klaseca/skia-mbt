@@ -86,6 +86,15 @@ pub extern "c" fn gr_direct_context_purge_unlocked_resources(context : GrDirectC
 pub extern "c" fn gr_glinterface_create_native_interface() -> GrGlinterface = "moonbit_skia_gr_glinterface_create_native_interface"
 
 ///|
+#borrow(get)
+extern "c" fn gr_glinterface_assemble_interface_ffi(ctx : FuncRef[((Bytes) -> FuncRef[() -> Unit], Bytes) -> FuncRef[() -> Unit]], get : (Bytes) -> FuncRef[() -> Unit]) -> GrGlinterface = "moonbit_skia_gr_glinterface_assemble_interface_ffi"
+
+///|
+pub fn gr_glinterface_assemble_interface(get : (Bytes) -> FuncRef[() -> Unit]) -> GrGlinterface {
+  gr_glinterface_assemble_interface_ffi((invoke, arg0) => invoke(arg0), get)
+}
+
+///|
 #borrow(glInterface)
 pub extern "c" fn gr_glinterface_unref(glInterface : GrGlinterface) = "moonbit_skia_gr_glinterface_unref"
 

@@ -85,7 +85,7 @@ pub(all) struct FontMetrics {
 pub struct GlContext {
   // private fields
 }
-pub fn GlContext::GlContext() -> Self raise SkiaError
+pub fn GlContext::GlContext(loader? : (Bytes) -> FuncRef[() -> Unit]) -> Self raise SkiaError
 pub fn GlContext::abandon(Self) -> Unit
 pub fn GlContext::dispose(Self) -> Unit
 pub fn GlContext::flush(Self) -> Unit raise SkiaError

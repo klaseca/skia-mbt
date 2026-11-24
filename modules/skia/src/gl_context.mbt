@@ -9,8 +9,14 @@ pub struct GlContext {
 }
 
 ///|
-pub fn GlContext::GlContext() -> GlContext raise SkiaError {
-  let interface = @sys.gr_glinterface_create_native_interface()
+/// Use the host's loader when supplied. The native context must be current.
+pub fn GlContext::GlContext(
+  loader? : (Bytes) -> FuncRef[() -> Unit],
+) -> GlContext raise SkiaError {
+  let interface = match loader {
+    Some(loader) => @sys.gr_glinterface_assemble_interface(loader)
+    None => @sys.gr_glinterface_create_native_interface()
+  }
   defer @sys.gr_glinterface_unref(interface)
   if interface.is_null() || !@sys.gr_glinterface_validate(interface) {
     raise GlInterfaceCreateFailed

@@ -27,6 +27,10 @@ export const skiaSysConfig = defineConfig({
   },
   functions: [
     {
+      name: 'gr_glinterface_assemble_interface',
+      synchronousCallback: { callback: 'get', context: 'ctx' },
+    },
+    {
       name: 'gr_direct_context_make_metal',
       params: {
         device: { passing: 'pointer' },

@@ -136,6 +136,8 @@ pub fn d3d12_make_context(Pointer, Pointer, Pointer) -> GrDirectContext
 
 pub fn d3d12_wrap_back_buffer(GrRecordingContext, Pointer, Int32, Int32) -> Surface
 
+pub fn data_get_data(Data) -> Pointer
+
 pub fn data_get_size(Data) -> UInt64
 
 pub fn data_new_empty() -> Data
@@ -333,6 +335,8 @@ pub fn gr_direct_context_reset_context(GrDirectContext, UInt32) -> Unit
 pub fn gr_direct_context_set_resource_cache_limit(GrDirectContext, UInt64) -> Unit
 
 pub fn gr_direct_context_submit(GrDirectContext, Bool) -> Bool
+
+pub fn gr_glinterface_assemble_interface((Bytes) -> FuncRef[() -> Unit]) -> GrGlinterface
 
 pub fn gr_glinterface_create_native_interface() -> GrGlinterface
 

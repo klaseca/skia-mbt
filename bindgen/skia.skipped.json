@@ -1,12 +1,7 @@
 {
-  "generated": 362,
-  "skipped": 51,
+  "generated": 364,
+  "skipped": 49,
   "functions": [
-    {
-      "header": "sk_data.h",
-      "name": "sk_data_get_data",
-      "reason": "unsupported return type const void *"
-    },
     {
       "header": "sk_data.h",
       "name": "sk_data_get_bytes",
@@ -191,11 +186,6 @@
       "header": "gr_context.h",
       "name": "gr_direct_context_make_direct3d_with_options",
       "reason": "parameter d3dBackendContext has unsupported type const gr_d3d_backendcontext_t"
-    },
-    {
-      "header": "gr_context.h",
-      "name": "gr_glinterface_assemble_interface",
-      "reason": "parameter get has unsupported type gr_gl_get_proc"
     },
     {
       "header": "gr_context.h",

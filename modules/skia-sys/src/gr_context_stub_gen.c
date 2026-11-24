@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+moonbit_bytes_t moonbit_cstring_to_bytes_skia(const char *str);
+
 typedef struct {
   gr_glinterface_t *ptr;
   int32_t owns_ptr;
@@ -254,6 +256,22 @@ void moonbit_skia_gr_direct_context_purge_unlocked_resources(gr_direct_context_t
 MOONBIT_FFI_EXPORT
 void * moonbit_skia_gr_glinterface_create_native_interface(void) {
   return moonbit_skia_grglinterface_make_owned((gr_glinterface_t *)gr_glinterface_create_native_interface());
+}
+
+typedef gr_gl_func_ptr (*moonbit_skia_gr_glinterface_assemble_interface_invoke)(void *, moonbit_bytes_t);
+typedef struct { moonbit_skia_gr_glinterface_assemble_interface_invoke invoke; void *closure; } moonbit_skia_gr_glinterface_assemble_interface_callback_state;
+
+static gr_gl_func_ptr moonbit_skia_gr_glinterface_assemble_interface_callback(void *data, const char * arg0) {
+  moonbit_skia_gr_glinterface_assemble_interface_callback_state *state = (moonbit_skia_gr_glinterface_assemble_interface_callback_state *)data;
+  // MoonBit takes an owned reference on each invocation.
+  moonbit_incref(state->closure);
+  return state->invoke(state->closure, moonbit_cstring_to_bytes_skia(arg0));
+}
+
+MOONBIT_FFI_EXPORT
+void * moonbit_skia_gr_glinterface_assemble_interface_ffi(moonbit_skia_gr_glinterface_assemble_interface_invoke ctx, void * get) {
+  moonbit_skia_gr_glinterface_assemble_interface_callback_state moonbit_skia_gr_glinterface_assemble_interface_state = { ctx, get };
+  return moonbit_skia_grglinterface_make_owned((gr_glinterface_t *)gr_glinterface_assemble_interface(&moonbit_skia_gr_glinterface_assemble_interface_state, moonbit_skia_gr_glinterface_assemble_interface_callback));
 }
 
 MOONBIT_FFI_EXPORT
